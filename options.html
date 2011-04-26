@@ -1,0 +1,54 @@
+<!DOCTYPE html><html><head>
+<script src="js/lib.js"></script>
+<title>Flag button options</title>
+<style>
+legend
+    {
+    font-size:150%;
+    font-weight:bold;
+    }
+</style>
+</head><body>
+    <h1>Flag button options</h1> 
+    <fieldset><legend>Cache</legend>
+	On your first site visit, Flag button extention asks <a href="http://ipinfodb.com">ipinfodb.com</a> about current site and saves its reply to the cache. On your following page loads, it uses cached data.
+	Current cache size is: <b id="cache1">?</b> records
+
+	<h3>Clear cache on exit:</h3>
+	<input type="radio" name="cacheClear" id="cacheClear0" onclick="widget.preferences.cacheClear=0"/><label for="cacheClear0"> <b>NO:</b> cache is persistent between Opera restarts</label>
+	<br>
+	<input type="radio" name="cacheClear" id="cacheClear1" onclick="widget.preferences.cacheClear=1"/><label for="cacheClear1"> <b>YES:</b> get fresh data on every Opera launch</label>
+
+	<h3>Cache size limit:</h3>
+	    <input type="number" id="cacheMax" style="width:5em" onkeyup="widget.preferences.cacheMax=this.value+widget.preferences.saved"/><label for="cacheMax"> records (about thousand is okay)</label>
+
+	<h3>Clear cache:</h3>
+	    <input type="button" value="Clear now!" onclick="clearCache();gebi('cache1').innerHTML=widget.preferences.length-widget.preferences.saved;">
+    </fieldset>
+    <fieldset><legend>Auth key</legend>
+	<a href="http://ipinfodb.com">ipinfodb.com</a> requires free registration <q>for the purpose of optimizing their resources</q>. I (the author) share the given to me key with you. You can use my key or <a href="http://ipinfodb.com/register.php">register</a> and use your own key.
+
+	<h3>Use Auth key:</h3>
+	    <input type="radio" name="usekey" id="usekey0" onclick="widget.preferences.usekey=0"/><label for="usekey0"> Use public (Author's) Auth key</label>
+	    <br>
+	    <input type="radio" name="usekey" id="usekey1" onclick="widget.preferences.usekey=1"/><label for="usekey1"> Use my own Auth key</label>
+
+	<h3>My Auth key:</h3>
+	    <input type="text" id="userkey" style="width:20em" onkeyup="widget.preferences.userkey=this.value"/>
+    </fieldset>
+    
+<script>
+gebi('cache1').innerHTML=widget.preferences.length-widget.preferences.saved;
+if(widget.preferences.cacheClear==1)
+    gebi('cacheClear1').checked=true;
+else
+    gebi('cacheClear0').checked=true;
+gebi('cacheMax').value=widget.preferences.cacheMax-widget.preferences.saved;
+if(widget.preferences.usekey=='1')
+    gebi('usekey1').checked=true;
+else
+    gebi('usekey0').checked=true;
+gebi('userkey').value=widget.preferences.userkey;
+//~ opera.postError(widget.preferences.userkey);
+</script>
+</body></html>

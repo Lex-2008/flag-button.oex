@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets" id="http://my.opera.com/alex-shpak/blog/flag-button" version="1.1">
+    <name>Flag Button</name>
+    <description>
+	Adds a button with a flag of a country where the sever is located. Uses ipinfodb.com API.
+    </description>
+    <author href="http://alexey.shpakovsky.ru" email="alexey@shpakovsky.ru">Alexey Shpakovsky</author>
+    <icon src="icons/European-Union-Flag-16.png" width="16" height="16"/>
+    <icon src="icons/European-Union-Flag-24.png" width="24" height="24"/>
+    <icon src="icons/European-Union-Flag-32.png" width="32" height="32"/>
+    <icon src="icons/European-Union-Flag-48.png" width="48" height="48"/>
+    <icon src="icons/European-Union-Flag-64.png" width="64" height="64"/>
+    <icon src="icons/European-Union-Flag-128.png" width="128" height="128"/>
+    <icon src="icons/European-Union-Flag-256.png" width="256" height="256"/>
+    <license href="http://www.apache.org/licenses/LICENSE-2.0.html">
+	This extension is Open Source.
+	If you use or improve it -- i'll be happy to know :)
+	
+	* Flagfox extension was the one that inspired me
+	* Using some ideas from operaflag UserJS
+	    Copyright 2009-2010 by PH and covered by GNU GPL (v1 or v2).
+	    Author's link is dead: http://my.opera.com/PH`/about/
+	* Using parts of Reddited extension
+	    licensed under the Apache License, Version 2.0: 
+	    https://addons.opera.com/addons/extensions/details/reddited
+	* Using ipinfodb.com free API to get the data
+	    http://ipinfodb.com/ip_location_api.php
+	* Using famfamfam country flag icons (padded to 16x16 with transparent color)
+	    available for free use for any purpose:
+	    http://www.famfamfam.com/lab/icons/flags/
+	* Using European Union flag (as main icon) from "172 final country flag icons" by Custom Icon Design.
+	    License: Free for non-commercial use.
+	    http://www.customicondesign.com/free-icon/172-final-flag-icons/
+    </license>
+    <access origin="*"/>
+    <preference name="save" value="save,saved,cacheMax,cacheClear,usekey,userkey,mykey"/>
+    <preference name="saved" value="7"/>
+    <preference name="cacheMax" value="1007"/>
+    <preference name="cacheClear" value="0"/>
+    <preference name="usekey" value="0"/>
+    <preference name="userkey" value=" "/>
+    <preference name="mykey" value="8ab4dafef4a713f5097cb50706e861b38ebf6972a44167aa9426cde1768fed5e"/>
+</widget>

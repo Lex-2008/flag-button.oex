@@ -1,0 +1,189 @@
+<!DOCTYPE html><html><head>
+<script src="js/lib.js"></script>
+<script>
+// debug ;)
+function aalert(o){
+var str='';
+for(var qwe in o)
+    str+=''+qwe+':'+typeof(o[qwe])+'='+o[qwe]+'\n';
+opera.postError('('+typeof(o)+')='+o+'\n\n'+str);
+}
+
+
+
+//init
+opera.extension.tabs.addEventListener( "create", toggleIfExists, false);
+opera.extension.tabs.addEventListener( "focus", toggleIfExists, false);
+opera.extension.tabs.addEventListener( "blur", toggleIfExists, false);
+opera.extension.addEventListener( "message", toggleIfExists, false);
+opera.extension.addEventListener( "message", popupHelper, false);
+var theButton;
+var ToolbarUIItemProperties =
+    {
+    title:'This button will show a flag of a country where the sever is located.\n'+
+	'Try refreshing the page if it doesn\'t work.',
+    icon:'icons/European-Union-Flag-16.png',
+    disabled:true,
+    badge:
+	{
+	display: "block",
+	color: "white",
+	backgroundColor: "rgba(0, 0, 0, 1)",
+	textContent:'',
+	},
+    popup:
+	{
+	href: "popup.html",
+	width: 250,
+	height:230,
+	}
+    };
+theButton = opera.contexts.toolbar.createItem(ToolbarUIItemProperties);
+opera.contexts.toolbar.addItem(theButton);
+
+
+
+//main function
+function toggleIfExists()
+    {
+    //that is my key
+    var key;
+    if(widget.preferences.usekey=='0')//NB! if('0') is true
+	key=widget.preferences.mykey;
+    else
+	key=widget.preferences.userkey;
+    //~ opera.postError(key);
+    
+    //get data
+    var fail=false;
+    var tab=opera.extension.tabs.getFocused();
+    if(!tab)
+	fail=true;
+    else
+	{
+	try
+	    {
+	    var url=tab.url;
+	    if(!url)
+		fail=true;
+	    else
+		{
+		var re = new RegExp('^(?:f|ht)tp(?:s)?\://([^/]+)', 'im');
+		var host=url.match(re)[1].toString();
+		    if(!host)
+			fail=true;
+		}
+	    }
+	catch(e)
+	    {
+	    fail=true;
+	    }
+	}
+    //~ opera.postError(host);
+    
+    if(fail)
+	{
+	theButton.title='This button will show a flag of a country where the sever is located.\n'+
+		'Try refreshing the page if it doesn\'t work.';
+	theButton.icon='icons/European-Union-Flag-16.png';
+	theButton.badge.textContent='';
+	theButton.disabled=true;
+	return;
+	}
+    
+    //try cache
+    if(!setIt(host))
+	{
+	//write to cache
+	var XHR=new window.XMLHttpRequest();
+	XHR.onreadystatechange=function()
+	    {
+	    if(XHR.readyState==4)
+		{
+		if(widget.preferences.length>1000)
+		    clearCache();
+		//~ opera.postError('widget.preferences.cache["'+host+'"]');
+		widget.preferences.setItem('cache:'+host,XHR.responseText);
+		setIt(host);
+		}
+	    };
+	XHR.open("GET","http://api.ipinfodb.com/v3/ip-country/?key="+key+"&ip="+host+"&format=json",true);
+	XHR.send(null);
+	}
+    }
+
+
+
+//cache helper
+function setIt(host)
+    {
+    var q=widget.preferences.getItem('cache:'+host);
+    //~ opera.postError(q);
+    if(q)
+	{
+	arg=JSON.parse(q);
+	if(arg.statusCode=='OK')
+	    {
+	    theButton.title=arg.ipAddress+' is at '+arg.countryName;
+	    theButton.icon='flags/'+arg.countryCode.toLowerCase()+".png";
+	    theButton.badge.textContent=arg.countryCode;
+	    theButton.disabled=false;
+	    }
+	else
+	    {
+	    theButton.title=arg.ipAddress+' error '+arg.statusCode+': '+arg.statusMessage;
+	    theButton.icon='icons/European-Union-Flag-16.png';
+	    theButton.badge.textContent=arg.statusCode;
+	    theButton.disabled=true;
+	    }
+	return true;
+	}
+    else
+	return false;
+    }
+
+
+// 'clearCache on exit' option
+window.addEventListener('unload', function()
+    {
+    if(widget.preferences.cacheClear==1)
+	clearCache();
+    },false);
+
+
+
+//almost like main
+function popupHelper(event)
+    {
+    if(event.data!='popup')
+	return;
+    var key;
+    if(widget.preferences.usekey=='0')//NB! if('0') is true
+	key=widget.preferences.mykey;
+    else
+	key=widget.preferences.userkey;
+    
+    //get data
+    var tab=opera.extension.tabs.getFocused();
+    if(!tab) return;
+    var url=tab.url;
+    if(!url) return;
+    var re = new RegExp('^(?:f|ht)tp(?:s)?\://([^/]+)', 'im');
+    var host=url.match(re)[1].toString();
+    //~ opera.postError(host);
+    
+    var XHR=new window.XMLHttpRequest();
+    XHR.onreadystatechange=function()
+	{
+	if(XHR.readyState==4)
+	    {
+	    arg=JSON.parse(XHR.responseText);
+	    arg.host=host;
+	    event.source.postMessage(arg);
+	    }
+	};
+    XHR.open("GET","http://api.ipinfodb.com/v3/ip-city/?key="+key+"&ip="+host+"&format=json",true);
+    XHR.send(null);
+    }
+</script>
+</head><body></body></html>
