@@ -1,1 +1,1 @@
-opera.extension.postMessage( "on" );
+opera.extension.postMessage({q:"on"});

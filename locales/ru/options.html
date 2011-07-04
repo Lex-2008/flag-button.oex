@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html><html><head><meta charset="utf-8">
+<title>Настройки Flag button</title>
+<style>
+legend
+    {
+    font-size:150%;
+    font-weight:bold;
+    }
+</style>
+</head><body>
+    <h1>Настройки Flag button</h1> 
+    <fieldset><legend>Общие</legend>
+	<input type="checkbox" id="showBadge" onclick="widget.preferences.showBadge=this.checked?'1':'0'"/><label for="showBadge"> Показывать 2-буквенный код страны на флаге</label>
+    </fieldset>
+    <fieldset><legend>Кэш</legend>
+	При Вашем первом посещении каждого сайта, расширение Flag button запрашивает сервис <a href="http://ipinfodb.com">ipinfodb.com</a> о его расположении и сохраняет его ответ в кэше. При последующих загрузках страниц с этого сайта, используются данные из кэша.
+	Текущий размер кэша: <b id="cache1">?</b> записей
+
+	<h3>Очищать кэш при выходе:</h3>
+	<input type="radio" name="cacheClear" id="cacheClear0" onclick="widget.preferences.cacheClear=0"/><label for="cacheClear0"> <b>НЕТ:</b> данные кэша сохраняются между запусками браузера</label>
+	<br>
+	<input type="radio" name="cacheClear" id="cacheClear1" onclick="widget.preferences.cacheClear=1"/><label for="cacheClear1"> <b>ДА:</b> получать свежие данные после каждой перезагрузки браузера</label>
+
+	<h3>Ограничение размера кэша:</h3>
+	    <input type="number" id="cacheMax" style="width:5em" onkeyup="widget.preferences.cacheMax=this.value+widget.preferences.saved"/><label for="cacheMax"> записей (рекомендуемое значение &mdash; около тысячи)</label>
+
+	<h3>Очистить кэш:</h3>
+	    <input type="button" value="Очистить сейчас!" onclick="clearCache();gebi('cache1').innerHTML=widget.preferences.length-widget.preferences.saved;">
+    </fieldset>
+    <fieldset><legend>Ключ доступа</legend>
+	Сайт <a href="http://ipinfodb.com">ipinfodb.com</a> требует бесплатной регистрации <q>для оптимизации ресурсов</q>. Я (автор расширения) делюсь своим ключом с Вами. Вы можете использовать мой ключ или <a href="http://ipinfodb.com/register.php">зарегистрироваться</a> и использовать свой собственный.
+
+	<h3>Использовать ключ:</h3>
+	    <input type="radio" name="usekey" id="usekey0" onclick="widget.preferences.usekey=0"/><label for="usekey0"> Использовать общий ключ доступа (автора)</label>
+	    <br>
+	    <input type="radio" name="usekey" id="usekey1" onclick="widget.preferences.usekey=1"/><label for="usekey1"> Использовать мой персональный ключ доступа</label>
+
+	<h3>Мой ключ доступа:</h3>
+	    <input type="text" id="userkey" style="width:20em" onkeyup="widget.preferences.userkey=this.value"/>
+    </fieldset>    
+<script src="js/lib.js"></script>
+<script src="js/options.js"></script>
+</body></html>

@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<widget xmlns="http://www.w3.org/ns/widgets" id="http://my.opera.com/alex-shpak/blog/flag-button" version="1.1">
-    <name>Flag Button</name>
-    <description>
-	Adds a button with a flag of a country where the sever is located. Uses ipinfodb.com API.
-    </description>
-    <author href="http://alexey.shpakovsky.ru" email="alexey@shpakovsky.ru">Alexey Shpakovsky</author>
+﻿<?xml version='1.0' encoding='utf-8'?>
+<widget xmlns="http://www.w3.org/ns/widgets" id="https://addons.opera.com/addons/extensions/details/flag-button/" version="1.2">
+    <name xml:lang="en">Flag Button</name>
+    <name xml:lang="ru">Flag Button</name>
+    <name xml:lang="tr">Bayrak Düğmesi</name>
+    <name xml:lang="pl">Guzik z flagą</name>
     <icon src="icons/European-Union-Flag-16.png" width="16" height="16"/>
     <icon src="icons/European-Union-Flag-24.png" width="24" height="24"/>
     <icon src="icons/European-Union-Flag-32.png" width="32" height="32"/>
@@ -12,32 +11,37 @@
     <icon src="icons/European-Union-Flag-64.png" width="64" height="64"/>
     <icon src="icons/European-Union-Flag-128.png" width="128" height="128"/>
     <icon src="icons/European-Union-Flag-256.png" width="256" height="256"/>
-    <license href="http://www.apache.org/licenses/LICENSE-2.0.html">
-	This extension is Open Source.
-	If you use or improve it -- i'll be happy to know :)
-	
-	* Flagfox extension was the one that inspired me
-	* Using some ideas from operaflag UserJS
-	    Copyright 2009-2010 by PH and covered by GNU GPL (v1 or v2).
-	    Author's link is dead: http://my.opera.com/PH`/about/
-	* Using parts of Reddited extension
-	    licensed under the Apache License, Version 2.0: 
-	    https://addons.opera.com/addons/extensions/details/reddited
-	* Using ipinfodb.com free API to get the data
-	    http://ipinfodb.com/ip_location_api.php
-	* Using famfamfam country flag icons (padded to 16x16 with transparent color)
-	    available for free use for any purpose:
-	    http://www.famfamfam.com/lab/icons/flags/
-	* Using European Union flag (as main icon) from "172 final country flag icons" by Custom Icon Design.
-	    License: Free for non-commercial use.
-	    http://www.customicondesign.com/free-icon/172-final-flag-icons/
-    </license>
     <access origin="*"/>
-    <preference name="save" value="save,saved,cacheMax,cacheClear,usekey,userkey,mykey"/>
-    <preference name="saved" value="7"/>
-    <preference name="cacheMax" value="1007"/>
+    <preference name="save" value="save,showBadge,saved,cacheMax,cacheClear,usekey,userkey,mykey"/>
+    <preference name="showBadge" value="1"/>
+    <preference name="saved" value="8"/>
+    <preference name="cacheMax" value="1008"/>
     <preference name="cacheClear" value="0"/>
     <preference name="usekey" value="0"/>
     <preference name="userkey" value=" "/>
     <preference name="mykey" value="8ab4dafef4a713f5097cb50706e861b38ebf6972a44167aa9426cde1768fed5e"/>
+    <license>Copyright 2011 alex-shpak
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</license>
+    <author href="http://alexey.shpakovsky.ru" email="alexey@shpakovsky.ru">alex-shpak</author>
+    <description xml:lang="en">Adds a button with a flag of a country where the sever is located. Uses ipinfodb.com API.
+
+Have you ever wondered where in the "real" world is located the site, which you're currently viewing? Norway? USA? Netherlands? This extension gives an answer to this question! It adds a button, on which you see a flag of a country, where the site is located, and two letters, denoting this country. If you hover the button with your mouse, a tooltip will appear, where you can learn server's IP and the full country name. If you click the button, a bigger window will popup, with more detailed information: Region, City, and geographical coordinates (if available). The same window features links to who.is (domain information site), ipinfodb.com (information provider) and google maps.</description>
+    <description xml:lang="ru">Добавляет кнопку с флагом страны, в которой расположен сервер. Использует данные сайта ipinfodb.com.
+
+Задумывались ли Вы когда-нибудь, в какой стране (в реальном мире) расположен тот сайт, который Вы сейчас смотрите? Россия? Норвегия? США? Это расширение дает ответ на этот вопрос! Оно добавляет кнопку с флагом той страны, где расположен сайт, и её 2-буквенным кодом. При наведении курсора мыши на кнопку появляется подсказка с IP-адресом сервера и полным названием страны. При нажатии на кнопку появляется небольшое окошко с более детальной информацией: регионом, городом и географическими координатами (если доступно). В том же окне есть ссылки на сайты who.is (информация о домене), ipinfodb.com (откуда мы берем информацию о расположении сайта) и Google карты.</description>
+    <description xml:lang="tr">Bu düğme, sunucunun bulunduğu ülkenin bayrağını göstermektedir. Bilgiler ipinfodb.com sitesinden alınır.
+
+Hiç gezdiğiniz web sayfasının sunucularının gerçek dünyada hangi ülkede olduğunu merak etmediniz mi? Türkiye? Norveç? USA? İşte bu eklenti bu soruya cevap veriyor! Araç çubuğunuza bir düğme ekleyerek; sunucunun bulunduğu ülke bayrağını ve ülke kodunu size gösteriyor. Eğer farenizin imlecini düğme üzerine götürürseniz ayrıca size web sitesine ilişkin IP ve yerleşim bilgilerini de vermektedir. Bunun yanı sıra düğmeyi tıklamanız halinde; daha büyük bir pencere açılacak ve siteye ilişkin çok daha detaylı bilgiler ( IP,Sunucu, Şehir, Enlem, Boylam, vb.) alabileceksiniz. Yine bu pencerede size kolaylık sağlayabilecek bazı linkler (who.is, ipinfodb.com be google haritalar)de bulunmaktadır.</description>
+<description xml:lang="pl">Dodaje przycisk z flagą kraju, w którym znajduje się serwer. Korzysta z danych ipinfodb.com .</description>
 </widget>

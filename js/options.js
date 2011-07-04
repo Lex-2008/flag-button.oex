@@ -1,0 +1,12 @@
+gebi('showBadge').checked=widget.preferences.showBadge!='0';
+gebi('cache1').innerHTML=widget.preferences.length-widget.preferences.saved;
+if(widget.preferences.cacheClear==1)
+    gebi('cacheClear1').checked=true;
+else
+    gebi('cacheClear0').checked=true;
+gebi('cacheMax').value=widget.preferences.cacheMax-widget.preferences.saved;
+if(widget.preferences.usekey=='1')
+    gebi('usekey1').checked=true;
+else
+    gebi('usekey0').checked=true;
+gebi('userkey').value=widget.preferences.userkey;

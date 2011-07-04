@@ -1,5 +1,4 @@
-<!DOCTYPE html><html><head>
-<script src="js/lib.js"></script>
+﻿<!DOCTYPE html><html><head><meta charset="utf-8">
 <title>Flag button options</title>
 <style>
 legend
@@ -10,6 +9,9 @@ legend
 </style>
 </head><body>
     <h1>Flag button options</h1> 
+    <fieldset><legend>General</legend>
+	<input type="checkbox" id="showBadge" onclick="widget.preferences.showBadge=this.checked?'1':'0'"/><label for="showBadge"> Show 2-letter ISO country code on the flag</label>
+    </fieldset>
     <fieldset><legend>Cache</legend>
 	On your first site visit, Flag button extention asks <a href="http://ipinfodb.com">ipinfodb.com</a> about current site and saves its reply to the cache. On your following page loads, it uses cached data.
 	Current cache size is: <b id="cache1">?</b> records
@@ -35,20 +37,7 @@ legend
 
 	<h3>My Auth key:</h3>
 	    <input type="text" id="userkey" style="width:20em" onkeyup="widget.preferences.userkey=this.value"/>
-    </fieldset>
-    
-<script>
-gebi('cache1').innerHTML=widget.preferences.length-widget.preferences.saved;
-if(widget.preferences.cacheClear==1)
-    gebi('cacheClear1').checked=true;
-else
-    gebi('cacheClear0').checked=true;
-gebi('cacheMax').value=widget.preferences.cacheMax-widget.preferences.saved;
-if(widget.preferences.usekey=='1')
-    gebi('usekey1').checked=true;
-else
-    gebi('usekey0').checked=true;
-gebi('userkey').value=widget.preferences.userkey;
-//~ opera.postError(widget.preferences.userkey);
-</script>
+    </fieldset>    
+<script src="js/lib.js"></script>
+<script src="js/options.js"></script>
 </body></html>

@@ -1,0 +1,24 @@
+This extension uses work of several other people: 
+ * Flagfox extension was the one that inspired me
+ * Using some ideas from operaflag UserJS 
+   Copyright 2009-2010 by PH and covered by GNU GPL (v1 or v2). 
+   Author's link is dead: http://my.opera.com/PH`/about/ 
+ * Using parts of Reddited extension 
+   licensed under the Apache License, Version 2.0: 
+   https://addons.opera.com/addons/extensions/details/reddited 
+ * Turkish translation provided by z@h3k
+   http://my.opera.com/zahek/about/
+ * Using ipinfodb.com free API to get the data 
+   http://ipinfodb.com/ip_location_api.php 
+ * Using famfamfam country flag icons (padded to 16x16 with transparent color) 
+   available for free use for any purpose: 
+   http://www.famfamfam.com/lab/icons/flags/ 
+ * Using some flags (including European Union flag as main icon) from "172 final country flag icons" by Custom Icon Design. 
+   License: Free for non-commercial use. 
+   http://www.customicondesign.com/free-icon/172-final-flag-icons/ 
+ * Using Myanmar and Malawi flags from Wikipedia 
+   licensed under Creative Commons Public Domain Dedication 
+   http://creativecommons.org/licenses/publicdomain/ 
+   converted from SVG to PNG by fileformat.info service
+ * Thank you to all who tested this extension and provided valuable feedback (in alphabetical order by myOpera username): Penge4, Puneach, TiRaNiD, z@h3k, stivo85, s-a-s-h. Without your support this extension would be much less than it is now!
+ 

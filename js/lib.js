@@ -1,3 +1,11 @@
+// debug ;)
+function aalert(o){
+var str='';
+for(var qwe in o)
+    str+=''+qwe+':'+typeof(o[qwe])+'='+o[qwe]+'\n';
+opera.postError('('+typeof(o)+')='+o+'\n\n'+str);
+}
+
 function clearCache()
     {
     var keys=widget.preferences.save.split(',');

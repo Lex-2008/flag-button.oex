@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html><html><head><meta charset="utf-8">
+<title>Guzik z flagą - ustawienia</title>
+<style>
+legend
+    {
+    font-size:150%;
+    font-weight:bold;
+    }
+</style>
+</head><body>
+    <h1>Guzik z flagą - ustawienia</h1> 
+    <fieldset><legend>Główne</legend>
+	<input type="checkbox" id="showBadge" onclick="widget.preferences.showBadge=this.checked?'1':'0'"/><label for="showBadge"> Dołącz do flagi dwuliterowy kod kraju.</label>
+    </fieldset>
+    <fieldset><legend>Pamięć podręczna</legend>
+	Kiedy po raz pierwszy odwiedzasz jakąś stronę, „Guzik z flagą” pyta <a href="http://ipinfodb.com">stronę ipinfodb.com</a> o nią i trzyma odpowiedź w pamięci podręcznej. Podczas kolejnych odwiedzin używa zapisanych danych.
+	Obecnie w pamięci podręcznej jest <b id="cache1">?</b> pozycji.
+
+	<h3>Czyść pamięć przy wyjściu:</h3>
+	<input type="radio" name="cacheClear" id="cacheClear0" onclick="widget.preferences.cacheClear=0"/><label for="cacheClear0"> <b>NIE:</b> dane są trwałe, nie usuwa ich wyłączenie Opery.</label>
+	<br>
+	<input type="radio" name="cacheClear" id="cacheClear1" onclick="widget.preferences.cacheClear=1"/><label for="cacheClear1"> <b>TAK:</b> pobieranie świeżych danch po każdym uruchomieniu Opery.</label>
+
+	<h3>Ograniczenie wielkości pamięci:</h3>
+	    <input type="number" id="cacheMax" style="width:5em" onkeyup="widget.preferences.cacheMax=this.value+widget.preferences.saved"/><label for="cacheMax"> pozycji (około tysiąca zwykle wystarcza).</label>
+
+	<h3>Wyczyść pamięć:</h3>
+	    <input type="button" value="Czyść teraz!" onclick="clearCache();gebi('cache1').innerHTML=widget.preferences.length-widget.preferences.saved;">
+    </fieldset>
+    <fieldset><legend>Klucz</legend>
+	<a href="http://ipinfodb.com">ipinfodb.com</a> wymaga darmowej rejestracji <q>w celu ulepszania swoich zasobów</q>. Ja (autor) dzielę się moim kluczem z wami. Możesz używać mojego klucza, lub <a href="http://ipinfodb.com/register.php">zarejestrować się</a> i używać własnego.
+
+	<h3>Używaj klucza:</h3>
+	    <input type="radio" name="usekey" id="usekey0" onclick="widget.preferences.usekey=0"/><label for="usekey0"> publicznego (autora).</label>
+	    <br>
+	    <input type="radio" name="usekey" id="usekey1" onclick="widget.preferences.usekey=1"/><label for="usekey1"> własnego.</label>
+
+	<h3>Mój klucz:</h3>
+	    <input type="text" id="userkey" style="width:20em" onkeyup="widget.preferences.userkey=this.value"/>
+    </fieldset>    
+<script src="js/lib.js"></script>
+<script src="js/options.js"></script>
+</body></html>
