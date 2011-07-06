@@ -6,38 +6,100 @@ legend
     font-size:150%;
     font-weight:bold;
     }
+textarea
+    {
+    width:100%;
+    height:5em;
+    }
 </style>
 </head><body>
-    <h1>Настройки Flag button</h1> 
-    <fieldset><legend>Общие</legend>
-	<input type="checkbox" id="showBadge" onclick="widget.preferences.showBadge=this.checked?'1':'0'"/><label for="showBadge"> Показывать 2-буквенный код страны на флаге</label>
+    <h1>Настройки Flag button</h1>
+    <fieldset><legend>Надпись на кнопке</legend>
+	<input type="checkbox" id="showBadge"/><label for="showBadge"> Показывать 2-буквенный код страны на флаге</label>
+	<br>
+	<input type="checkbox" id="showXXBadge"/><label for="showXXBadge"> Показывать <tt>XX</tt> для неизвестной страны</label>
+	<br>
+	<input type="color" id="badgeBGcolor"/><label for="badgeBGcolor"> Цвет фона надписи</label>
+	<br>
+	<input type="color" id="badgeTXcolor"/><label for="badgeTXcolor"> Цвет текста надписи</label>
     </fieldset>
+    
+    <fieldset><legend>Всплывающее окно</legend>
+	Это окно, которое Вы видите, когда нажимаете на кнопку расширения
+	<br>
+	<label for="popupWidth">
+	    <h3>Ширина окна:</h3>
+	    <input type="number" id="popupWidth"/> пикс
+	</label>
+	
+	<label for="linksCfg">
+	    <h3>Список ссылок:</h3>
+	    Ниже Вы можете настроить, какие ссылки хотите видеть внизу всплывающего окна.
+	    На каждой строчке введите заголовок ссылки и адрес, разделенные знаком равенства.
+	    <br>
+	    Вы также можете использовать <tt>[замещающий текст]</tt> для настройки адресов: <tt>[host]</tt> (адрес сайта), <tt>[ipAddress]</tt> (IP-адрес), <tt>[countryName]</tt> (название страны), <tt>[regionName]</tt> (регион, область или штат), <tt>[cityName]</tt> (название города), <tt>[zipCode]</tt> (почтовый код), <tt>[latitude]</tt> (широта), <tt>[longitude]</tt> (долгота), <tt>[timeZone]</tt> (часовой пояс).
+	    <br>
+	    <textarea id="linksCfg"></textarea>
+	</label>
+	
+	<h3>Стиль ссылок:</h3>
+	Ниже Вы можете выбрать, как эти ссылки будут разделены:
+	<br>
+	<input type="radio" name="linksStyle" id="linksStyle0"/><label for="linksStyle0"> пробелом</label>
+	<br>
+	<input type="radio" name="linksStyle" id="linksStyle1"/><label for="linksStyle1"> через запятую</label>
+	<br>
+	<input type="radio" name="linksStyle" id="linksStyle2"/><label for="linksStyle2"> в столбик</label>
+	<br>
+    </fieldset>
+    
     <fieldset><legend>Кэш</legend>
 	При Вашем первом посещении каждого сайта, расширение Flag button запрашивает сервис <a href="http://ipinfodb.com">ipinfodb.com</a> о его расположении и сохраняет его ответ в кэше. При последующих загрузках страниц с этого сайта, используются данные из кэша.
-	Текущий размер кэша: <b id="cache1">?</b> записей
+	Текущий размер кэша: <b id="cache1">?</b> записей.
 
 	<h3>Очищать кэш при выходе:</h3>
-	<input type="radio" name="cacheClear" id="cacheClear0" onclick="widget.preferences.cacheClear=0"/><label for="cacheClear0"> <b>НЕТ:</b> данные кэша сохраняются между запусками браузера</label>
+	Эта настройка будет применена при следующем запуске браузера.
 	<br>
-	<input type="radio" name="cacheClear" id="cacheClear1" onclick="widget.preferences.cacheClear=1"/><label for="cacheClear1"> <b>ДА:</b> получать свежие данные после каждой перезагрузки браузера</label>
+	<input type="radio" name="cacheClear" id="cacheClear0"/><label for="cacheClear0"> <b>НЕТ:</b> данные кэша сохраняются между запусками браузера</label>
+	<br>
+	<input type="radio" name="cacheClear" id="cacheClear1"/><label for="cacheClear1"> <b>ДА:</b> получать свежие данные после каждой перезагрузки браузера</label>
 
 	<h3>Ограничение размера кэша:</h3>
-	    <input type="number" id="cacheMax" style="width:5em" onkeyup="widget.preferences.cacheMax=this.value+widget.preferences.saved"/><label for="cacheMax"> записей (рекомендуемое значение &mdash; около тысячи)</label>
+	<input type="number" id="cacheMax" style="width:5em"/><label for="cacheMax"> записей (рекомендуемое значение &mdash; около тысячи)</label>
 
 	<h3>Очистить кэш:</h3>
-	    <input type="button" value="Очистить сейчас!" onclick="clearCache();gebi('cache1').innerHTML=widget.preferences.length-widget.preferences.saved;">
+	<button id="cacheClearNow">Очистить сейчас!</button>
     </fieldset>
+        
     <fieldset><legend>Ключ доступа</legend>
-	Сайт <a href="http://ipinfodb.com">ipinfodb.com</a> требует бесплатной регистрации <q>для оптимизации ресурсов</q>. Я (автор расширения) делюсь своим ключом с Вами. Вы можете использовать мой ключ или <a href="http://ipinfodb.com/register.php">зарегистрироваться</a> и использовать свой собственный.
+	Сайт <a href="http://ipinfodb.com">ipinfodb.com</a> требует бесплатной регистрации <q>для оптимизации ресурсов</q>. Я (автор расширения) делюсь своим ключем с Вами. Вы можете использовать мой ключ или <a href="http://ipinfodb.com/register.php">зарегистрироваться</a> и использовать свой собственный.
 
 	<h3>Использовать ключ:</h3>
-	    <input type="radio" name="usekey" id="usekey0" onclick="widget.preferences.usekey=0"/><label for="usekey0"> Использовать общий ключ доступа (автора)</label>
-	    <br>
-	    <input type="radio" name="usekey" id="usekey1" onclick="widget.preferences.usekey=1"/><label for="usekey1"> Использовать мой персональный ключ доступа</label>
+	<input type="radio" name="usekey" id="usekey0"/><label for="usekey0"> Использовать общий ключ доступа (автора)</label>
+	<br>
+	<input type="radio" name="usekey" id="usekey1"/><label for="usekey1"> Использовать мой персональный ключ доступа</label>
 
 	<h3>Мой ключ доступа:</h3>
-	    <input type="text" id="userkey" style="width:20em" onkeyup="widget.preferences.userkey=this.value"/>
+	<input type="text" id="userkey" style="width:20em"/>
     </fieldset>    
+            
+    <fieldset><legend>Особые флаги</legend>
+	Если Вы заметили устаревшую иконку флага, Вам не нравится <q>неизвестный флаг</q>, используемый по умолчанию, или Вы хотите использовать другую иконку для какой-либо страны, Вы можете настроить это здесь.
+	На каждой строке, введите двухбуквенный код страны и адрес иконки, разделенные знаком равенства.
+	Вы так же можете указать <tt>XX</tt> в качестве кода страны для замены <q>неизвестного флага</q>, используемого по умолчанию.
+	Например, чтобы заменить его обратно на флаг Европейского Союза, добавьте такую строчку:
+	<tt>XX=http://aux.iconpedia.net/uploads/1493003352328043060.png</tt>
+	<br>
+	<textarea id="iconsCfg"></textarea>
+    </fieldset>
+    
+    <fieldset><legend>Общие</legend>
+	<h3>Сброс настроек:</h3>
+	<button id="prefsClearNow">Сбросить настройки на значения <q>По умолчанию</q></button>
+	<!-- <button id="test">show!</button> -->
+    </fieldset>
+    
+<script src="lang.js"></script>
 <script src="js/lib.js"></script>
 <script src="js/options.js"></script>
 </body></html>

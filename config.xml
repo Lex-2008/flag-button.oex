@@ -1,25 +1,13 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<widget xmlns="http://www.w3.org/ns/widgets" id="https://addons.opera.com/addons/extensions/details/flag-button/" version="1.2">
+<widget xmlns="http://www.w3.org/ns/widgets" id="https://addons.opera.com/addons/extensions/details/flag-button/" version="1.3">
     <name xml:lang="en">Flag Button</name>
     <name xml:lang="ru">Flag Button</name>
     <name xml:lang="tr">Bayrak Düğmesi</name>
     <name xml:lang="pl">Guzik z flagą</name>
-    <icon src="icons/European-Union-Flag-16.png" width="16" height="16"/>
-    <icon src="icons/European-Union-Flag-24.png" width="24" height="24"/>
-    <icon src="icons/European-Union-Flag-32.png" width="32" height="32"/>
-    <icon src="icons/European-Union-Flag-48.png" width="48" height="48"/>
-    <icon src="icons/European-Union-Flag-64.png" width="64" height="64"/>
-    <icon src="icons/European-Union-Flag-128.png" width="128" height="128"/>
-    <icon src="icons/European-Union-Flag-256.png" width="256" height="256"/>
+    <icon src="icons/svg2raster-16.png" width="16" height="16"/>
+    <icon src="icons/svg2raster-64.png" width="64" height="64"/>
+    <icon src="icons/svg2raster-256.png" width="256" height="256"/>
     <access origin="*"/>
-    <preference name="save" value="save,showBadge,saved,cacheMax,cacheClear,usekey,userkey,mykey"/>
-    <preference name="showBadge" value="1"/>
-    <preference name="saved" value="8"/>
-    <preference name="cacheMax" value="1008"/>
-    <preference name="cacheClear" value="0"/>
-    <preference name="usekey" value="0"/>
-    <preference name="userkey" value=" "/>
-    <preference name="mykey" value="8ab4dafef4a713f5097cb50706e861b38ebf6972a44167aa9426cde1768fed5e"/>
     <license>Copyright 2011 alex-shpak
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -43,5 +31,7 @@ Have you ever wondered where in the "real" world is located the site, which you'
     <description xml:lang="tr">Bu düğme, sunucunun bulunduğu ülkenin bayrağını göstermektedir. Bilgiler ipinfodb.com sitesinden alınır.
 
 Hiç gezdiğiniz web sayfasının sunucularının gerçek dünyada hangi ülkede olduğunu merak etmediniz mi? Türkiye? Norveç? USA? İşte bu eklenti bu soruya cevap veriyor! Araç çubuğunuza bir düğme ekleyerek; sunucunun bulunduğu ülke bayrağını ve ülke kodunu size gösteriyor. Eğer farenizin imlecini düğme üzerine götürürseniz ayrıca size web sitesine ilişkin IP ve yerleşim bilgilerini de vermektedir. Bunun yanı sıra düğmeyi tıklamanız halinde; daha büyük bir pencere açılacak ve siteye ilişkin çok daha detaylı bilgiler ( IP,Sunucu, Şehir, Enlem, Boylam, vb.) alabileceksiniz. Yine bu pencerede size kolaylık sağlayabilecek bazı linkler (who.is, ipinfodb.com be google haritalar)de bulunmaktadır.</description>
-<description xml:lang="pl">Dodaje przycisk z flagą kraju, w którym znajduje się serwer. Korzysta z danych ipinfodb.com .</description>
+<description xml:lang="pl">Dodaje przycisk z flagą kraju, w którym znajduje się serwer. Korzysta z danych ipinfodb.com.
+
+Czy kiedykolwiek zastanawiałeś się, gdzie „w realu” znajduje się strona, którą właśnie odwiedzasz? W Norwegii? Polsce? Kanadzie? To rozszerzenie odpowie na twoje pytanie! Kiedy je zainstalujesz, zostanie dodany przycisk, na którym zobaczysz flagę i dwuliterowy symbol kraju, w którym znajduje się strona. Po najechaniu na przycisk kursorem, pojawia się dymek z adresem IP serweru i pełną nazwą państwa. Kliknięcie guzika powoduje wyłonienie się większego okna z kolejnymi informacjami: regionem, miastem i współrzędnymi geograficznymi (o ile są dostępne). W tym samym oknie znajdziesz łącza do who.is (informacje o domenach), ipinfodb.com (stąd rozszerzenie pobiera informacje) i Map Google.</description>
 </widget>

@@ -6,38 +6,100 @@ legend
     font-size:150%;
     font-weight:bold;
     }
+textarea
+    {
+    width:100%;
+    height:5em;
+    }
 </style>
 </head><body>
-    <h1>Flag button options</h1> 
-    <fieldset><legend>General</legend>
-	<input type="checkbox" id="showBadge" onclick="widget.preferences.showBadge=this.checked?'1':'0'"/><label for="showBadge"> Show 2-letter ISO country code on the flag</label>
+    <h1>Flag button options</h1>    
+    <fieldset><legend>Badge</legend>
+	<input type="checkbox" id="showBadge"/><label for="showBadge"> Show 2-letter ISO country code on the badge</label>
+	<br>
+	<input type="checkbox" id="showXXBadge"/><label for="showXXBadge"> Show <tt>XX</tt> on the badge for unknown country</label>
+	<br>
+	<input type="color" id="badgeBGcolor"/><label for="badgeBGcolor"> Color of badge</label>
+	<br>
+	<input type="color" id="badgeTXcolor"/><label for="badgeTXcolor"> Color of text on badge</label>
     </fieldset>
+    
+    <fieldset><legend>Popup window</legend>
+	Popup is a small window that you see when click on an extension button.
+	<br>
+	<label for="popupWidth">
+	    <h3>Popup width:</h3>
+	    <input type="number" id="popupWidth"/> pixels
+	</label>
+	
+	<label for="linksCfg">
+	    <h3>Links list:</h3>
+	    Below you can change what links do you want to see at the bottom of the popup window.
+	    Each line contains link title and URL, separated by equal sign.
+	    <br>
+	    Note that you can use several <tt>[placeholders]</tt> to customize URLs: <tt>[host], [ipAddress], [countryName], [regionName], [cityName], [zipCode], [latitude], [longitude], [timeZone]</tt>.
+	    <br>
+	    <textarea id="linksCfg"></textarea>
+	</label>
+	
+	<h3>Links style:</h3>
+	Below you can change how would you like these links to be separated:
+	<br>
+	<input type="radio" name="linksStyle" id="linksStyle0"/><label for="linksStyle0"> by blank space</label>
+	<br>
+	<input type="radio" name="linksStyle" id="linksStyle1"/><label for="linksStyle1"> by comma</label>
+	<br>
+	<input type="radio" name="linksStyle" id="linksStyle2"/><label for="linksStyle2"> listed in a column</label>
+	<br>
+    </fieldset>
+    
     <fieldset><legend>Cache</legend>
 	On your first site visit, Flag button extention asks <a href="http://ipinfodb.com">ipinfodb.com</a> about current site and saves its reply to the cache. On your following page loads, it uses cached data.
 	Current cache size is: <b id="cache1">?</b> records
 
 	<h3>Clear cache on exit:</h3>
-	<input type="radio" name="cacheClear" id="cacheClear0" onclick="widget.preferences.cacheClear=0"/><label for="cacheClear0"> <b>NO:</b> cache is persistent between Opera restarts</label>
+	Note that this setting will be applied only after Opera restart.
 	<br>
-	<input type="radio" name="cacheClear" id="cacheClear1" onclick="widget.preferences.cacheClear=1"/><label for="cacheClear1"> <b>YES:</b> get fresh data on every Opera launch</label>
+	<input type="radio" name="cacheClear" id="cacheClear0"/><label for="cacheClear0"> <b>NO:</b> cache is persistent between Opera restarts</label>
+	<br>
+	<input type="radio" name="cacheClear" id="cacheClear1"/><label for="cacheClear1"> <b>YES:</b> get fresh data on every Opera launch</label>
 
 	<h3>Cache size limit:</h3>
-	    <input type="number" id="cacheMax" style="width:5em" onkeyup="widget.preferences.cacheMax=this.value+widget.preferences.saved"/><label for="cacheMax"> records (about thousand is okay)</label>
+	<input type="number" id="cacheMax" style="width:5em"/><label for="cacheMax"> records (about thousand is okay)</label>
 
 	<h3>Clear cache:</h3>
-	    <input type="button" value="Clear now!" onclick="clearCache();gebi('cache1').innerHTML=widget.preferences.length-widget.preferences.saved;">
+	<button id="cacheClearNow">Clear now!</button>
     </fieldset>
+        
     <fieldset><legend>Auth key</legend>
 	<a href="http://ipinfodb.com">ipinfodb.com</a> requires free registration <q>for the purpose of optimizing their resources</q>. I (the author) share the given to me key with you. You can use my key or <a href="http://ipinfodb.com/register.php">register</a> and use your own key.
 
 	<h3>Use Auth key:</h3>
-	    <input type="radio" name="usekey" id="usekey0" onclick="widget.preferences.usekey=0"/><label for="usekey0"> Use public (Author's) Auth key</label>
-	    <br>
-	    <input type="radio" name="usekey" id="usekey1" onclick="widget.preferences.usekey=1"/><label for="usekey1"> Use my own Auth key</label>
+	<input type="radio" name="usekey" id="usekey0"/><label for="usekey0"> Use public (Author's) Auth key</label>
+	<br>
+	<input type="radio" name="usekey" id="usekey1"/><label for="usekey1"> Use my own Auth key</label>
 
 	<h3>My Auth key:</h3>
-	    <input type="text" id="userkey" style="width:20em" onkeyup="widget.preferences.userkey=this.value"/>
-    </fieldset>    
+	    <input type="text" id="userkey" style="width:20em"/>
+    </fieldset>
+            
+    <fieldset><legend>Custom icons</legend>
+	If you noticed an outdated icon, don't like the default <q>unknown flag</q> icon, or want to use another icon for some country, you can configure it here.
+	On each line, type two-letter country code and custom icon URL, separated by equal sign.
+	Note that you can use <tt>XX</tt> country code for unknown flag (default icon).
+	For example, to change it back to European Union flag, add this line:
+	<tt>XX=http://aux.iconpedia.net/uploads/1493003352328043060.png</tt>
+	<br>
+	<textarea id="iconsCfg"></textarea>
+    </fieldset>
+    
+    <fieldset><legend>General</legend>
+	<h3>Preferences reset:</h3>
+	<button id="prefsClearNow">Reset preferences to defaults</button>
+	<!-- <button id="test">show!</button> -->
+    </fieldset>
+    
+<script src="lang.js"></script>
 <script src="js/lib.js"></script>
 <script src="js/options.js"></script>
 </body></html>

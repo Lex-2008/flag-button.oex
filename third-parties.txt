@@ -6,19 +6,25 @@ This extension uses work of several other people:
  * Using parts of Reddited extension 
    licensed under the Apache License, Version 2.0: 
    https://addons.opera.com/addons/extensions/details/reddited 
- * Turkish translation provided by z@h3k
-   http://my.opera.com/zahek/about/
+ * Turkish translation provided by z@h3k:
+   http://my.opera.com/ZAHEK/
+ * Polish translation provided by chocimir:
+   http://my.opera.com/chocimir/
  * Using ipinfodb.com free API to get the data 
    http://ipinfodb.com/ip_location_api.php 
  * Using famfamfam country flag icons (padded to 16x16 with transparent color) 
    available for free use for any purpose: 
    http://www.famfamfam.com/lab/icons/flags/ 
- * Using some flags (including European Union flag as main icon) from "172 final country flag icons" by Custom Icon Design. 
+ * Using some flags from "172 final country flag icons" by Custom Icon Design. 
    License: Free for non-commercial use. 
    http://www.customicondesign.com/free-icon/172-final-flag-icons/ 
  * Using Myanmar and Malawi flags from Wikipedia 
    licensed under Creative Commons Public Domain Dedication 
    http://creativecommons.org/licenses/publicdomain/ 
+   converted from SVG to PNG by fileformat.info service
+ * Using modified "Flag of None" icon
+   released into the public domain and available to anyone for any purpose
+   http://commons.wikimedia.org/wiki/File:Flag_of_None.svg
    converted from SVG to PNG by fileformat.info service
  * Thank you to all who tested this extension and provided valuable feedback (in alphabetical order by myOpera username): Penge4, Puneach, TiRaNiD, z@h3k, stivo85, s-a-s-h. Without your support this extension would be much less than it is now!
  
