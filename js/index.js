@@ -21,7 +21,6 @@ var ToolbarUIItemProperties =
 theButton = opera.contexts.toolbar.createItem(ToolbarUIItemProperties);
 opera.contexts.toolbar.addItem(theButton);
 
-
 opera.extension.tabs.addEventListener( "create", toggleIfExists, false);
 opera.extension.tabs.addEventListener( "focus", toggleIfExists, false);
 opera.extension.tabs.addEventListener( "blur", toggleIfExists, false);
@@ -51,46 +50,12 @@ opera.extension.addEventListener( "message", function(event)
     }, false);
 
 
-//main function
+
+//button function
 function toggleIfExists()
     {
-    //that is my key
-    var key;
-    if(widget.preferences.usekey=='0')//NB! if('0') is true
-	key='8ab4dafef4a713f5097cb50706e861b38ebf6972a44167aa9426cde1768fed5e';
-    else
-	key=widget.preferences.userkey;
-    //~ opera.postError(key);
     
-    //get data
-    var fail=false;
-    var tab=opera.extension.tabs.getFocused();
-    if(!tab)
-	fail=true;
-    else
-	{
-	try
-	    {
-	    var url=tab.url;
-	    if(!url)
-		fail=true;
-	    else
-		{
-		var re = new RegExp('^(?:f|ht)tp(?:s)?\://([^/]+)', 'im');
-		var host=url.match(re)[1].toString();
-		    if(!host)
-			fail=true;
-		}
-	    }
-	catch(e)
-	    {
-	    fail=true;
-	    }
-	}
-    //~ opera.postError(host);
-    
-    if(fail)
-	{
+    var onFail=function(){
 	theButton.title=lang.defTitle;
 	if(iconsCfg['XX'])
 	    theButton.icon=iconsCfg['XX'];
@@ -104,40 +69,8 @@ function toggleIfExists()
 	return;
 	}
     
-    //try cache
-    if(!setIt(host))
+    var onOk=function(arg){
 	{
-	//write to cache
-	var XHR=new window.XMLHttpRequest();
-	XHR.onreadystatechange=function()
-	    {
-	    if(XHR.readyState==4)
-		{
-		if(cache.length>widget.preferences.cacheMax+cache.saved)
-		    clearCache();
-		cache.setItem('cache:'+host,XHR.responseText);
-		//~ opera.postError('i2cache:'+host+':'+XHR.responseText);
-		setIt(host);
-		}
-	    };
-	//~ XHR.open("GET","http://api.ipinfodb.com/v3/ip-country/?key="+key+"&ip="+host+"&format=json",true);
-	//~ opera.postError("GET http://api.ipinfodb.com/v3/ip-city/?key="+key+"&ip="+host+"&format=json");
-	XHR.open("GET","http://api.ipinfodb.com/v3/ip-city/?key="+key+"&ip="+host+"&format=json",true);
-	XHR.send(null);
-	}
-    }
-
-
-
-//cache helper
-function setIt(host)
-    {
-    var q=cache.getItem('cache:'+host);
-    //~ opera.postError(q);
-    if(q)
-	{
-	//~ opera.postError('i4cache:'+host+':'+q);
-	arg=JSON.parse(q);
 	if(arg.statusCode=='OK')
 	    {
 	    theButton.title=arg.ipAddress+' - '+arg.countryName;
@@ -168,9 +101,69 @@ function setIt(host)
 	    }
 	return true;
 	}
-    else
-	return false;
+    
+    getTabInfo(onOk,onFail);    
     }
+
+//main function
+function getTabInfo(onOk,onFail)
+    {
+    //that is my key
+    var key;
+    if(widget.preferences.usekey=='0')//NB! if('0') is true
+	key='8ab4dafef4a713f5097cb50706e861b38ebf6972a44167aa9426cde1768fed5e';
+    else
+	key=widget.preferences.userkey;
+    //~ opera.postError(key);
+    
+    //get tab URL
+    var fail=false;
+    try
+	{
+    var url=opera.extension.tabs.getFocused().url;
+    var re = new RegExp('^(?:f|ht)tp(?:s)?\://([^/]+)', 'im');
+    var host=url.match(re)[1].toString();
+	if(!host)
+	    fail=true;
+	}
+    catch(e)
+	{
+	fail=true;
+	}
+    //~ opera.postError(host);
+    
+    if(fail)
+	{
+	onFail();
+	return;
+	}
+    
+    //try cache
+    var q=cache.getItem('cache:'+host);
+    if(q && (arg=JSON.parse(q)) && arg.cityName)//using new cache
+	onOk(arg);
+    else
+	{
+	//get remotely data
+	var XHR=new window.XMLHttpRequest();
+	XHR.onreadystatechange=function()
+	    {
+	    if(XHR.readyState==4)
+		{
+		if(cache.length>widget.preferences.cacheMax+cache.saved)
+		    clearCache();
+		cache.setItem('cache:'+host,XHR.responseText);
+		//~ opera.postError('i2cache:'+host+':'+XHR.responseText);
+		onOk(arg);
+		}
+	    };
+	//~ XHR.open("GET","http://api.ipinfodb.com/v3/ip-country/?key="+key+"&ip="+host+"&format=json",true);
+	//~ XHR.open("GET","http://api.ipinfodb.com/v3/ip-city/?key="+key+"&ip="+host+"&format=json",true);
+	XHR.open("GET","http://flag-button.tk/api.php?host="+host,true);
+	XHR.send(null);
+	}
+    }
+
 
 
 // 'clearCache on exit' option
@@ -185,47 +178,13 @@ function setIt(host)
 //almost like main
 function popupHelper(event)
     {
-    var key;
-    if(widget.preferences.usekey=='0')//NB! if('0') is true
-	key=widget.preferences.mykey;
-    else
-	key=widget.preferences.userkey;
-    
-    //get data
-    var tab=opera.extension.tabs.getFocused();
-    if(!tab) return;
-    var url=tab.url;
-    if(!url) return;
-    var re = new RegExp('^(?:f|ht)tp(?:s)?\://([^/]+)', 'im');
-    var host=url.match(re)[1].toString();
-    //~ opera.postError(host);
-    
-    var q=cache.getItem('cache:'+host);
-    if(q && (arg=JSON.parse(q)) && arg.cityName)//using new cache
+    var onOk=function(text)
 	{
-	arg=JSON.parse(q);
+	arg=JSON.parse(text);
 	arg.host=host;
 	event.source.postMessage(arg);
-	//~ opera.postError('p4cache:'+host+':'+q);
-	}
-    else
-	{//retreive again, and save to cache
-	var XHR=new window.XMLHttpRequest();
-	XHR.onreadystatechange=function()
-	    {
-	    if(XHR.readyState==4)
-		{
-		cache.setItem('cache:'+host,XHR.responseText);
-		arg=JSON.parse(XHR.responseText);
-		arg.host=host;
-		event.source.postMessage(arg);
-		//~ opera.postError('p2cache:'+host+':'+XHR.responseText);
-		}
-	    };
-	//~ opera.postError("GET http://api.ipinfodb.com/v3/ip-city/?key="+key+"&ip="+host+"&format=json");
-	XHR.open("GET","http://api.ipinfodb.com/v3/ip-city/?key="+key+"&ip="+host+"&format=json",true);
-	XHR.send(null);
-	}
+	}    
+    getTabInfo(onOk);
     }
 
 
@@ -235,15 +194,19 @@ for(var q in defaults)
     if(typeof widget.preferences[q]=='undefined')
 	widget.preferences[q]=defaults[q];
 
+
+
 //apply prefs
 theButton.badge.backgroundColor=widget.preferences.badgeBGcolor;
 theButton.badge.color=widget.preferences.badgeTXcolor;
 theButton.popup.width=widget.preferences.popupWidth;
 var iconsCfg=JSON.parse(widget.preferences.iconsCfg);
 
+
+
 // set location for cache
 var cache;
-if(widget.preferences.cacheClear)
+if(widget.preferences.cacheClear==1)
     {
     cache=widget.preferences;
     clearCache();

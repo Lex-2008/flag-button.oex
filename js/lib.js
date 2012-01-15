@@ -22,6 +22,8 @@ try {
     }
 catch(e){};
 
+
+
 // debug ;)
 function aalert(o){
 var str='';
@@ -37,7 +39,7 @@ function clearCache()
     var save={};
     //save
     for(var q in defaults)
-	if(widget.preferences.getItem(q) !== undefined)
+	if(cache.getItem(q) !== undefined)
 	    save[q]=cache.getItem(q);
     //clear
     cache.clear();

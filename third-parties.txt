@@ -26,5 +26,5 @@ This extension uses work of several other people:
    released into the public domain and available to anyone for any purpose
    http://commons.wikimedia.org/wiki/File:Flag_of_None.svg
    converted from SVG to PNG by fileformat.info service
- * Thank you to all who tested this extension and provided valuable feedback (in alphabetical order by myOpera username): Penge4, Puneach, TiRaNiD, z@h3k, stivo85, s-a-s-h. Without your support this extension would be much less than it is now!
+ * Thank you to all who tested this extension and provided valuable feedback (in alphabetical order by My Opera username): chocimir, komokdj, missmeyet, Penge4, Puneach, Alexander, stivo85, TiRaNiD, Walter Krueger, z@h3k, zamszyk. Without your support this extension would be much less than it is now!
  
