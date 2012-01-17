@@ -1,12 +1,13 @@
-//default settings. Looks like <preference> tags in config.xml are kinda broken :(
+//defaults. Looks like <preference> tags in config.xml are kinda broken :(
 defaults={
-    saved:-2+15,
+    saved:0,
     showBadge:1,
     showXXBadge:0,
     badgeBGcolor:'#000000',
     badgeTXcolor:'#ffffff',
     cacheMax:1000,
     cacheClear:0,
+    disableButton:1,
     usekey:0,
     userkey:' ',
     popupWidth:200,
@@ -14,6 +15,8 @@ defaults={
     linksStyle:0,
     iconsCfg:'{}',
 };
+for(var q in defaults)
+    defaults.saved++;
 try {
     if(lang.defLinks)
 	defaults.linksCfg=JSON.stringify(lang.defLinks);

@@ -63,6 +63,8 @@ gebi('iconsCfg').onkeydown=gebi('iconsCfg').onkeyup=function()
     opera.extension.postMessage({q:"badgeColor"});
     }
 
+gebi('disableButton').onclick=function() { widget.preferences.disableButton=this.checked?'1':'0'; };
+
 gebi('prefsClearNow').onclick=function()
     {
     if(confirm(lang.confirmReset))
@@ -72,6 +74,21 @@ gebi('prefsClearNow').onclick=function()
 	}
     };
 //~ gebi('test').onclick=function() { aalert(JSON.parse(widget.preferences.iconsCfg)); }; 
+
+gebi('mapUsersBtn').onclick=function()
+    {
+    gebi('mapUsersImg').src='http://flag-button.tk/map.php?for=flag-button';
+    gebi('mapUsersImg').style.display='block';
+    gebi('mapUsersBtn').style.display='none';
+    gebi('mapUsersWarning').style.display='none';
+    }
+
+gebi('mapSitesBtn').onclick=function()
+    {
+    gebi('mapSitesImg').src='http://flag-button.tk/sitemap.php';
+    gebi('mapSitesImg').style.display='block';
+    gebi('mapSitesBtn').style.display='none';
+    }
 
 
 
@@ -113,5 +130,7 @@ function loadPrefs()
     for(var q in iconsCfg)
 	str+=q+'='+iconsCfg[q]+'\n';
     gebi('iconsCfg').value=str;
+    
+    gebi('disableButton').checked=widget.preferences.disableButton!='0';
     }
 loadPrefs();

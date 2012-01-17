@@ -21,18 +21,40 @@ var ToolbarUIItemProperties =
 theButton = opera.contexts.toolbar.createItem(ToolbarUIItemProperties);
 opera.contexts.toolbar.addItem(theButton);
 
-opera.extension.tabs.addEventListener( "create", toggleIfExists, false);
-opera.extension.tabs.addEventListener( "focus", toggleIfExists, false);
-opera.extension.tabs.addEventListener( "blur", toggleIfExists, false);
-opera.extension.windows.addEventListener( "create", toggleIfExists, false);
-opera.extension.windows.addEventListener( "focus", toggleIfExists, false);
-opera.extension.windows.addEventListener( "blur", toggleIfExists, false);
+//~ opera.extension.tabs.addEventListener( "create", bad1, false);
+//~ opera.extension.tabs.addEventListener( "focus", bad1, false);
+//~ opera.extension.tabs.addEventListener( "blur", bad1, false);
+//~ opera.extension.windows.addEventListener( "create", bad1, false);
+//~ opera.extension.windows.addEventListener( "focus", bad1, false);
+//~ opera.extension.windows.addEventListener( "blur", bad1, false);
+
+function disableButton(text)
+    {
+    if(text)
+	theButton.title=text;
+    else
+	theButton.title=lang.defTitle;
+    if(iconsCfg['XX'])
+	theButton.icon=iconsCfg['XX'];
+    else
+	theButton.icon='icons/svg2raster-16.png';
+    if(widget.preferences.showXXBadge!=0)
+	theButton.badge.textContent='XX';
+    else
+	theButton.badge.textContent='';
+    theButton.disabled=true;
+    }
+
 opera.extension.addEventListener( "message", function(event)
     {
     switch(event.data.q)
 	{
 	case 'on':
-	    toggleIfExists();
+	    toggleIfExists(event.data.w);
+	break;
+	case 'off':
+	    if(!widget.preferences.disableButton)
+		disableButton();
 	break;
 	case 'popup':
 	    popupHelper(event);
@@ -50,31 +72,17 @@ opera.extension.addEventListener( "message", function(event)
     }, false);
 
 
+var lastHost='';
+
 
 //button function
-function toggleIfExists()
+function toggleIfExists(host)
     {
-    
-    var onFail=function(){
-	theButton.title=lang.defTitle;
-	if(iconsCfg['XX'])
-	    theButton.icon=iconsCfg['XX'];
-	else
-	    theButton.icon='icons/svg2raster-16.png';
-	if(widget.preferences.showXXBadge!=0)
-	    theButton.badge.textContent='XX';
-	else
-	    theButton.badge.textContent='';
-	theButton.disabled=true;
-	return;
-	}
-    
-    var onOk=function(arg){
+    var onOk=function(arg)
 	{
 	if(arg.statusCode=='OK')
 	    {
 	    theButton.title=arg.ipAddress+' - '+arg.countryName;
-	    //~ theButton.icon='flags/'+arg.countryCode.toLowerCase()+".png";
 	    var key=arg.countryCode.toUpperCase();
 	    if(iconsCfg[key])
 		theButton.icon=iconsCfg[key];
@@ -88,56 +96,25 @@ function toggleIfExists()
 	    }
 	else
 	    {
-	    theButton.title=arg.ipAddress+' - '+arg.statusCode+': '+arg.statusMessage;
-	    if(iconsCfg['XX'])
-		theButton.icon=iconsCfg['XX'];
+	    if(arg.ipAddress)
+		disableButton(arg.ipAddress+' - '+arg.statusCode+': '+arg.statusMessage);
 	    else
-		theButton.icon='icons/svg2raster-16.png';
-	    if(widget.preferences.showXXBadge!=0)
-		theButton.badge.textContent='XX';
-	    else
-		theButton.badge.textContent='';
-	    theButton.disabled=true;
+		disableButton(arg.statusCode+': '+arg.statusMessage);
 	    }
-	return true;
 	}
     
-    getTabInfo(onOk,onFail);    
+    getTabInfo(onOk,host);    
     }
 
 //main function
-function getTabInfo(onOk,onFail)
+function getTabInfo(onOk,host)
     {
-    //that is my key
-    var key;
-    if(widget.preferences.usekey=='0')//NB! if('0') is true
-	key='8ab4dafef4a713f5097cb50706e861b38ebf6972a44167aa9426cde1768fed5e';
+    //get host
+    if(host)
+	lastHost=host;
     else
-	key=widget.preferences.userkey;
-    //~ opera.postError(key);
-    
-    //get tab URL
-    var fail=false;
-    try
-	{
-    var url=opera.extension.tabs.getFocused().url;
-    var re = new RegExp('^(?:f|ht)tp(?:s)?\://([^/]+)', 'im');
-    var host=url.match(re)[1].toString();
-	if(!host)
-	    fail=true;
-	}
-    catch(e)
-	{
-	fail=true;
-	}
-    //~ opera.postError(host);
-    
-    if(fail)
-	{
-	onFail();
-	return;
-	}
-    
+	host=lastHost;
+
     //try cache
     var q=cache.getItem('cache:'+host);
     if(q && (arg=JSON.parse(q)) && arg.cityName)//using new cache
@@ -154,6 +131,7 @@ function getTabInfo(onOk,onFail)
 		    clearCache();
 		cache.setItem('cache:'+host,XHR.responseText);
 		//~ opera.postError('i2cache:'+host+':'+XHR.responseText);
+		arg=JSON.parse(XHR.responseText);
 		onOk(arg);
 		}
 	    };
@@ -166,22 +144,13 @@ function getTabInfo(onOk,onFail)
 
 
 
-// 'clearCache on exit' option
-//~ window.addEventListener('unload', function()
-    //~ {
-    //~ if(widget.preferences.cacheClear==1)
-	//~ clearCache();
-    //~ },false);
-
-
-
 //almost like main
 function popupHelper(event)
     {
-    var onOk=function(text)
+    var onOk=function(arg)
 	{
-	arg=JSON.parse(text);
-	arg.host=host;
+	//get host
+	arg.host=lastHost;
 	event.source.postMessage(arg);
 	}    
     getTabInfo(onOk);

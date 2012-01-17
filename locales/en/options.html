@@ -1,17 +1,6 @@
 ﻿<!DOCTYPE html><html><head><meta charset="utf-8">
 <title>Flag button options</title>
-<style>
-legend
-    {
-    font-size:150%;
-    font-weight:bold;
-    }
-textarea
-    {
-    width:100%;
-    height:5em;
-    }
-</style>
+<link rel="stylesheet" href="css/options.css">
 </head><body>
     <h1>Flag button options</h1>    
     <fieldset><legend>Badge</legend>
@@ -25,26 +14,26 @@ textarea
     </fieldset>
     
     <fieldset><legend>Popup window</legend>
-	Popup is a small window that you see when click on an extension button.
-	<br>
-	<label for="popupWidth">
-	    <h3>Popup width:</h3>
-	    <input type="number" id="popupWidth"/> pixels
-	</label>
+	<div class="info">
+	    Popup is a small window that you see when click on an extension button.
+	</div>
+	<h3>Popup width:</h3>
+	    <input type="number" id="popupWidth"/><label for="popupWidth"> pixels</label>
 	
-	<label for="linksCfg">
-	    <h3>Links list:</h3>
+	<h3>Links list:</h3>
+	    <div class="info">
 	    Below you can change what links do you want to see at the bottom of the popup window.
 	    Each line contains link title and URL, separated by equal sign.
 	    <br>
 	    Note that you can use several <tt>[placeholders]</tt> to customize URLs: <tt>[host], [ipAddress], [countryName], [regionName], [cityName], [zipCode], [latitude], [longitude], [timeZone]</tt>.
 	    <br>
-	    <textarea id="linksCfg"></textarea>
-	</label>
+	</div>
+	<textarea id="linksCfg"></textarea>
 	
 	<h3>Links style:</h3>
-	Below you can change how would you like these links to be separated:
-	<br>
+	<div class="info">
+	    Below you can change how would you like these links to be separated:
+	</div>
 	<input type="radio" name="linksStyle" id="linksStyle0"/><label for="linksStyle0"> by blank space</label>
 	<br>
 	<input type="radio" name="linksStyle" id="linksStyle1"/><label for="linksStyle1"> by comma</label>
@@ -54,8 +43,10 @@ textarea
     </fieldset>
     
     <fieldset><legend>Cache</legend>
-	On your first site visit, Flag button extention asks <a href="http://ipinfodb.com">ipinfodb.com</a> about current site and saves its reply to the cache. On your following page loads, it uses cached data.
-	Current cache size is: <b id="cache1">?</b> records
+	<div class="info">
+	    On your first site visit, Flag button extention asks <a href="http://ipinfodb.com">ipinfodb.com</a> about current site and saves its reply to the cache. On your following page loads, it uses cached data.
+	    Current cache size is: <b id="cache1">?</b> records
+	</div>
 
 	<h3>Clear cache on exit:</h3>
 	Note that this setting will be applied only after Opera restart.
@@ -65,6 +56,9 @@ textarea
 	<input type="radio" name="cacheClear" id="cacheClear1"/><label for="cacheClear1"> <b>YES:</b> get fresh data on every Opera launch</label>
 
 	<h3>Cache size limit:</h3>
+	<div class="info">
+	    Cache will be automatically cleared after becoming this large
+	</div>
 	<input type="number" id="cacheMax" style="width:5em"/><label for="cacheMax"> records (about thousand is okay)</label>
 
 	<h3>Clear cache:</h3>
@@ -84,19 +78,40 @@ textarea
     </fieldset>
             
     <fieldset><legend>Custom icons</legend>
-	If you noticed an outdated icon, don't like the default <q>unknown flag</q> icon, or want to use another icon for some country, you can configure it here.
-	On each line, type two-letter country code and custom icon URL, separated by equal sign.
-	Note that you can use <tt>XX</tt> country code for unknown flag (default icon).
-	For example, to change it back to European Union flag, add this line:
-	<tt>XX=http://aux.iconpedia.net/uploads/1493003352328043060.png</tt>
-	<br>
+	<div class="info">
+	    If you noticed an outdated icon, don't like the default <q>unknown flag</q> icon, or want to use another icon for some country, you can configure it here.
+	    On each line, type two-letter country code and custom icon URL, separated by equal sign.
+	    Note that you can use <tt>XX</tt> country code for unknown flag (default icon).
+	    For example, to change it back to European Union flag, add this line:
+	    <tt>XX=http://flag-button.tk/European-Union-Flag-16.png</tt>
+	</div>
 	<textarea id="iconsCfg"></textarea>
     </fieldset>
     
     <fieldset><legend>General</legend>
+	<div class="info">
+	    Disabling the following feature will avoid icon flickering while switching between tabs, but on some pages (like speddial) you will see a flag from the previous page.
+	</div>
+	<input type="checkbox" id="disableButton"/><label for="disableButton"> Disable button on leaving the page</label>
+	
 	<h3>Preferences reset:</h3>
 	<button id="prefsClearNow">Reset preferences to defaults</button>
-	<!-- <button id="test">show!</button> -->
+	
+	<h3>Map of users</h3>
+	<div class="info">
+	    On this map you can see geographical location of all users of this extension, who agreed to share this information
+	</div>
+	<div id="mapUsersWarning" class="warning"><b>Warning!</b>
+	    By pressing this button, you agree that your coordinates will be stored and your location will be marked on this map by the same city-sized dot. Actually, any Internet site you are visiting already has this information</div>
+	<button id="mapUsersBtn">Show the map</button>
+	<img id="mapUsersImg" style="display:none">
+	
+	<h3>Map of sites</h3>
+	<div class="info">
+	    On this map you can see geographical location of all sites ever visited by users of this extension
+	</div>
+	<button id="mapSitesBtn">Show the map</button>
+	<img id="mapSitesImg" style="display:none">
     </fieldset>
     
 <script src="lang.js"></script>

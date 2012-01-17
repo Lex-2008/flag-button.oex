@@ -4,9 +4,21 @@ var ids=['host','ipAddress','countryName','regionName','cityName','zipCode','lat
 opera.extension.addEventListener( "message", function(arg)
     {
     //~ opera.postError('received: '+JSON.stringify(arg.data));
+    
+    //close on error
+    if(arg.fail)
+	window.close();
+    
     var q,w,s;
     for(q in ids)
+	{
 	gebi(ids[q]).innerHTML=arg.data[ids[q]];
+	//~ opera.postError('data: ['+arg.data[ids[q]]+']');
+	if(arg.data[ids[q]]=='' || arg.data[ids[q]]=='-')
+	    gebi(ids[q]+'_gr').style.display='none';
+	else
+	    gebi(ids[q]+'_gr').style.display='';
+	}
     var linksCfg=JSON.parse(widget.preferences.linksCfg);
     var root=gebi('links');
     for(q in linksCfg)

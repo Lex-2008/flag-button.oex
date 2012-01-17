@@ -1,17 +1,6 @@
 ﻿<!DOCTYPE html><html><head><meta charset="utf-8">
 <title>Настройки Flag button</title>
-<style>
-legend
-    {
-    font-size:150%;
-    font-weight:bold;
-    }
-textarea
-    {
-    width:100%;
-    height:5em;
-    }
-</style>
+<link rel="stylesheet" href="css/options.css">
 </head><body>
     <h1>Настройки Flag button</h1>
     <fieldset><legend>Надпись на кнопке</legend>
@@ -25,26 +14,26 @@ textarea
     </fieldset>
     
     <fieldset><legend>Всплывающее окно</legend>
-	Это окно, которое Вы видите, когда нажимаете на кнопку расширения
-	<br>
-	<label for="popupWidth">
-	    <h3>Ширина окна:</h3>
-	    <input type="number" id="popupWidth"/> пикс
-	</label>
+	<div class="info">
+	    Это окно, которое Вы видите, когда нажимаете на кнопку расширения
+	</div>
+	<h3>Ширина окна:</h3>
+	    <input type="number" id="popupWidth"/><label for="popupWidth"> пикс</label>
 	
-	<label for="linksCfg">
-	    <h3>Список ссылок:</h3>
+	<h3>Список ссылок:</h3>
+	<div class="info">
 	    Ниже Вы можете настроить, какие ссылки хотите видеть внизу всплывающего окна.
 	    На каждой строчке введите заголовок ссылки и адрес, разделенные знаком равенства.
 	    <br>
 	    Вы также можете использовать <tt>[замещающий текст]</tt> для настройки адресов: <tt>[host]</tt> (адрес сайта), <tt>[ipAddress]</tt> (IP-адрес), <tt>[countryName]</tt> (название страны), <tt>[regionName]</tt> (регион, область или штат), <tt>[cityName]</tt> (название города), <tt>[zipCode]</tt> (почтовый код), <tt>[latitude]</tt> (широта), <tt>[longitude]</tt> (долгота), <tt>[timeZone]</tt> (часовой пояс).
 	    <br>
-	    <textarea id="linksCfg"></textarea>
-	</label>
+	</div>
+	<textarea id="linksCfg"></textarea>
 	
 	<h3>Стиль ссылок:</h3>
-	Ниже Вы можете выбрать, как эти ссылки будут разделены:
-	<br>
+	<div class="info">
+	    Ниже Вы можете выбрать, как эти ссылки будут разделены:
+	</div>
 	<input type="radio" name="linksStyle" id="linksStyle0"/><label for="linksStyle0"> пробелом</label>
 	<br>
 	<input type="radio" name="linksStyle" id="linksStyle1"/><label for="linksStyle1"> через запятую</label>
@@ -54,23 +43,28 @@ textarea
     </fieldset>
     
     <fieldset><legend>Кэш</legend>
-	При Вашем первом посещении каждого сайта, расширение Flag button запрашивает сервис <a href="http://ipinfodb.com">ipinfodb.com</a> о его расположении и сохраняет его ответ в кэше. При последующих загрузках страниц с этого сайта, используются данные из кэша.
-	Текущий размер кэша: <b id="cache1">?</b> записей.
-
+	<div class="info">
+	    При Вашем первом посещении каждого сайта, расширение Flag button запрашивает сервис <a href="http://ipinfodb.com">ipinfodb.com</a> о его расположении и сохраняет его ответ в кэше. При последующих загрузках страниц с этого сайта, используются данные из кэша.
+	    Текущий размер кэша: <b id="cache1">?</b> записей.
+	</div>
+	
 	<h3>Очищать кэш при выходе:</h3>
 	Эта настройка будет применена при следующем запуске браузера.
 	<br>
 	<input type="radio" name="cacheClear" id="cacheClear0"/><label for="cacheClear0"> <b>НЕТ:</b> данные кэша сохраняются между запусками браузера</label>
 	<br>
 	<input type="radio" name="cacheClear" id="cacheClear1"/><label for="cacheClear1"> <b>ДА:</b> получать свежие данные после каждой перезагрузки браузера</label>
-
+	
 	<h3>Ограничение размера кэша:</h3>
+	<div class="info">
+	    При достижении этого размера кэш будет автоматически очищен
+	</div>
 	<input type="number" id="cacheMax" style="width:5em"/><label for="cacheMax"> записей (рекомендуемое значение &mdash; около тысячи)</label>
-
+	
 	<h3>Очистить кэш:</h3>
 	<button id="cacheClearNow">Очистить сейчас!</button>
     </fieldset>
-        
+    
     <fieldset style="display:none"><legend>Ключ доступа</legend>
 	Сайт <a href="http://ipinfodb.com">ipinfodb.com</a> требует бесплатной регистрации <q>для оптимизации ресурсов</q>. Я (автор расширения) делюсь своим ключем с Вами. Вы можете использовать мой ключ или <a href="http://ipinfodb.com/register.php">зарегистрироваться</a> и использовать свой собственный.
 
@@ -82,23 +76,46 @@ textarea
 	<h3>Мой ключ доступа:</h3>
 	<input type="text" id="userkey" style="width:20em"/>
     </fieldset>    
-            
+    
     <fieldset><legend>Особые флаги</legend>
-	Если Вы заметили устаревшую иконку флага, Вам не нравится <q>неизвестный флаг</q>, используемый по умолчанию, или Вы хотите использовать другую иконку для какой-либо страны, Вы можете настроить это здесь.
-	На каждой строке, введите двухбуквенный код страны и адрес иконки, разделенные знаком равенства.
-	Вы так же можете указать <tt>XX</tt> в качестве кода страны для замены <q>неизвестного флага</q>, используемого по умолчанию.
-	Например, чтобы заменить его обратно на флаг Европейского Союза, добавьте такую строчку:
-	<tt>XX=http://aux.iconpedia.net/uploads/1493003352328043060.png</tt>
-	<br>
+	<div class="info">
+	    Если Вы заметили устаревшую иконку флага, Вам не нравится <q>неизвестный флаг</q>, используемый по умолчанию, или Вы хотите использовать другую иконку для какой-либо страны, Вы можете настроить это здесь.
+	    На каждой строке введите двухбуквенный код страны и адрес иконки, разделенные знаком равенства.
+	    Вы так же можете использовать <tt>XX</tt> в качестве кода страны для замены <q>неизвестного флага</q>, используемого по умолчанию.
+	    Например, чтобы заменить его обратно на флаг Европейского Союза, добавьте такую строчку:
+	    <tt>XX=http://flag-button.tk/European-Union-Flag-16.png</tt>
+	</div>
 	<textarea id="iconsCfg"></textarea>
     </fieldset>
     
     <fieldset><legend>Общие</legend>
+	<div class="info">
+	    Отключение этой опции поможет избежать мигания иконки при переключении между вкладками, но на некоторых страницах (например, на экспресс-панели) Вы будете видеть флаг, оставшийся с тредыдущей страницы.
+	</div>
+	<input type="checkbox" id="disableButton"/><label for="disableButton"> Отключать кнопку при покидании страницы</label>
+	
 	<h3>Сброс настроек:</h3>
 	<button id="prefsClearNow">Сбросить настройки на значения <q>По умолчанию</q></button>
-	<!-- <button id="test">show!</button> -->
+	
+	<h3>Карта пользователей</h3>
+	<div class="info">
+	    На этой карте точками отмечено географическое расположение пользователей этого расширения, согласившихся предоставить эту информацию
+	</div>
+	<div id="mapUsersWarning" class="warning"><b>Внимание!</b>
+	    Нажимая эту кнопку, Вы соглашаетесь на то, что Ваши координаты будут записаны и Ваше местоположение будет отмечено на этой карте такой же точкой размером с город. На самом деле, любой интернет-сайт, на который Вы заходите, обладает этой информацией</div>
+	<button id="mapUsersBtn">Показать карту</button>
+	<img id="mapUsersImg" style="display:none">
+	
+	<h3>Карта сайтов</h3>
+	<div class="info">
+	    На этой карте точками отмечено географическое расположение всех сайтов, на которые заходили пользователи этого расширения
+	</div>
+	<button id="mapSitesBtn">Показать карту</button>
+	<img id="mapSitesImg" style="display:none">
     </fieldset>
-    
+
+
+
 <script src="lang.js"></script>
 <script src="js/lib.js"></script>
 <script src="js/options.js"></script>

@@ -1,0 +1,41 @@
+legend
+    {
+    font-size:150%;
+    font-weight:bold;
+    }
+textarea
+    {
+    width:100%;
+    height:5em;
+    }
+h3:not(:first-of-type)
+	{
+	border-top:1px solid silver;
+	padding-top:1em;
+	}
+.info
+	{
+	border:1px solid blue;
+	background:lightblue;
+	margin-bottom:1em;
+	}
+.info:before
+	{
+	content:url("/icons/information.png") " ";
+	position:relative;
+	top:2px;
+	left:2px;
+	}
+.warning
+	{
+	border:1px solid red;
+	background:yellow;
+	margin-bottom:1em;
+	}
+.warning:before
+	{
+	content:url("/icons/exclamation.png") " ";
+	position:relative;
+	top:2px;
+	left:2px;
+	}
