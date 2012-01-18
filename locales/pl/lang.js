@@ -4,8 +4,7 @@
     defLinks:
 	{
 	"who.is":	"http://who.is/[host]",
-	"ipinfodb":	"http://ipinfodb.com/ip_locator.php?ip=[ipAddress]",
-	"Mapy Google":	"http://maps.google.com/?ie=UTF8&ll=[latitude],[longitude]",
+	"Mapy Google":	"http://maps.google.com/?ie=UTF8&ll=[lat],[lng]",
 	},
     defWidth:250,
     confirmReset:'Na pewno chcesz przywrócić domyślne ustawienia?',

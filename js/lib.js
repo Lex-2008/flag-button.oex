@@ -49,15 +49,16 @@ function clearCache()
     //restore
     for(var q in save)
 	cache.setItem(q,save[q]);
+    
+    cache.setItem('saved',cache.length);
     }
 
 
 
 function clearPrefs()
     {
-    for(var q in widget.preferences)
-	if(q.substr(0,6)!=='cache:')
-	    widget.preferences[q]=defaults[q];
+    for(var q in defaults)
+        widget.preferences[q]=defaults[q];
     }
 
 

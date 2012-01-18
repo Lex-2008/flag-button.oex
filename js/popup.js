@@ -1,10 +1,7 @@
-var ids=['host','ipAddress','countryName','regionName','cityName','zipCode','latitude','longitude','timeZone'];
-//~ var reps=[['whois','http://who.is/[host]'],['ipinfo','http://ipinfodb.com/ip_locator.php?ip=[host]'],['gmaps','http://maps.google.com/?ie=UTF8&ll=[latitude],[longitude]']];
+var ids=['host','ip','country','region','city','zip','lat','lng','tz','src','cmp'];
 
 opera.extension.addEventListener( "message", function(arg)
     {
-    //~ opera.postError('received: '+JSON.stringify(arg.data));
-    
     //close on error
     if(arg.fail)
 	window.close();
@@ -13,12 +10,12 @@ opera.extension.addEventListener( "message", function(arg)
     for(q in ids)
 	{
 	gebi(ids[q]).innerHTML=arg.data[ids[q]];
-	//~ opera.postError('data: ['+arg.data[ids[q]]+']');
-	if(arg.data[ids[q]]=='' || arg.data[ids[q]]=='-')
+	if(arg.data[ids[q]]==undefined)
 	    gebi(ids[q]+'_gr').style.display='none';
 	else
 	    gebi(ids[q]+'_gr').style.display='';
 	}
+    gebi('src').href='http://'+arg.data[ids[q]];
     var linksCfg=JSON.parse(widget.preferences.linksCfg);
     var root=gebi('links');
     for(q in linksCfg)

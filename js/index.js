@@ -45,6 +45,7 @@ function disableButton(text)
     theButton.disabled=true;
     }
 
+
 opera.extension.addEventListener( "message", function(event)
     {
     switch(event.data.q)
@@ -80,26 +81,26 @@ function toggleIfExists(host)
     {
     var onOk=function(arg)
 	{
-	if(arg.statusCode=='OK')
+	if(arg.code=='ok')
 	    {
-	    theButton.title=arg.ipAddress+' - '+arg.countryName;
-	    var key=arg.countryCode.toUpperCase();
+	    theButton.title=arg.ip+' - '+arg.country;
+	    var key=arg.co.toUpperCase();
 	    if(iconsCfg[key])
 		theButton.icon=iconsCfg[key];
 	    else
 		theButton.icon='flags/'+key.toLowerCase()+".png";
 	    if(widget.preferences.showBadge!=0)
-		theButton.badge.textContent=arg.countryCode;
+		theButton.badge.textContent=arg.co;
 	    else
 		theButton.badge.textContent='';
 	    theButton.disabled=false;
 	    }
 	else
 	    {
-	    if(arg.ipAddress)
-		disableButton(arg.ipAddress+' - '+arg.statusCode+': '+arg.statusMessage);
+	    if(arg.ip)
+		disableButton(arg.ip+' - '+arg.code+': '+arg.err);
 	    else
-		disableButton(arg.statusCode+': '+arg.statusMessage);
+		disableButton(arg.code+': '+arg.err);
 	    }
 	}
     
@@ -117,7 +118,7 @@ function getTabInfo(onOk,host)
 
     //try cache
     var q=cache.getItem('cache:'+host);
-    if(q && (arg=JSON.parse(q)) && arg.cityName)//using new cache
+    if(q && (arg=JSON.parse(q)))
 	onOk(arg);
     else
 	{
