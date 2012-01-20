@@ -42,41 +42,6 @@
 	<br>
     </fieldset>
     
-    <fieldset><legend>Bellek</legend>
-	<div class="info">
-	    Herhangi bir web sitesini ilk defa ziyaret ettiğinizde, eklenti <a href="http://ipinfodb.com">ipinfodb.com</a> aracılığı ile site bilgilerini sorgular ve gelen bilgileri ön belleğe kaydeder. Daha sonraki sayfa yüklemelerinde; ön bellekteki bu bilgiler kullanılır.
-	    Geçerli ön bellek miktarı: <b id="cache1">?</b> kayıt
-	</div>
-
-	<h3>Çıkışta ön belleği temizleme:</h3>
-	Bu ayarlar Oepra'yı yeniden başlattığınızda etkinleşecektir.
-	<br>
-	<input type="radio" name="cacheClear" id="cacheClear0"/><label for="cacheClear0"> <b>HAYIR:</b> Opera tekrar başlatıldığında geçerli ön bellek kullanılır.</label>
-	<br>
-	<input type="radio" name="cacheClear" id="cacheClear1"/><label for="cacheClear1"> <b>EVET:</b> Opera her açılışta yeni bilgiler sorgular.</label>
-
-	<h3>Ön bellek boyutu:</h3>
-	<div class="info">
-	    Cache will be automatically cleared after becoming this large
-	</div>
-	<input type="number" id="cacheMax" style="width:5em"/><label for="cacheMax"> kayıt (bin civarı uygundur)</label>
-
-	<h3>Temizleme:</h3>
-	<button id="cacheClearNow">Şimdi temizle!</button>
-    </fieldset>
-        
-    <fieldset style="display:none"><legend>Yetki Anahtarı</legend>
-	<a href="http://ipinfodb.com">ipinfodb.com</a> sitesi, <q>kendi kayıtlarını optimize etmek amacıyla</q> ücretsiz kayıt imkanı sunmaktadır. Bu eklenti benim (yazar) kendi yetki anahtarımı kullanmaktadır. Eğer isterseniz bu anahtarı kullanmaya devam edebilir veya siteye <a href="http://ipinfodb.com/register.php">kayıt olarak</a> kendi anahtarınızı da kullanabilirsiniz.
-
-	<h3>Yetki anahtarı kullanma:</h3>
-	<input type="radio" name="usekey" id="usekey0"/><label for="usekey0"> Ortak (yazarın) yetki anahtarını kullanın.</label>
-	<br>
-	<input type="radio" name="usekey" id="usekey1"/><label for="usekey1"> Kendi yetki anahtarınızı kullanın.</label>
-
-	<h3>Yetki anahtarınız:</h3>
-	    <input type="text" id="userkey" style="width:20em"/>
-    </fieldset>
-            
     <fieldset><legend>Özel simgeler</legend>
 	<div class="info">
 	    Eğer geçerliliğini yitirmiş bir simge fark ettiyseniz, varsayılan olarak gelen <q>tanımlanamayan bayrak</q> simgesini kullanmak istemiyorsanız veya aynı ülke için farklı bir bayrak simgesi kullanmak istiyorsanız, bunu bu bölümden ayarlayabilirsiniz. Her bir satıra iki harfli ülke kodunu ve bağlantı adresini yazarak, eşittir "=" işareti ile birleştirin. Bilinmeyen bayrak simgeleri(varsayılan simge) için <tt>XX</tt> ülke kodunu kullanabilirsiniz. Ör: <tt>XX=http://flag-button.tk/European-Union-Flag-16.png</tt>
@@ -85,8 +50,18 @@
     </fieldset>
     
     <fieldset><legend>Genel</legend>
+	<div class="info">
+	    Disabling the following feature will avoid icon flickering while switching between tabs, but on some pages (like speddial) you will see a flag from the previous page.
+	</div>
+	<input type="checkbox" id="disableButton"/><label for="disableButton"> Disable button on leaving the page</label>
+	<br>
+	<input type="checkbox" id="debugMode"/><label for="debugMode"> Show debug info</label>
+	<button id="test">test</button>
+
 	<h3>Ayarları sıfırlama:</h3>
 	<button id="prefsClearNow">Varsayılan ayarlara dön</button>
+	<h3>Temizleme:</h3>
+	<button id="cacheClearNow">Şimdi temizle!</button>
 	
 	<h3>Map of users</h3>
 	<div class="info">

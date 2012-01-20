@@ -42,41 +42,6 @@
 	<br>
     </fieldset>
     
-    <fieldset><legend>Cache</legend>
-	<div class="info">
-	    On your first site visit, Flag button extention asks <a href="http://ipinfodb.com">ipinfodb.com</a> about current site and saves its reply to the cache. On your following page loads, it uses cached data.
-	    Current cache size is: <b id="cache1">?</b> records
-	</div>
-
-	<h3>Clear cache on exit:</h3>
-	Note that this setting will be applied only after Opera restart.
-	<br>
-	<input type="radio" name="cacheClear" id="cacheClear0"/><label for="cacheClear0"> <b>NO:</b> cache is persistent between Opera restarts</label>
-	<br>
-	<input type="radio" name="cacheClear" id="cacheClear1"/><label for="cacheClear1"> <b>YES:</b> get fresh data on every Opera launch</label>
-
-	<h3>Cache size limit:</h3>
-	<div class="info">
-	    Cache will be automatically cleared after becoming this large
-	</div>
-	<input type="number" id="cacheMax" style="width:5em"/><label for="cacheMax"> records (about thousand is okay)</label>
-
-	<h3>Clear cache:</h3>
-	<button id="cacheClearNow">Clear now!</button>
-    </fieldset>
-        
-    <fieldset style="display:none"><legend>Auth key</legend>
-	<a href="http://ipinfodb.com">ipinfodb.com</a> requires free registration <q>for the purpose of optimizing their resources</q>. I (the author) share the given to me key with you. You can use my key or <a href="http://ipinfodb.com/register.php">register</a> and use your own key.
-
-	<h3>Use Auth key:</h3>
-	<input type="radio" name="usekey" id="usekey0"/><label for="usekey0"> Use public (Author's) Auth key</label>
-	<br>
-	<input type="radio" name="usekey" id="usekey1"/><label for="usekey1"> Use my own Auth key</label>
-
-	<h3>My Auth key:</h3>
-	    <input type="text" id="userkey" style="width:20em"/>
-    </fieldset>
-            
     <fieldset><legend>Custom icons</legend>
 	<div class="info">
 	    If you noticed an outdated icon, don't like the default <q>unknown flag</q> icon, or want to use another icon for some country, you can configure it here.
@@ -93,9 +58,14 @@
 	    Disabling the following feature will avoid icon flickering while switching between tabs, but on some pages (like speddial) you will see a flag from the previous page.
 	</div>
 	<input type="checkbox" id="disableButton"/><label for="disableButton"> Disable button on leaving the page</label>
+	<br>
+	<input type="checkbox" id="debugMode"/><label for="debugMode"> Show debug info</label>
+	<button id="test">test</button>
 	
 	<h3>Preferences reset:</h3>
 	<button id="prefsClearNow">Reset preferences to defaults</button>
+	<h3>Clear cache:</h3>
+	<button id="cacheClearNow">Clear now!</button>
 	
 	<h3>Map of users</h3>
 	<div class="info">

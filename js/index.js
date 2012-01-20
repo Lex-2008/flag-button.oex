@@ -107,6 +107,7 @@ function toggleIfExists(host)
     getTabInfo(onOk,host);    
     }
 
+
 //main function
 function getTabInfo(onOk,host)
     {
@@ -117,8 +118,8 @@ function getTabInfo(onOk,host)
 	host=lastHost;
 
     //try cache
-    var q=cache.getItem('cache:'+host);
-    if(q && (arg=JSON.parse(q)))
+    var arg=cache.getItem(host);
+    if(arg)
 	onOk(arg);
     else
 	{
@@ -128,11 +129,9 @@ function getTabInfo(onOk,host)
 	    {
 	    if(XHR.readyState==4)
 		{
-		if(cache.length>widget.preferences.cacheMax+cache.saved)
-		    clearCache();
-		cache.setItem('cache:'+host,XHR.responseText);
 		//~ opera.postError('i2cache:'+host+':'+XHR.responseText);
 		arg=JSON.parse(XHR.responseText);
+		cache.setItem(host,arg);
 		onOk(arg);
 		}
 	    };
@@ -150,8 +149,6 @@ function popupHelper(event)
     {
     var onOk=function(arg)
 	{
-	//get host
-	arg.host=lastHost;
 	event.source.postMessage(arg);
 	}    
     getTabInfo(onOk);
@@ -159,7 +156,62 @@ function popupHelper(event)
 
 
 
-//default prefs
+//init cache
+function importOldCache()
+    {
+    var counter=Math.round((new Date()).getTime()/1000)-1327000000;
+    for(var q in widget.preferences)
+	if(q.substr(0,6)=='cache:')
+	    {
+	    var o=JSON.parse(widget.preferences[q]);
+	    //~ aalert(o);
+	    var n={t:counter+=100};//add some number so all records don't disappear at once
+	    if(o.statusCode=='OK')
+		{
+		n.code='ok';
+		if(o.ipAddress!='' && o.ipAddress='-') n.ip=o.ipAddress;
+		if(o.countryCode!='' && o.countryCode!='-') n.co=o.countryCode;
+		if(o.countryName='' && o.countryName='-') n.country=o.countryName;
+		if(o.regionName!='' && o.regionName!='-') n.region=o.regionName;
+		if(o.cityName!='' && o.cityName='-') n.city=o.cityName;
+		if(o.zipCode='' && o.zipCode='-') n.zip=o.zipCode;
+		if(o.latitude='' && o.latitude='-') n.lat=o.latitude;
+		if(o.longitude='' && o.longitude='-') n.lng=o.longitude;
+		if(o.timeZone='' && o.timeZone='-') n.tz=o.timeZone;
+		n.src='ipinfodb.com';
+		n.cmp='no';
+		}
+	    else
+		if(o.statusMessage!='' && o.statusMessage!='-') n.err=o.statusMessage;
+	    cache.setItem(q.substr(6),n);
+	    }
+    //save prefs
+    var save={};
+    for(q in defaults)
+	if(widget.preferences[q]!==undefined)
+	    save[q]=widget.preferences[q];
+    //wipe everything
+    widget.preferences.clear();
+    //restore prefs
+    for(q in save)
+	widget.preferences[q]=save[q];
+    //save cache
+    cache.save();
+    }
+
+
+if(widget.preferences.cache==undefined)
+    {
+    //import old cache
+    importOldCache();
+    }
+else
+    cache.load();
+
+setInterval("cache.save()",60000);
+
+
+//init prefs
 for(var q in defaults)
     if(typeof widget.preferences[q]=='undefined')
 	widget.preferences[q]=defaults[q];
@@ -171,17 +223,3 @@ theButton.badge.backgroundColor=widget.preferences.badgeBGcolor;
 theButton.badge.color=widget.preferences.badgeTXcolor;
 theButton.popup.width=widget.preferences.popupWidth;
 var iconsCfg=JSON.parse(widget.preferences.iconsCfg);
-
-
-
-// set location for cache
-var cache;
-if(widget.preferences.cacheClear==1)
-    {
-    cache=widget.preferences;
-    clearCache();
-    cache=sessionStorage;
-    cache.saved=0;
-    }
-else
-    cache=widget.preferences;

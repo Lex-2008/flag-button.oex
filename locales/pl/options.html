@@ -42,41 +42,6 @@
 	<br>
     </fieldset>
     
-    <fieldset><legend>Pamięć podręczna</legend>
-	<div class="info">
-	    Kiedy po raz pierwszy odwiedzasz jakąś stronę, „Guzik z flagą” pyta <a href="http://ipinfodb.com">stronę ipinfodb.com</a> o nią i trzyma odpowiedź w pamięci podręcznej. Podczas kolejnych odwiedzin używa zapisanych danych.
-	    Obecnie w pamięci podręcznej jest <b id="cache1">?</b> pozycji.
-	</div>
-	
-	<h3>Czyść pamięć przy wyjściu:</h3>
-	Zauważ, że ustawienie będzie brane pod uwagę dopiero po ponownym urchomieniu Opery.
-	<br>
-	<input type="radio" name="cacheClear" id="cacheClear0"/><label for="cacheClear0"> <b>NIE:</b> dane są trwałe, nie usuwa ich wyłączenie Opery.</label>
-	<br>
-	<input type="radio" name="cacheClear" id="cacheClear1"/><label for="cacheClear1"> <b>TAK:</b> pobieranie świeżych danch po każdym uruchomieniu Opery.</label>
-
-	<h3>Ograniczenie wielkości pamięci:</h3>
-	<div class="info">
-	    Cache will be automatically cleared after becoming this large
-	</div>
-	<input type="number" id="cacheMax" style="width:5em"/><label for="cacheMax"> pozycji (około tysiąca zwykle wystarcza).</label>
-
-	<h3>Wyczyść pamięć:</h3>
-	<button id="cacheClearNow">Czyść teraz!</button>
-    </fieldset>
-        
-    <fieldset style="display:none"><legend>Klucz</legend>
-	<a href="http://ipinfodb.com">ipinfodb.com</a> wymaga darmowej rejestracji <q>w celu ulepszania swoich zasobów</q>. Ja (autor) dzielę się moim kluczem z wami. Możesz używać mojego klucza, lub <a href="http://ipinfodb.com/register.php">zarejestrować się</a> i używać własnego.
-
-	<h3>Używaj klucza:</h3>
-	<input type="radio" name="usekey" id="usekey0"/><label for="usekey0"> publicznego (autora).</label>
-	<br>
-	<input type="radio" name="usekey" id="usekey1"/><label for="usekey1"> własnego.</label>
-
-	<h3>Mój klucz:</h3>
-	    <input type="text" id="userkey" style="width:20em"/>
-    </fieldset>
-            
     <fieldset><legend>Własne ikony</legend>
 	<div class="info">
 	    Jeśli znalazłeś przestarzałe ikony, nie podoba ci się domyślna <q>nieznana flaga</q> lub po prostu chcesz użyć innych ikon dla niektórych krajów, możesz je zmienić tutaj. W każdej linii wpisz dwuliterowy kod kraju i adres ikony rozdzielone znakiem równości.
@@ -91,9 +56,14 @@
 	    Disabling the following feature will avoid icon flickering while switching between tabs, but on some pages (like speddial) you will see a flag from the previous page.
 	</div>
 	<input type="checkbox" id="disableButton"/><label for="disableButton"> Disable button on leaving the page</label>
+	<br>
+	<input type="checkbox" id="debugMode"/><label for="debugMode"> Show debug info</label>
+	<button id="test">test</button>
 	
 	<h3>Prywrócenie domyślnych ustawień:</h3>
 	<button id="prefsClearNow">Przywróć</button>
+	<h3>Wyczyść pamięć:</h3>
+	<button id="cacheClearNow">Czyść teraz!</button>
 	
 	<h3>Map of users</h3>
 	<div class="info">

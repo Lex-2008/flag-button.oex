@@ -42,41 +42,6 @@
 	<br>
     </fieldset>
     
-    <fieldset><legend>Кэш</legend>
-	<div class="info">
-	    При Вашем первом посещении каждого сайта, расширение Flag button запрашивает сервис <a href="http://ipinfodb.com">ipinfodb.com</a> о его расположении и сохраняет его ответ в кэше. При последующих загрузках страниц с этого сайта, используются данные из кэша.
-	    Текущий размер кэша: <b id="cache1">?</b> записей.
-	</div>
-	
-	<h3>Очищать кэш при выходе:</h3>
-	Эта настройка будет применена при следующем запуске браузера.
-	<br>
-	<input type="radio" name="cacheClear" id="cacheClear0"/><label for="cacheClear0"> <b>НЕТ:</b> данные кэша сохраняются между запусками браузера</label>
-	<br>
-	<input type="radio" name="cacheClear" id="cacheClear1"/><label for="cacheClear1"> <b>ДА:</b> получать свежие данные после каждой перезагрузки браузера</label>
-	
-	<h3>Ограничение размера кэша:</h3>
-	<div class="info">
-	    При достижении этого размера кэш будет автоматически очищен
-	</div>
-	<input type="number" id="cacheMax" style="width:5em"/><label for="cacheMax"> записей (рекомендуемое значение &mdash; около тысячи)</label>
-	
-	<h3>Очистить кэш:</h3>
-	<button id="cacheClearNow">Очистить сейчас!</button>
-    </fieldset>
-    
-    <fieldset style="display:none"><legend>Ключ доступа</legend>
-	Сайт <a href="http://ipinfodb.com">ipinfodb.com</a> требует бесплатной регистрации <q>для оптимизации ресурсов</q>. Я (автор расширения) делюсь своим ключем с Вами. Вы можете использовать мой ключ или <a href="http://ipinfodb.com/register.php">зарегистрироваться</a> и использовать свой собственный.
-
-	<h3>Использовать ключ:</h3>
-	<input type="radio" name="usekey" id="usekey0"/><label for="usekey0"> Использовать общий ключ доступа (автора)</label>
-	<br>
-	<input type="radio" name="usekey" id="usekey1"/><label for="usekey1"> Использовать мой персональный ключ доступа</label>
-
-	<h3>Мой ключ доступа:</h3>
-	<input type="text" id="userkey" style="width:20em"/>
-    </fieldset>    
-    
     <fieldset><legend>Особые флаги</legend>
 	<div class="info">
 	    Если Вы заметили устаревшую иконку флага, Вам не нравится <q>неизвестный флаг</q>, используемый по умолчанию, или Вы хотите использовать другую иконку для какой-либо страны, Вы можете настроить это здесь.
@@ -93,9 +58,14 @@
 	    Отключение этой опции поможет избежать мигания иконки при переключении между вкладками, но на некоторых страницах (например, на экспресс-панели) Вы будете видеть флаг, оставшийся с тредыдущей страницы.
 	</div>
 	<input type="checkbox" id="disableButton"/><label for="disableButton"> Отключать кнопку при покидании страницы</label>
+	<br>
+	<input type="checkbox" id="debugMode"/><label for="debugMode"> Показывать тестовую информацию</label>
+	<button id="test">test</button>
 	
 	<h3>Сброс настроек:</h3>
 	<button id="prefsClearNow">Сбросить настройки на значения <q>По умолчанию</q></button>
+	<h3>Очистить кэш:</h3>
+	<button id="cacheClearNow">Очистить сейчас!</button>
 	
 	<h3>Карта пользователей</h3>
 	<div class="info">

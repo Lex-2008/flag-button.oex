@@ -1,4 +1,5 @@
-var ids=['host','ip','country','region','city','zip','lat','lng','tz','src','cmp'];
+var ids=['ip','country','region','city','zip','lat','lng','tz','src','cmp'];
+var host=opera.extension.bgProcess.lastHost;
 
 opera.extension.addEventListener( "message", function(arg)
     {
@@ -15,7 +16,9 @@ opera.extension.addEventListener( "message", function(arg)
 	else
 	    gebi(ids[q]+'_gr').style.display='';
 	}
+    gebi('host').innerHTML=host;
     gebi('src').href='http://'+arg.data[ids[q]];
+    if(widget.preferences.debugMode!='0') gebi('cmp_gr').style.display='none';
     var linksCfg=JSON.parse(widget.preferences.linksCfg);
     var root=gebi('links');
     for(q in linksCfg)
