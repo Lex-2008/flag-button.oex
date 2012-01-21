@@ -18,7 +18,7 @@ opera.extension.addEventListener( "message", function(arg)
 	}
     gebi('host').innerHTML=host;
     gebi('src').href='http://'+arg.data[ids[q]];
-    if(widget.preferences.debugMode!='0') gebi('cmp_gr').style.display='none';
+    if(widget.preferences.debugMode=='0') gebi('cmp_gr').style.display='none';
     var linksCfg=JSON.parse(widget.preferences.linksCfg);
     var root=gebi('links');
     for(q in linksCfg)

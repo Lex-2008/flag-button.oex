@@ -15,8 +15,8 @@ function loadPrefs()
         widget.preferences.badgeTXcolor=this.value;
         opera.extension.postMessage({q:"badgeColor"});
         };
-    gebi('showBadge').checked=widget.preferences.showBadge!='0';
-    gebi('showXXBadge').checked=widget.preferences.showXXBadge!='0';
+    gebi('showBadge').checked=widget.preferences.showBadge=='1';
+    gebi('showXXBadge').checked=widget.preferences.showXXBadge=='1';
     gebi('badgeBGcolor').value=widget.preferences.badgeBGcolor;
     gebi('badgeTXcolor').value=widget.preferences.badgeTXcolor;
     
@@ -46,7 +46,6 @@ function loadPrefs()
     gebi('iconsCfg').value=str;
     gebi('iconsCfg').style.height='auto';
     gebi('iconsCfg').style.height=(gebi('iconsCfg').border_size+gebi('iconsCfg').scrollHeight)+'px';
-
     
     //===popup===
     gebi('popupWidth').onchange=gebi('popupWidth').onkeyup=function(){ widget.preferences.popupWidth=this.value; };
@@ -68,6 +67,8 @@ function loadPrefs()
         widget.preferences.linksCfg=JSON.stringify(linksCfg);
         opera.extension.postMessage({q:"badgeColor"});
         }
+    
+    //===links===
     gebi('linksStyle0').onclick=function() { widget.preferences.linksStyle=0 };
     gebi('linksStyle1').onclick=function() { widget.preferences.linksStyle=1 };
     gebi('linksStyle2').onclick=function() { widget.preferences.linksStyle=2 };
@@ -85,11 +86,27 @@ function loadPrefs()
     else
 	gebi('linksStyle0').checked=true;
     
+    //===source===
+    gebi('source0').onclick=function() { widget.preferences.source=0; };
+    gebi('source2').onclick=function() { widget.preferences.source=2; };
+    gebi('source1000').onclick=function() { widget.preferences.source=1000; };
+    if(widget.preferences.source=='0')
+	gebi('source0').checked=true;
+    else if(widget.preferences.source=='2')
+	gebi('source2').checked=true;
+    else
+	gebi('source1000').checked=true;
+    gebi('userkey').onchange=function() { widget.preferences.userkey=this.value; };
+    gebi('userkey').value=widget.preferences.userkey;
+    gebi('offlineMode').onclick=function() { widget.preferences.offlineMode=this.checked?'1':'0'; };
+    gebi('offlineMode').checked=widget.preferences.offlineMode=='1';
+
+    
     //===general===
     gebi('disableButton').onclick=function() { widget.preferences.disableButton=this.checked?'1':'0'; };
-    gebi('disableButton').checked=widget.preferences.disableButton!='0';
+    gebi('disableButton').checked=widget.preferences.disableButton=='1';
     gebi('debugMode').onclick=function() { widget.preferences.debugMode=this.checked?'1':'0'; };
-    gebi('debugMode').checked=widget.preferences.debugMode!='0';
+    gebi('debugMode').checked=widget.preferences.debugMode=='1';
 
     gebi('cacheClearNow').onclick=function() { clearCache() };
     gebi('prefsClearNow').onclick=function()
@@ -100,8 +117,15 @@ function loadPrefs()
             loadPrefs();
             }
         };
-    if(widget.preferences.debugMode!='1') gebi('test').style.display='none';
-    gebi('test').onclick=function() { prompt('',JSON.stringify(cache.data)); }; 
+    if(widget.preferences.debugMode=='0') gebi('test').style.display='none';
+    gebi('test').onclick=function()
+        {
+        var q=JSON.stringify(cache.data);
+        var l=q.length;
+        var n=0;
+        for(var w in cache.data) n++;
+        prompt(l+'bytes/'+n+'strings='+(l/n),q);
+        }; 
     
     //===maps===
     gebi('mapUsersBtn').onclick=function()

@@ -8,4 +8,5 @@
 	},
     defWidth:200,
     confirmReset:'Are you sure you want to reset all preferences to defaults?',
+    offlineText:'Data is unavailable in offline mode',
     };

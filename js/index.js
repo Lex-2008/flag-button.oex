@@ -38,12 +38,19 @@ function disableButton(text)
 	theButton.icon=iconsCfg['XX'];
     else
 	theButton.icon='icons/svg2raster-16.png';
-    if(widget.preferences.showXXBadge!=0)
+    if(widget.preferences.showXXBadge=='1')
 	theButton.badge.textContent='XX';
     else
 	theButton.badge.textContent='';
     theButton.disabled=true;
     }
+
+//workaround: prevent disableButton from closing popup
+var popupIsOpening=false;
+theButton.addEventListener('click',function()
+    {
+    popupIsOpening=true;
+    },false);
 
 
 opera.extension.addEventListener( "message", function(event)
@@ -54,8 +61,11 @@ opera.extension.addEventListener( "message", function(event)
 	    toggleIfExists(event.data.w);
 	break;
 	case 'off':
-	    if(!widget.preferences.disableButton)
-		disableButton();
+	    if(popupIsOpening)//do not disable the button
+		popupIsOpening=false;
+	    else
+		if(widget.preferences.disableButton=='1')
+		    disableButton();
 	break;
 	case 'popup':
 	    popupHelper(event);
@@ -89,7 +99,7 @@ function toggleIfExists(host)
 		theButton.icon=iconsCfg[key];
 	    else
 		theButton.icon='flags/'+key.toLowerCase()+".png";
-	    if(widget.preferences.showBadge!=0)
+	    if(widget.preferences.showBadge=='1')
 		theButton.badge.textContent=arg.co;
 	    else
 		theButton.badge.textContent='';
@@ -111,12 +121,17 @@ function toggleIfExists(host)
 //main function
 function getTabInfo(onOk,host)
     {
+    //NB! if('0') is true
+    //that is my key
+    var key='8ab4dafef4a713f5097cb50706e861b38ebf6972a44167aa9426cde1768fed5e';
+    if(widget.preferences.userkey.length()>30) key=widget.preferences.userkey;
+    
     //get host
     if(host)
 	lastHost=host;
     else
 	host=lastHost;
-
+    
     //try cache
     var arg=cache.getItem(host);
     if(arg)
@@ -124,23 +139,59 @@ function getTabInfo(onOk,host)
     else
 	{
 	//get remotely data
-	var XHR=new window.XMLHttpRequest();
-	XHR.onreadystatechange=function()
+	if(widget.preferences.offlineMode==1)
 	    {
-	    if(XHR.readyState==4)
+	    onOk({code:'err',err:lang.offlineText});
+	    }
+	else
+	    {
+	    var XHR=new window.XMLHttpRequest();
+	    XHR.onreadystatechange=function()
 		{
-		//~ opera.postError('i2cache:'+host+':'+XHR.responseText);
-		arg=JSON.parse(XHR.responseText);
-		cache.setItem(host,arg);
-		onOk(arg);
+		if(XHR.readyState==4)
+		    {
+		    switch(widget.preferences.source)
+			{
+			case 0:
+			    //freegeoip.net
+			    //ip,co,country,region_code,region_name,city,zip,lat,lon
+			    data=XHR.responseText.split(',');
+			    //code|err|ip|co|country|region|city|zip|lat|lng|tz|src|cmp
+			    arg=['ok','',data[0],data[1],data[2],data[4],data[5],data[6],data[7],data[8],'','freegeoip.net',''].join('|');
+			break;
+			case 2:
+			    //ipinfodb.com
+			    //statuscode;statusmessage;ip;co;country;region;city;zip;lat;lon;timezone
+			    data=XHR.responseText.split(';');
+			    //code|err|ip|co|country|region|city|zip|lat|lng|tz|src|cmp
+			    arg=[data[0].toLowerCase(),data[1],data[2],data[3],data[4],data[5],data[6],data[7],data[8],data[9],data[10],'ipinfodb.com',''].join('|');
+			break;
+			default:
+			    //flag-button.tk
+			    arg=XHR.responseText;
+			break;
+			}
+		    cache.setItem(host,arg);
+		    arg=cache.getItem(host);
+		    if(arg) onOk(arg);
+		    }
+		};
+	    switch(widget.preferences.source)
+		{
+		case 0:
+		    XHR.open("GET","http://freegeoip.net/csv/"+host,true);
+		break;
+		case 2:
+		    XHR.open("GET","http://api.ipinfodb.com/v3/ip-country/?key="+key+"&ip="+host+"&format=raw",true);
+		break;
+		default:
+		    XHR.open("GET","http://flag-button.tk/api.php?host="+host,true);
+		break;
 		}
-	    };
-	//~ XHR.open("GET","http://api.ipinfodb.com/v3/ip-country/?key="+key+"&ip="+host+"&format=json",true);
-	//~ XHR.open("GET","http://api.ipinfodb.com/v3/ip-city/?key="+key+"&ip="+host+"&format=json",true);
-	XHR.open("GET","http://flag-button.tk/api.php?host="+host,true);
-	XHR.send(null);
-	}
-    }
+	    XHR.send(null);
+	    }//online
+	}//get data
+    }//getTabInfo
 
 
 
@@ -165,25 +216,11 @@ function importOldCache()
 	    {
 	    var o=JSON.parse(widget.preferences[q]);
 	    //~ aalert(o);
-	    var n={t:counter+=100};//add some number so all records don't disappear at once
-	    if(o.statusCode=='OK')
-		{
-		n.code='ok';
-		if(o.ipAddress!='' && o.ipAddress='-') n.ip=o.ipAddress;
-		if(o.countryCode!='' && o.countryCode!='-') n.co=o.countryCode;
-		if(o.countryName='' && o.countryName='-') n.country=o.countryName;
-		if(o.regionName!='' && o.regionName!='-') n.region=o.regionName;
-		if(o.cityName!='' && o.cityName='-') n.city=o.cityName;
-		if(o.zipCode='' && o.zipCode='-') n.zip=o.zipCode;
-		if(o.latitude='' && o.latitude='-') n.lat=o.latitude;
-		if(o.longitude='' && o.longitude='-') n.lng=o.longitude;
-		if(o.timeZone='' && o.timeZone='-') n.tz=o.timeZone;
-		n.src='ipinfodb.com';
-		n.cmp='no';
-		}
-	    else
-		if(o.statusMessage!='' && o.statusMessage!='-') n.err=o.statusMessage;
-	    cache.setItem(q.substr(6),n);
+	    var t=counter;
+	    counter+=100;//add some number so all records don't disappear at once
+		//code|err|ip|co|country|region|city|zip|lat|lng|tz|src|cmp
+	    n.d=[o.statusCode.toLowerCase(),o.statusMessage,o.ipAddress,o.countryCode,o.countryName,o.regionName,o.cityName,o.zipCode,o.latitude,o.longitude,o.timeZone,'ipinfodb.com',''];
+	    cache.setItem(q.substr(6),n,t);
 	    }
     //save prefs
     var save={};
@@ -213,7 +250,7 @@ setInterval("cache.save()",60000);
 
 //init prefs
 for(var q in defaults)
-    if(typeof widget.preferences[q]=='undefined')
+    if(widget.preferences[q]===undefined)
 	widget.preferences[q]=defaults[q];
 
 

@@ -7,6 +7,8 @@
     <icon src="icons/svg2raster-16.png" width="16" height="16"/>
     <icon src="icons/svg2raster-64.png" width="64" height="64"/>
     <icon src="icons/svg2raster-256.png" width="256" height="256"/>
+    <access origin="http://freegeoip.net" subdomains="true" />
+    <access origin="http://ipinfodb.com" subdomains="true" />
     <access origin="http://flag-button.tk" subdomains="true" />
     <license href="http://www.apache.org/licenses/LICENSE-2.0">Copyright 2011 alex-shpak
 

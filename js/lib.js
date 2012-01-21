@@ -1,19 +1,23 @@
 //defaults. Looks like <preference> tags in config.xml are kinda broken :(
 defaults={
-    saved:0,
     showBadge:1,
     showXXBadge:0,
     badgeBGcolor:'#000000',
     badgeTXcolor:'#ffffff',
     disableButton:1,
     debugMode:0,
+    source:0,//0=freegeoip.net,2=ipinfodb.com,1000=flag-button.tk
+    userkey:' ',
+    offlineMode=0,
     popupWidth:200,
     linksCfg:'{}',
     linksStyle:0,
     iconsCfg:'{}',
 };
-for(var q in defaults)
-    defaults.saved++;
+if(Math.random()<0.5)
+    defaults.source=0;
+else
+    defaults.source=2;
 try {
     if(lang.defLinks)
 	defaults.linksCfg=JSON.stringify(lang.defLinks);
@@ -37,19 +41,22 @@ opera.postError('('+typeof(o)+')='+o+'\n\n'+str);
 var cache={
     getItem:function(name)
         {
-        return this.data[name];
+        var q=this.data[name].d.split('|');
+        //code|err|ip|co|country|region|city|zip|lat|lng|tz|src|cmp
+        return {"code":q[0],"err":q[1],"ip":q[2],"co":q[3],"country":q[4],"region":q[5],"city":q[6],"zip":q[7],"lat":q[8],"lng":q[9],"tz":q[10],"src":q[11],"cmp":q[12]};
         },
-    setItem:function(name,val,d)
+    setItem:function(name,val,t,d)//val=string
         {
-        val.t=Math.round((new Date()).getTime()/1000)-1327000000;
+        if(t===undefined)
+            t=Math.round((new Date()).getTime()/1000)-1327000000;
         try {
-            this.data[name]=val;
+            this.data[name]={'t':t,'d':val};
             }
         catch(e)
             {
             if(d==undefined) d=1;
             this.trunc(d);
-            this.setItem(name,val,d+1);
+            this.setItem(name,val,t,d+1);
             }
         },
     trunc:function(d)//we will delete approximately d*10% of all cache elements
@@ -104,7 +111,7 @@ var cache={
             this.save(d+1);
             }
         },
-    data:{}//{host:{t:timestamp,...},..}
+    data:{}//{host:{t:timestamp,d:'code|err|ip|co|country|region|city|zip|lat|lng|tz|src|cmp'},..}
     }
 
 
