@@ -1,4 +1,4 @@
-var ids=['ip','country','region','city','zip','lat','lng','tz','src','cmp'];
+var ids=['host','ip','country','region','city','zip','lat','lng','tz','src','cmp'];
 var host=opera.extension.bgProcess.lastHost;
 
 opera.extension.addEventListener( "message", function(arg)
@@ -11,12 +11,12 @@ opera.extension.addEventListener( "message", function(arg)
     for(q in ids)
 	{
 	gebi(ids[q]).innerHTML=arg.data[ids[q]];
-	if(arg.data[ids[q]]==undefined)
-	    gebi(ids[q]+'_gr').style.display='none';
-	else
+	if(arg.data[ids[q]])
 	    gebi(ids[q]+'_gr').style.display='';
+	else
+	    gebi(ids[q]+'_gr').style.display='none';
 	}
-    gebi('host').innerHTML=host;
+    //~ gebi('host').innerHTML=host;
     gebi('src').href='http://'+arg.data[ids[q]];
     if(widget.preferences.debugMode=='0') gebi('cmp_gr').style.display='none';
     var linksCfg=JSON.parse(widget.preferences.linksCfg);

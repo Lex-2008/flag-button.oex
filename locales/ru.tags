@@ -1,0 +1,187 @@
+==========options.html========== 
+1:	<!DOCTYPE html><html><head><meta charset="utf-8">
+2:	<title></title>
+3:	<link rel="stylesheet" href="css/options.css">
+4:	</head><body>
+5:	<h1></h1>
+6:	<fieldset><legend></legend>
+7:	<input type="checkbox" id="showBadge"/><label for="showBadge"></label>
+8:	<br>
+9:	<input type="checkbox" id="showXXBadge"/><label for="showXXBadge"><tt></tt></label>
+10:	<br>
+11:	<input type="color" id="badgeBGcolor"/><label for="badgeBGcolor"></label>
+12:	<br>
+13:	<input type="color" id="badgeTXcolor"/><label for="badgeTXcolor"></label>
+14:	</fieldset>
+15:	
+16:	<fieldset><legend></legend>
+17:	<div class="info">
+18:	
+19:	</div>
+20:	<label for="popupWidth"><input type="number" id="popupWidth"/></label>
+21:	
+22:	<h3></h3>
+23:	<div class="info">
+24:	
+25:	
+26:	<br>
+27:	<tt></tt>
+28:	<tt></tt><tt></tt><tt></tt><tt></tt><tt></tt><tt></tt><tt></tt><tt></tt><tt></tt>
+29:	</div>
+30:	<textarea id="linksCfg"></textarea>
+31:	<br>
+32:	<button id="linksResetNow"></button>
+33:	
+34:	<h3></h3>
+35:	<div class="info">
+36:	
+37:	</div>
+38:	<input type="radio" name="linksStyle" id="linksStyle0"/><label for="linksStyle0"></label>
+39:	<br>
+40:	<input type="radio" name="linksStyle" id="linksStyle1"/><label for="linksStyle1"></label>
+41:	<br>
+42:	<input type="radio" name="linksStyle" id="linksStyle2"/><label for="linksStyle2"></label>
+43:	<br>
+44:	</fieldset>
+45:	
+46:	<fieldset><legend></legend>
+47:	<div class="info">
+48:	
+49:	
+50:	<tt></tt>
+51:	
+52:	<tt></tt>
+53:	</div>
+54:	<textarea id="iconsCfg"></textarea>
+55:	</fieldset>
+56:	
+57:	<fieldset><legend></legend>
+58:	<div class="info">
+59:	
+60:	</div>
+61:	<div class="warning"><b></b>
+62:	
+63:	
+64:	</div>
+65:	<input type="radio" name="source" id="source0"/><label for="source0"><a href="http://freegeoip.net/"></a>
+66:	<a href="http://maxmind.com/"></a>
+67:	</label>
+68:	<br>
+69:	<input type="radio" name="source" id="source2"/><label for="source2"><a href="http://ipinfodb.com/"></a>
+70:	<a href="http://www.ip2location.com/?rid=1094"></a>
+71:	</label>
+72:	<br>
+73:	<input type="radio" name="source" id="source1000"/><label for="source1000"><a href="http://flag-button.tk/"></a>
+74:	
+75:	</label>
+76:	<span class="debugMode">
+77:	<br>
+78:	<input type="radio" name="source" id="source1001"/><label for="source1001"><a href="http://localhost/"></a>
+79:	
+80:	</label>
+81:	</span>
+82:	<br>
+83:	
+84:	<div class="info">
+85:	<a href="http://ipinfodb.com/"></a><a href="http://ipinfodb.com/register.php"></a>
+86:	
+87:	
+88:	
+89:	</div>
+90:	<a href="http://ipinfodb.com/"></a><a href="http://ipinfodb.com/register.php"></a><input type="text" id="userkey"/>
+91:	
+92:	<h3></h3>
+93:	<div class="info">
+94:	
+95:	</div>
+96:	<input type="checkbox" id="offlineMode"/><label for="offlineMode"></label>
+97:	</fieldset>
+98:	
+99:	<fieldset><legend></legend>
+100:	<div class="info">
+101:	
+102:	</div>
+103:	<input type="checkbox" id="disableButton"/><label for="disableButton"></label>
+104:	<br>
+105:	<input type="checkbox" id="showInfo"/><label for="showInfo"></label>
+106:	<br>
+107:	<input type="checkbox" id="debugMode"/><label for="debugMode"></label>
+108:	
+109:	<h3></h3>
+110:	<input type="radio" name="eventType" id="eventType0"/><label for="eventType0">
+111:	
+112:	</label>
+113:	<br>
+114:	<input type="radio" name="eventType" id="eventType1"/><label for="eventType1">
+115:	
+116:	</label>
+117:	<br>
+118:	<input type="radio" name="eventType" id="eventType2"/><label for="eventType2">
+119:	
+120:	</label>
+121:	
+122:	<h3></h3>
+123:	<button id="prefsClearNow"></button>
+124:	<button id="cacheClearNow"></button>
+125:	<button id="cacheClearErr"></button>
+126:	<button id="cacheTruncNow" class="debugMode"></button>
+127:	<button id="cacheShow" class="debugMode"></button>
+128:	<button id="cacheShow1" class="debugMode"></button>
+129:	</fieldset>
+130:	
+131:	<fieldset><legend></legend>
+132:	<h3></h3>
+133:	<div class="info">
+134:	
+135:	</div>
+136:	<div id="mapUsersWarning" class="warning"><b></b>
+137:	
+138:	
+139:	</div>
+140:	<button id="mapUsersBtn"></button>
+141:	<img id="mapUsersImg" style="display:none">
+142:	
+143:	<h3></h3>
+144:	<div class="info">
+145:	<a href="http://flag-button.tk/"></a>
+146:	</div>
+147:	<button id="mapSitesBtn"></button>
+148:	<img id="mapSitesImg" style="display:none">
+149:	</fieldset>
+150:	
+151:	<fieldset><legend></legend>
+152:	<object id="lic" data="licenses.html"></object>
+153:	</fieldset>
+154:	
+155:	<script src="lang.js"></script>
+156:	<script src="js/lib.js"></script>
+157:	<script src="js/options.js"></script>
+158:	</body></html>
+==========popup.html========== 
+1:	<!DOCTYPE html><html><head><meta charset="utf-8">
+2:	<title></title>
+3:	<style>
+4:	
+5:	
+6:	
+7:	
+8:	</style>
+9:	</head><body><div id="wrap">
+10:	<div id="host_gr"><b></b><span id="host"></span></div>
+11:	<div id="ip_gr"><b></b><span id="ip"></span></div>
+12:	<div id="country_gr"><b></b><span id="country"></span></div>
+13:	<div id="region_gr"><b></b><span id="region"></span></div>
+14:	<div id="city_gr"><b></b><span id="city"></span></div>
+15:	<div id="zip_gr"><b></b><span id="zip"></span></div>
+16:	<div id="lat_gr"><b></b><span id="lat"></span></div>
+17:	<div id="lng_gr"><b></b><span id="lng"></span></div>
+18:	<div id="tz_gr"><b></b><span id="tz"></span></div>
+19:	<div id="src_gr"><b></b><a id="src"></a></div>
+20:	<div id="cmp_gr"><b></b><a id="cmp"></a></div>
+21:	<hr>
+22:	<div id="links"></div>
+23:	</div>
+24:	
+25:	<script src="js/lib.js"></script>
+26:	<script src="js/popup.js"></script>
+27:	</body></html>

@@ -1,5 +1,17 @@
 var cache=opera.extension.bgProcess.cache;
 
+function addCSS(cssCode)
+    {
+    var styleElement = document.createElement("style");
+    styleElement.type = "text/css";
+    if (styleElement.styleSheet) {
+        styleElement.styleSheet.cssText = cssCode;
+    } else {
+        styleElement.appendChild(document.createTextNode(cssCode));
+    }
+    document.getElementsByTagName("head")[0].appendChild(styleElement);
+    }
+
 function loadPrefs()
     {
     //===badge===
@@ -78,7 +90,13 @@ function loadPrefs()
     for(var q in linksCfg)
 	str+=q+'='+linksCfg[q]+'\n';
     gebi('linksCfg').value=str;
+    gebi('linksCfg').style.height='auto';
     gebi('linksCfg').style.height=(gebi('linksCfg').border_size+gebi('linksCfg').scrollHeight)+'px';
+    gebi('linksResetNow').onclick=function()
+        {
+        widget.preferences.linksCfg=defaults.linksCfg;
+        loadPrefs();
+        };
     if(widget.preferences.linksStyle=='1')
 	gebi('linksStyle1').checked=true;
     else if(widget.preferences.linksStyle=='2')
@@ -90,10 +108,13 @@ function loadPrefs()
     gebi('source0').onclick=function() { widget.preferences.source=0; };
     gebi('source2').onclick=function() { widget.preferences.source=2; };
     gebi('source1000').onclick=function() { widget.preferences.source=1000; };
+    gebi('source1001').onclick=function() { widget.preferences.source=1001; };
     if(widget.preferences.source=='0')
 	gebi('source0').checked=true;
     else if(widget.preferences.source=='2')
 	gebi('source2').checked=true;
+    else if(widget.preferences.source=='1001')
+	gebi('source1001').checked=true;
     else
 	gebi('source1000').checked=true;
     gebi('userkey').onchange=function() { widget.preferences.userkey=this.value; };
@@ -105,10 +126,24 @@ function loadPrefs()
     //===general===
     gebi('disableButton').onclick=function() { widget.preferences.disableButton=this.checked?'1':'0'; };
     gebi('disableButton').checked=widget.preferences.disableButton=='1';
+    gebi('showInfo').onclick=function() { widget.preferences.showInfo=this.checked?'1':'0'; };
+    gebi('showInfo').checked=widget.preferences.showInfo=='1';
+    if(widget.preferences.showInfo=='0') addCSS('.info{display:none}');
     gebi('debugMode').onclick=function() { widget.preferences.debugMode=this.checked?'1':'0'; };
     gebi('debugMode').checked=widget.preferences.debugMode=='1';
-
-    gebi('cacheClearNow').onclick=function() { clearCache() };
+    if(widget.preferences.debugMode=='0') addCSS('.debugMode{display:none}');
+    
+    gebi('eventType0').onclick=function() { widget.preferences.eventType=0 };
+    gebi('eventType1').onclick=function() { widget.preferences.eventType=1 };
+    gebi('eventType2').onclick=function() { widget.preferences.eventType=2 };
+    if(widget.preferences.eventType=='0')
+	gebi('eventType0').checked=true;
+    else if(widget.preferences.eventType=='1')
+	gebi('eventType1').checked=true;
+    else
+	gebi('eventType2').checked=true;
+    
+    //===test===
     gebi('prefsClearNow').onclick=function()
         {
         if(confirm(lang.confirmReset))
@@ -117,23 +152,63 @@ function loadPrefs()
             loadPrefs();
             }
         };
-    if(widget.preferences.debugMode=='0') gebi('test').style.display='none';
-    gebi('test').onclick=function()
+    gebi('cacheClearNow').onclick=function() { clearCache() };
+    gebi('cacheClearErr').onclick=function()
+        {
+        for(var q in cache.data)
+            {
+            if(cache.data[q].d.substr(0,3)!='ok|')
+                delete cache.data[q];
+            }
+        };
+    gebi('cacheTruncNow').onclick=function()
+        {
+        cache.trunc();
+        cache.save();
+        };
+    gebi('cacheShow').onclick=function()
         {
         var q=JSON.stringify(cache.data);
         var l=q.length;
         var n=0;
-        for(var w in cache.data) n++;
-        prompt(l+'bytes/'+n+'strings='+(l/n),q);
-        }; 
+        var u=0;
+        for(var w in cache.data)
+            {
+            n++;
+            u+=w.length+cache.data[w].d.length;
+            }
+        alert('cache: '+l+'chars/'+n+'strings='+Math.round(l/n)+'avg;\n'+
+                'overhead: '+(l-u)+'chars/...='+Math.round((l-u)/n)+'avg; '+
+                            Math.round((l-u)/l*100)+'%');
+        };
+    gebi('cacheShow1').onclick=function()
+        {
+        precache=opera.extension.bgProcess.precache;
+        var q=JSON.stringify(precache);
+        var l=q.length;
+        var n=0;
+        var u=0;
+        //~ clearCache();
+        for(var w in precache)
+            {
+            n++;
+            u+=w.length+precache[w].length;
+            //~ cache.setItem(w,precache[w]);
+            }
+        alert('precache: '+l+'chars/'+n+'strings='+Math.round(l/n)+'avg;\n'+
+                'overhead: '+(l-u)+'chars/...='+Math.round((l-u)/n)+'avg; '+
+                            Math.round((l-u)/l*100)+'%');
+        //~ gebi('cacheShow').click();
+        //~ prompt('result',JSON.stringify(opera.extension.bgProcess.result));
+        }
     
     //===maps===
     gebi('mapUsersBtn').onclick=function()
         {
         gebi('mapUsersImg').src='http://flag-button.tk/map.php?for=flag-button';
         gebi('mapUsersImg').style.display='block';
-        gebi('mapUsersBtn').style.display='none';
         gebi('mapUsersWarning').style.display='none';
+        gebi('mapUsersBtn').style.display='none';
         }
 
     gebi('mapSitesBtn').onclick=function()
@@ -143,7 +218,11 @@ function loadPrefs()
         gebi('mapSitesBtn').style.display='none';
         }
 
-    
-    
+    //===licence===
+    gebi('lic').onload=function()
+        {
+        this.height=this.contentWindow.document.body.scrollHeight
+        }
+    gebi('lic').height=gebi('lic').contentWindow.document.body.scrollHeight;
     }
 loadPrefs();

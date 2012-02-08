@@ -1,83 +1,155 @@
-﻿<!DOCTYPE html><html><head><meta charset="utf-8">
-<title>Guzik z flagą - ustawienia</title>
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<title>Guzik z flagą &mdash; preferencje</title>
 <link rel="stylesheet" href="css/options.css">
 </head><body>
-    <h1>Guzik z flagą - ustawienia</h1>    
+    <h1>Guzik z flagą &mdash; preferencje</h1>
     <fieldset><legend>Etykieta</legend>
-	<input type="checkbox" id="showBadge"/><label for="showBadge">Dołącz do flagi etykietę z dwuliterowym kodem kraju.</label>
+	<input type="checkbox" id="showBadge"/><label for="showBadge"> Dołącz do flagi etykietę z dwuliterowym kodem kraju</label>
 	<br>
-	<input type="checkbox" id="showXXBadge"/><label for="showXXBadge"> Pokazuj <tt>XX</tt> na etykiecie, jeśli kraj nie jest znany</label>
+	<input type="checkbox" id="showXXBadge"/><label for="showXXBadge"> Pokaż <tt>XX</tt> na etykiecie, jeśli kraj nie jest znany</label>
 	<br>
 	<input type="color" id="badgeBGcolor"/><label for="badgeBGcolor"> Kolor etykiety</label>
 	<br>
-	<input type="color" id="badgeTXcolor"/><label for="badgeTXcolor"> Kolor liter na etykiecie</label>
+	<input type="color" id="badgeTXcolor"/><label for="badgeTXcolor"> Kolor tekstu na etykiecie</label>
     </fieldset>
     
     <fieldset><legend>Okno</legend>
 	<div class="info">
-	    Chodzi o okienko wyłaniające się po kliknięciu na przycisk.
+	    Sekcja dotyczy okienka wyłaniającego się po kliknięciu na guzik.
 	</div>
-	<h3>Szerokość okna (w pikselach):</h3>
-	    <input type="number" id="popupWidth"/><label for="popupWidth"></label>
+	<label for="popupWidth">Szerokość okna (w pikselach): <input type="number" id="popupWidth"/></label>
 	
-	<h3>Lista łącz:</h3>
-	<div class="info">
-	    Poniżej mozesz zmieniać łącza znajdujące się w dolnej części okna.
-	    Każda linia zawiera nazwę i adres łącza, rozdzielone znakiem równości.
+	<h3>Lista łącz</h3>
+	    <div class="info">
+	    Poniżej możesz dostosować łącza znajdujące się w dolnej części okna.
+	    Każda linia powinna zawierać nazwę i adres łącza, rozdzielone znakiem równości.
 	    <br>
-	    Możesz wykorzystywać cechy strony, wstawiając do adresu <tt>[symbole]</tt>: host: <tt>[host]</tt> , adres IP: <tt>[ipAddress]</tt> , nazwę kraju: <tt>[countryName]</tt> , regionu: <tt>[regionName]</tt> , i miasta: <tt>[cityName]</tt> ; kod pocztowy: <tt>[zipCode]</tt> , szerokość geograficzną: <tt>[latitude]</tt> , długość geograficzną: <tt>[longitude]</tt> i strefę czasową: <tt>[timeZone]</tt>.
-	    <br>
+	    Możesz korzystać z danych o stronie, wstawiając następujące <tt>[symbole]</tt>:
+	    <tt>[host]</tt> (domena), <tt>[ip]</tt> (adres IP), <tt>[country]</tt> (kraj), <tt>[region]</tt> (region), <tt>[city]</tt> (miasto), <tt>[zip]</tt> (kod pocztowy), <tt>[lat]</tt> (szerokość geograficzna), <tt>[lng]</tt> (długość geograficzna), <tt>[tz]</tt> (strefa czasowa).
 	</div>
 	<textarea id="linksCfg"></textarea>
+	<br>
+	<button id="linksResetNow">Przywróć domyślne ustawienia</button>
 	
-	<h3>Wygląd łącz:</h3>
+	<h3>Wygląd łącz</h3>
 	<div class="info">
-	    Tu możesz wybrac sposób rozdzielania łącz:
+	    Tu możesz wybrać sposób ułożenia łącz:
 	</div>
-	<input type="radio" name="linksStyle" id="linksStyle0"/><label for="linksStyle0"> pusta przestrzeń,</label>
+	<input type="radio" name="linksStyle" id="linksStyle0"/><label for="linksStyle0"> ciąg bez przecinków</label>
 	<br>
-	<input type="radio" name="linksStyle" id="linksStyle1"/><label for="linksStyle1"> przecinek,</label>
+	<input type="radio" name="linksStyle" id="linksStyle1"/><label for="linksStyle1"> ciąg z przecinkami</label>
 	<br>
-	<input type="radio" name="linksStyle" id="linksStyle2"/><label for="linksStyle2"> nowa linia.</label>
+	<input type="radio" name="linksStyle" id="linksStyle2"/><label for="linksStyle2"> kolumna</label>
 	<br>
     </fieldset>
     
     <fieldset><legend>Własne ikony</legend>
 	<div class="info">
-	    Jeśli znalazłeś przestarzałe ikony, nie podoba ci się domyślna <q>nieznana flaga</q> lub po prostu chcesz użyć innych ikon dla niektórych krajów, możesz je zmienić tutaj. W każdej linii wpisz dwuliterowy kod kraju i adres ikony rozdzielone znakiem równości.
-	    Kod ikony nieznanego kraju (domyślnej ikony) to <tt>XX</tt>
-	    Na przykład <tt>XX=http://flag-button.tk/European-Union-Flag-16.png</tt>
+	    Jeśli są tu przestarzałe ikony, nie podoba ci się domyślna „nieznana flaga” lub po prostu chcesz użyć innych ikon dla niektórych krajów, możesz je zmienić tutaj.
+	    W każdej linii wpisz dwuliterowy kod kraju i adres ikony rozdzielone znakiem równości.
+	    Kod ikony „nieznanego kraju” (domyślnej ikony) to <tt>XX</tt>.
+	    Przykład: aby przywrócić flagę Unii Europejskiej jako domyślną, wpisz:
+	    <tt>XX=http://flag-button.tk/European-Union-Flag-16.png</tt>
 	</div>
 	<textarea id="iconsCfg"></textarea>
     </fieldset>
     
+    <fieldset><legend>Źródła</legend>
+	<div class="info">
+	    Za każdym razem gdy odwiedzasz nową stronę, rozszerzenie pobiera dane o jej położeniu z wybranego niżej serwisu.
+	</div>
+	<div class="warning"><b>Uwaga!</b>
+	    Nikt nie może zapewnić tego, że wybrany serwis nie przechowuje historii twoich zapytań ani wykazu odwiedzanych przez ciebie stron.
+	    Tak naprawdę na większości stron umieszczone są banery, których właściciele posiadają i częstokroć używają takich informacji.
+	</div>
+	<input type="radio" name="source" id="source0"/><label for="source0"> <a href="http://freegeoip.net/">freegeoip.net</a> &mdash;
+	    używa darmowej bazy GeoLite należącej do <a href="http://maxmind.com/">MaxMind</a>.
+	</label>
+	<br>
+	<input type="radio" name="source" id="source2"/><label for="source2"> <a href="http://ipinfodb.com/">ipinfodb.com</a> &mdash;
+	    używa darmowej bazy IP2Location Lite należącej do <a href="http://www.ip2location.com/?rid=1094">IP2Location</a>.
+	</label>
+	<br>
+	<input type="radio" name="source" id="source1000"/><label for="source1000"> <a href="http://flag-button.tk/">flag-button.tk</a> &mdash;
+	    zbiera dane z różnych darmowych źródeł i wybiera najlepsze.
+	</label>
+	<span class="debugMode">
+	    <br>
+	    <input type="radio" name="source" id="source1001"/><label for="source1001"> <a href="http://localhost/">localhost</a> &mdash;
+		wersja zainstalowana na twoim komputerze.
+	    </label>
+	</span>
+	<br>
+	
+	<div class="info">
+	    Jeśli chcesz używać <a href="http://ipinfodb.com/">ipinfodb.com</a>, wskazana jest (darmowa) <a href="http://ipinfodb.com/register.php">rejestracja</a> i podanie uzyskanego klucza dostępu.
+	    Ma to na celu ulepszanie zasobów serwisu oraz ominięcie ograniczenia jednoczesnych zapytań
+	    (przed rejestracją, szybkość jest ograniczona do 1 zapytania na sekundę od wszystkich użytkowników tego rozszerzenia;
+            po niej, szybkość jest ograniczona do 1 zapytania na sekundę tylko od ciebie).
+	</div>
+	Klucz dostępu do <a href="http://ipinfodb.com/">ipinfodb.com</a> (<a href="http://ipinfodb.com/register.php">rejestracja</a>): <input type="text" id="userkey"/>
+	
+	<h3>Tryb bez połączenia</h3>
+	<div class="info">
+	    W tym trybie zapytania nie są wysyłane, zobaczysz jedynie informacje o już odwiedzanych stronach.
+	</div>
+	<input type="checkbox" id="offlineMode"/><label for="offlineMode"> Włącz tryb bez połączenia</label>
+    </fieldset>
+    
     <fieldset><legend>Ogólne</legend>
 	<div class="info">
-	    Disabling the following feature will avoid icon flickering while switching between tabs, but on some pages (like speddial) you will see a flag from the previous page.
+	    Wyłączenie tej opcji sprawi, że ikona nie bedzie zmieniać stanu podczas przełączania między kartami, ale na niektórych stronach (np. w szybkim wybieraniu) zobaczysz dane poprzedniej strony.
 	</div>
-	<input type="checkbox" id="disableButton"/><label for="disableButton"> Disable button on leaving the page</label>
+	<input type="checkbox" id="disableButton"/><label for="disableButton"> Wygaś przycisk podczas opuszczania strony</label>
 	<br>
-	<input type="checkbox" id="debugMode"/><label for="debugMode"> Show debug info</label>
-	<button id="test">test</button>
+	<input type="checkbox" id="showInfo"/><label for="showInfo"> Wyświetlaj objaśnienia niniejszych opcji (zmiana będzie widoczna po przeładowaniu)</label>
+	<br>
+	<input type="checkbox" id="debugMode"/><label for="debugMode"> Pokazuj informacje odpluskwiające</label>
 	
-	<h3>Prywrócenie domyślnych ustawień:</h3>
-	<button id="prefsClearNow">Przywróć</button>
-	<h3>Wyczyść pamięć:</h3>
-	<button id="cacheClearNow">Czyść teraz!</button>
+	<h3>Sposób pracy</h3>
+	<input type="radio" name="eventType" id="eventType0"/><label for="eventType0">
+	    stary (nie działa na kartach prywatnych)
+	</label>
+	<br>
+	<input type="radio" name="eventType" id="eventType1"/><label for="eventType1">
+	    nowy (działa na kartach prywatnych, ale czasem zachowuje się dziwnie)
+	</label>
+	<br>
+	<input type="radio" name="eventType" id="eventType2"/><label for="eventType2">
+	    obydwa
+	</label>
 	
-	<h3>Map of users</h3>
+	<h3>Przywracanie ustawień</h3>
+	<button id="prefsClearNow">Przywróć domyślne ustawienia</button>
+	<button id="cacheClearNow">Usuń wszystkie przechowywane informacje o stronach</button>
+	<button id="cacheClearErr">Usuń wadliwe informacje o stronach</button>
+	<button id="cacheTruncNow" class="debugMode">Usuń najstarsze 10% informacji</button>
+	<button id="cacheShow" class="debugMode">Pokaż statystyki informacji</button>
+	<button id="cacheShow1" class="debugMode">Pokaż statystyki dołączonych fabrycznie informacji</button>
+    </fieldset>
+    
+    <fieldset><legend>Mapy</legend>
+	<h3>Mapa użytkowników</h3>
 	<div class="info">
-	    On this map you can see geographical location of all users of this extension, who agreed to share this information
+	    Na tej mapie zaznaczone są miejsca, w których użytkownicy, którzy zgodzili się na umieszczenie ich na mapie, korzystają z tego rozszerzenia.
 	</div>
-	<div id="mapUsersWarning" class="warning"><b>Warning!</b>
-	    By pressing this button, you agree that your coordinates will be stored and your location will be marked on this map by the same city-sized dot. Actually, any Internet site you are visiting already has this information</div>
-	<button id="mapUsersBtn">Show the map</button>
+	<div id="mapUsersWarning" class="warning"><b>Uwaga!</b>
+	    Naciskając ten przycisk, zgadzasz się na wysłanie i naniesienie twoich współrzędnych na mapę w postaci kropki.
+	    W tej chwili każda strona którą odwiedzasz posiada taką informację.
+	</div>
+	<button id="mapUsersBtn">Pokaż mapę</button>
 	<img id="mapUsersImg" style="display:none">
 	
-	<h3>Map of sites</h3>
-	<div class="info">On this map you can see geographical location of all sites ever visited by users of this extension</div>
-	<button id="mapSitesBtn">Show the map</button>
+	<h3>Mapa internetu (wg danych ze strony flag-button.tk)</h3>
+	<div class="info">
+	    Na tej mapie zaznaczone są miejsca, w których leżą serwery stron odwiedzanych przez użytkowników korzystających z bazy <a href="http://flag-button.tk/">flag-button.tk</a>
+	</div>
+	<button id="mapSitesBtn">Pokaż mapę</button>
 	<img id="mapSitesImg" style="display:none">
+    </fieldset>
+    
+    <fieldset><legend>Licencja</legend>
+	<object id="lic" data="licenses.html"></object>
     </fieldset>
     
 <script src="lang.js"></script>

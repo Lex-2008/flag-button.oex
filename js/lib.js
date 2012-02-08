@@ -6,18 +6,16 @@ defaults={
     badgeTXcolor:'#ffffff',
     disableButton:1,
     debugMode:0,
-    source:0,//0=freegeoip.net,2=ipinfodb.com,1000=flag-button.tk
+    source:2,//0=freegeoip.net,2=ipinfodb.com,1000=flag-button.tk
+    eventType:1,
     userkey:' ',
-    offlineMode=0,
+    offlineMode:0,
+    showInfo:1,
     popupWidth:200,
     linksCfg:'{}',
     linksStyle:0,
     iconsCfg:'{}',
 };
-if(Math.random()<0.5)
-    defaults.source=0;
-else
-    defaults.source=2;
 try {
     if(lang.defLinks)
 	defaults.linksCfg=JSON.stringify(lang.defLinks);
@@ -41,14 +39,24 @@ opera.postError('('+typeof(o)+')='+o+'\n\n'+str);
 var cache={
     getItem:function(name)
         {
-        var q=this.data[name].d.split('|');
-        //code|err|ip|co|country|region|city|zip|lat|lng|tz|src|cmp
-        return {"code":q[0],"err":q[1],"ip":q[2],"co":q[3],"country":q[4],"region":q[5],"city":q[6],"zip":q[7],"lat":q[8],"lng":q[9],"tz":q[10],"src":q[11],"cmp":q[12]};
+        if(window.precache && precache[name])
+            {
+            var q=precache[name].split('|');
+            //code|err|ip|co|country|region|city|zip|lat|lng|tz|src|cmp
+            return {"code":q[0],"err":q[1],"ip":q[2],"co":q[3],"country":q[4],"region":q[5],"city":q[6],"zip":q[7],"lat":q[8],"lng":q[9],"tz":q[10],"src":q[11],"cmp":q[12]};
+            }
+        if(this.data[name])
+            {
+            var q=this.data[name].d.split('|');
+            //code|err|ip|co|country|region|city|zip|lat|lng|tz|src|cmp
+            return {"code":q[0],"err":q[1],"ip":q[2],"co":q[3],"country":q[4],"region":q[5],"city":q[6],"zip":q[7],"lat":q[8],"lng":q[9],"tz":q[10],"src":q[11],"cmp":q[12]};
+            }
+        else return false;
         },
     setItem:function(name,val,t,d)//val=string
         {
         if(t===undefined)
-            t=Math.round((new Date()).getTime()/1000)-1327000000;
+            t=Math.round((new Date()).getTime()/100000)-13270000;
         try {
             this.data[name]={'t':t,'d':val};
             }
@@ -122,10 +130,20 @@ function clearCache()
     }
 
 
+function ensureAllPrefs()
+    {
+    for(var q in defaults)
+        if(widget.preferences[q]===undefined)
+            widget.preferences[q]=defaults[q];
+    }
+
+
+
 function clearPrefs()
     {
     //this might whipe your cache
     widget.preferences.clear();
+    ensureAllPrefs();
     }
 
 

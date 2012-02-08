@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<widget xmlns="http://www.w3.org/ns/widgets" id="https://addons.opera.com/addons/extensions/details/flag-button/" version="1.4">
+<widget xmlns="http://www.w3.org/ns/widgets" id="https://addons.opera.com/addons/extensions/details/flag-button/" version="1.5">
     <name xml:lang="en">Flag Button</name>
     <name xml:lang="ru">Flag Button</name>
     <name xml:lang="tr">Bayrak Düğmesi</name>
@@ -7,9 +7,7 @@
     <icon src="icons/svg2raster-16.png" width="16" height="16"/>
     <icon src="icons/svg2raster-64.png" width="64" height="64"/>
     <icon src="icons/svg2raster-256.png" width="256" height="256"/>
-    <access origin="http://freegeoip.net" subdomains="true" />
-    <access origin="http://ipinfodb.com" subdomains="true" />
-    <access origin="http://flag-button.tk" subdomains="true" />
+    <access origin="*"/>
     <license href="http://www.apache.org/licenses/LICENSE-2.0">Copyright 2011 alex-shpak
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,16 +22,16 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.</license>
     <author href="http://my.opera.com/alex-shpak/" email="alex-shpak@myopera.com">Alexey Shpakovsky</author>
-    <description xml:lang="en">Adds a button with a flag of a country where the sever is located. Uses flag-button.tk API.
-
-Have you ever wondered where in the "real" world is located the site, which you're currently viewing? Norway? USA? Netherlands? This extension gives an answer to this question! It adds a button, on which you see a flag of a country, where the site is located, and two letters, denoting this country. If you hover the button with your mouse, a tooltip will appear, where you can learn server's IP and the full country name. If you click the button, a bigger window will popup, with more detailed information: Region, City, and geographical coordinates (if available). The same window features links to who.is (domain information site) and google maps.</description>
-    <description xml:lang="ru">Добавляет кнопку с флагом страны, в которой расположен сервер. Использует данные сайта flag-button.tk.
-
-Задумывались ли Вы когда-нибудь, в какой стране (в реальном мире) расположен тот сайт, который Вы сейчас смотрите? Россия? Норвегия? США? Это расширение дает ответ на этот вопрос! Оно добавляет кнопку с флагом той страны, где расположен сайт, и её 2-буквенным кодом. При наведении курсора мыши на кнопку появляется подсказка с IP-адресом сервера и полным названием страны. При нажатии на кнопку появляется небольшое окошко с более детальной информацией: регионом, городом и географическими координатами (если доступно). В том же окне есть ссылки на сайты who.is (информация о домене) и Google карты.</description>
-    <description xml:lang="tr">Bu düğme, sunucunun bulunduğu ülkenin bayrağını göstermektedir. Bilgiler flag-button.tk sitesinden alınır.
-
-Hiç gezdiğiniz web sayfasının sunucularının gerçek dünyada hangi ülkede olduğunu merak etmediniz mi? Türkiye? Norveç? USA? İşte bu eklenti bu soruya cevap veriyor! Araç çubuğunuza bir düğme ekleyerek; sunucunun bulunduğu ülke bayrağını ve ülke kodunu size gösteriyor. Eğer farenizin imlecini düğme üzerine götürürseniz ayrıca size web sitesine ilişkin IP ve yerleşim bilgilerini de vermektedir. Bunun yanı sıra düğmeyi tıklamanız halinde; daha büyük bir pencere açılacak ve siteye ilişkin çok daha detaylı bilgiler ( IP,Sunucu, Şehir, Enlem, Boylam, vb.) alabileceksiniz. Yine bu pencerede size kolaylık sağlayabilecek bazı linkler (who.is be google haritalar)de bulunmaktadır.</description>
-<description xml:lang="pl">Dodaje przycisk z flagą kraju, w którym znajduje się serwer. Korzysta z danych flag-button.tk.
-
-Czy kiedykolwiek zastanawiałeś się, gdzie „w realu” znajduje się strona, którą właśnie odwiedzasz? W Norwegii? Polsce? Kanadzie? To rozszerzenie odpowie na twoje pytanie! Kiedy je zainstalujesz, zostanie dodany przycisk, na którym zobaczysz flagę i dwuliterowy symbol kraju, w którym znajduje się strona. Po najechaniu na przycisk kursorem, pojawia się dymek z adresem IP serweru i pełną nazwą państwa. Kliknięcie guzika powoduje wyłonienie się większego okna z kolejnymi informacjami: regionem, miastem i współrzędnymi geograficznymi (o ile są dostępne). W tym samym oknie znajdziesz łącza do who.is (informacje o domenach) i Map Google.</description>
+    <description xml:lang="en">
+        Adds a button with a flag of a country where the sever is located. Uses API of several external sites.
+    </description>
+    <description xml:lang="ru">
+        Добавляет кнопку с флагом страны, в которой расположен сервер. Использует данные нескольких внешних сайтов.
+    </description>
+    <description xml:lang="tr">
+        Bu düğme, sunucunun bulunduğu ülkenin bayrağını göstermektedir. Dış kaynaklı farklı web sayfalarının API'lerini kullanmaktadır.
+    </description>
+    <description xml:lang="pl">
+        Dodaje przycisk z flagą kraju, w którym znajduje się serwer. Korzysta z danych wielu serwisów.
+    </description>
 </widget>

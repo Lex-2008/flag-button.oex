@@ -15,42 +15,85 @@
     
     <fieldset><legend>Popup window</legend>
 	<div class="info">
-	    Popup is a small window that you see when click on an extension button.
+	    Popup is a small window that you see when click extension button
 	</div>
-	<h3>Popup width:</h3>
-	    <input type="number" id="popupWidth"/><label for="popupWidth"> pixels</label>
+	<label for="popupWidth">Popup width: <input type="number" id="popupWidth"/> pixels</label>
 	
-	<h3>Links list:</h3>
+	<h3>Links list</h3>
 	    <div class="info">
 	    Below you can change what links do you want to see at the bottom of the popup window.
 	    Each line contains link title and URL, separated by equal sign.
 	    <br>
-	    Note that you can use several <tt>[placeholders]</tt> to customize URLs: <tt>[host], [ipAddress], [countryName], [regionName], [cityName], [zipCode], [latitude], [longitude], [timeZone]</tt>.
-	    <br>
+	    You can use several <tt>[placeholders]</tt> to customize URLs:
+	    <tt>[host]</tt> (domain name), <tt>[ip]</tt>, <tt>[country]</tt>, <tt>[region]</tt>, <tt>[city]</tt>, <tt>[zip]</tt> (zip/postal code), <tt>[lat]</tt> (latitude), <tt>[lng]</tt> (longitude), <tt>[tz]</tt> (time zone).
 	</div>
 	<textarea id="linksCfg"></textarea>
+	<br>
+	<button id="linksResetNow">Reset to default values</button>
 	
-	<h3>Links style:</h3>
+	<h3>Links style</h3>
 	<div class="info">
-	    Below you can change how would you like these links to be separated:
+	    Below you can change how these links should be organized
 	</div>
-	<input type="radio" name="linksStyle" id="linksStyle0"/><label for="linksStyle0"> by blank space</label>
+	<input type="radio" name="linksStyle" id="linksStyle0"/><label for="linksStyle0"> space-separated list</label>
 	<br>
-	<input type="radio" name="linksStyle" id="linksStyle1"/><label for="linksStyle1"> by comma</label>
+	<input type="radio" name="linksStyle" id="linksStyle1"/><label for="linksStyle1"> comma-separated list</label>
 	<br>
-	<input type="radio" name="linksStyle" id="linksStyle2"/><label for="linksStyle2"> listed in a column</label>
+	<input type="radio" name="linksStyle" id="linksStyle2"/><label for="linksStyle2"> column</label>
 	<br>
     </fieldset>
     
     <fieldset><legend>Custom icons</legend>
 	<div class="info">
-	    If you noticed an outdated icon, don't like the default <q>unknown flag</q> icon, or want to use another icon for some country, you can configure it here.
+	    If you noticed an outdated icon, don't like the default "unknown flag" icon, or want to use another icon for some country, you can configure it here.
 	    On each line, type two-letter country code and custom icon URL, separated by equal sign.
-	    Note that you can use <tt>XX</tt> country code for unknown flag (default icon).
+	    Note that you can use <tt>XX</tt> country code for "unknown flag" (default icon).
 	    For example, to change it back to European Union flag, add this line:
 	    <tt>XX=http://flag-button.tk/European-Union-Flag-16.png</tt>
 	</div>
 	<textarea id="iconsCfg"></textarea>
+    </fieldset>
+    
+    <fieldset><legend>Source</legend>
+	<div class="info">
+	    Every time you visit a new site, this extension sends query about its location to the selected below source site.
+	</div>
+	<div class="warning"><b>Warning!</b>
+	    Nobody can guarantee that selected source site doesn't keep a history of your queries and doesn't save a list of all sites you have visited.
+	    In fact, most of sites in the Internet include banners, which owners have and most probably use this information.
+	</div>
+	<input type="radio" name="source" id="source0"/><label for="source0"> <a href="http://freegeoip.net/">freegeoip.net</a> &mdash;
+	    uses free GeoLite database by <a href="http://maxmind.com/">MaxMind</a>.
+	</label>
+	<br>
+	<input type="radio" name="source" id="source2"/><label for="source2"> <a href="http://ipinfodb.com/">ipinfodb.com</a> &mdash;
+	    uses free IP2Location Lite database by <a href="http://www.ip2location.com/?rid=1094">IP2Location</a>.
+	</label>
+	<br>
+	<input type="radio" name="source" id="source1000"/><label for="source1000"> <a href="http://flag-button.tk/">flag-button.tk</a> &mdash;
+	    collects data from several free sources and chooses the best.
+	</label>
+	<span class="debugMode">
+	    <br>
+	    <input type="radio" name="source" id="source1001"/><label for="source1001"> <a href="http://localhost/">localhost</a> &mdash;
+		locally installed version.
+	    </label>
+	</span>
+	<br>
+	
+	<div class="info">
+	    For using <a href="http://ipinfodb.com/">ipinfodb.com</a> source it is recommended to <a href="http://ipinfodb.com/register.php">register</a> (it's free) and enter provided access key.
+	    This will help to optimize server resources and remove the limit on parallel queries
+	    (Without using a key speed is limited to 1 request per second from all users of this extension.
+	    After registration the speed is limited to 1 request per second from you only).
+	</div>
+	<a href="http://ipinfodb.com/">ipinfodb.com</a> access key (<a href="http://ipinfodb.com/register.php">registration</a>): <input type="text" id="userkey"/>
+	
+	<h3>Offline mode</h3>
+	<div class="info">
+	    In this mode queries to source site won't be sent, and only the information about already visited tites will be shown
+	</div>
+	<input type="checkbox" id="offlineMode"/><label for="offlineMode"> Enable offline mode</label>
     </fieldset>
     
     <fieldset><legend>General</legend>
@@ -59,29 +102,54 @@
 	</div>
 	<input type="checkbox" id="disableButton"/><label for="disableButton"> Disable button on leaving the page</label>
 	<br>
+	<input type="checkbox" id="showInfo"/><label for="showInfo"> Show information about options (will be applied after page reload)</label>
+	<br>
 	<input type="checkbox" id="debugMode"/><label for="debugMode"> Show debug info</label>
-	<button id="test">test</button>
 	
-	<h3>Preferences reset:</h3>
+	<h3>Work method</h3>
+	<input type="radio" name="eventType" id="eventType0"/><label for="eventType0">
+	    old (doesn't work with private tabs)
+	</label>
+	<br>
+	<input type="radio" name="eventType" id="eventType1"/><label for="eventType1">
+	    new (works with private tabs, but sometimes behaves strangely)
+	</label>
+	<br>
+	<input type="radio" name="eventType" id="eventType2"/><label for="eventType2">
+	    both
+	</label>
+	
+	<h3>Preferences reset</h3>
 	<button id="prefsClearNow">Reset preferences to defaults</button>
-	<h3>Clear cache:</h3>
-	<button id="cacheClearNow">Clear now!</button>
-	
+	<button id="cacheClearNow">Clear entire cache</button>
+	<button id="cacheClearErr">Delete error records from cache</button>
+	<button id="cacheTruncNow" class="debugMode">Delete oldest 10% of cache</button>
+	<button id="cacheShow" class="debugMode">Show cache statistics</button>
+	<button id="cacheShow1" class="debugMode">Show preceche statistics</button>
+    </fieldset>
+    
+    <fieldset><legend>Maps</legend>
 	<h3>Map of users</h3>
 	<div class="info">
 	    On this map you can see geographical location of all users of this extension, who agreed to share this information
 	</div>
 	<div id="mapUsersWarning" class="warning"><b>Warning!</b>
-	    By pressing this button, you agree that your coordinates will be stored and your location will be marked on this map by the same city-sized dot. Actually, any Internet site you are visiting already has this information</div>
+	    By pressing this button, you agree that your coordinates will be stored and your location will be marked on this map by the same city-sized dot.
+	    Actually, any Internet site you are visiting already has this information.
+	</div>
 	<button id="mapUsersBtn">Show the map</button>
 	<img id="mapUsersImg" style="display:none">
 	
-	<h3>Map of sites</h3>
+	<h3>Internet map (by flag-button.tk site data)</h3>
 	<div class="info">
-	    On this map you can see geographical location of all sites ever visited by users of this extension
+	    On this map you can see geographical location of all sites visited by users of this extension who set <a href="http://flag-button.tk/">flag-button.tk</a> as their source
 	</div>
 	<button id="mapSitesBtn">Show the map</button>
 	<img id="mapSitesImg" style="display:none">
+    </fieldset>
+    
+    <fieldset><legend>Licenses</legend>
+	<object id="lic" data="licenses.html"></object>
     </fieldset>
     
 <script src="lang.js"></script>

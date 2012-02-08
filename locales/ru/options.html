@@ -17,36 +17,37 @@
 	<div class="info">
 	    Это окно, которое Вы видите, когда нажимаете на кнопку расширения
 	</div>
-	<h3>Ширина окна:</h3>
-	    <input type="number" id="popupWidth"/><label for="popupWidth"> пикс</label>
+	<label for="popupWidth">Ширина окна: <input type="number" id="popupWidth"/> пикс</label>
 	
-	<h3>Список ссылок:</h3>
+	<h3>Список ссылок</h3>
 	<div class="info">
 	    Ниже Вы можете настроить, какие ссылки хотите видеть внизу всплывающего окна.
 	    На каждой строчке введите заголовок ссылки и адрес, разделенные знаком равенства.
 	    <br>
-	    Вы также можете использовать <tt>[замещающий текст]</tt> для настройки адресов: <tt>[host]</tt> (адрес сайта), <tt>[ipAddress]</tt> (IP-адрес), <tt>[countryName]</tt> (название страны), <tt>[regionName]</tt> (регион, область или штат), <tt>[cityName]</tt> (название города), <tt>[zipCode]</tt> (почтовый код), <tt>[latitude]</tt> (широта), <tt>[longitude]</tt> (долгота), <tt>[timeZone]</tt> (часовой пояс).
-	    <br>
+	    Вы также можете использовать <tt>[замещающий текст]</tt> для настройки адресов:
+	    <tt>[host]</tt> (адрес сайта), <tt>[ip]</tt> (его IP-адрес), <tt>[country]</tt> (страна), <tt>[region]</tt> (регион, область или штат), <tt>[city]</tt> (город), <tt>[zip]</tt> (почтовый код), <tt>[lat]</tt> (широта), <tt>[lng]</tt> (долгота), <tt>[tz]</tt> (часовой пояс).
 	</div>
 	<textarea id="linksCfg"></textarea>
+	<br>
+	<button id="linksResetNow">Вернуть значения по умолчанию</button>
 	
-	<h3>Стиль ссылок:</h3>
+	<h3>Стиль ссылок</h3>
 	<div class="info">
-	    Ниже Вы можете выбрать, как эти ссылки будут разделены:
+	    Ниже Вы можете выбрать, как эти ссылки будут организованы
 	</div>
-	<input type="radio" name="linksStyle" id="linksStyle0"/><label for="linksStyle0"> пробелом</label>
+	<input type="radio" name="linksStyle" id="linksStyle0"/><label for="linksStyle0"> список через пробелом</label>
 	<br>
-	<input type="radio" name="linksStyle" id="linksStyle1"/><label for="linksStyle1"> через запятую</label>
+	<input type="radio" name="linksStyle" id="linksStyle1"/><label for="linksStyle1"> список через запятую</label>
 	<br>
-	<input type="radio" name="linksStyle" id="linksStyle2"/><label for="linksStyle2"> в столбик</label>
+	<input type="radio" name="linksStyle" id="linksStyle2"/><label for="linksStyle2"> столбик</label>
 	<br>
     </fieldset>
     
     <fieldset><legend>Особые флаги</legend>
 	<div class="info">
-	    Если Вы заметили устаревшую иконку флага, Вам не нравится <q>неизвестный флаг</q>, используемый по умолчанию, или Вы хотите использовать другую иконку для какой-либо страны, Вы можете настроить это здесь.
+	    Если Вы заметили устаревшую иконку флага, Вам не нравится "неизвестный флаг", используемый по умолчанию, или Вы хотите использовать другую иконку для какой-либо страны, Вы можете настроить это здесь.
 	    На каждой строке введите двухбуквенный код страны и адрес иконки, разделенные знаком равенства.
-	    Вы так же можете использовать <tt>XX</tt> в качестве кода страны для замены <q>неизвестного флага</q>, используемого по умолчанию.
+	    Вы так же можете использовать <tt>XX</tt> в качестве кода страны для замены "неизвестного флага", используемого по умолчанию.
 	    Например, чтобы заменить его обратно на флаг Европейского Союза, добавьте такую строчку:
 	    <tt>XX=http://flag-button.tk/European-Union-Flag-16.png</tt>
 	</div>
@@ -55,61 +56,101 @@
     
     <fieldset><legend>Источник</legend>
 	<div class="info">
-	    Каждый раз, когда Вы заходите на новый сайт, запрос о его расположении отправляется на один из нижеперечисленных сайтов-источников.
+	    Каждый раз, когда Вы открываете новый сайт, это расширение отправляет запрос о его расположении на выбранный ниже сайт-источник.
 	</div>
-	<div id="mapUsersWarning" class="warning"><b>Внимание!</b>
-	    Никто не может гарантировать, что сайт-источник не ведет историю запросов и не хранит список всех сайтов, на которые Вы заходили. На самом деле, на большинстве интернет-сайтов есть рекламные блоки, хозяева которых обладают и наверняка пользуются этой информацией</div>
-	<input type="radio" name="source" id="source0"/><label for="source0"> <a href="http://freegeoip.net/">freegeoip.net</a></label>
-	<br>
-	<input type="radio" name="source" id="source1"/><label for="source1"> <a href="http://ipinfodb.com/">ipinfodb.com</a></label>
-	
-	<h3>Ключ доступа к ipinfodb.com</h3>
-	<div class="info">
-	    Для использования источника ipinfodb.com рекомендуется бесплатно <a href="http://ipinfodb.com/register.php">зарегистрироваться</a> и в поле снизу указать полученный при регистрации ключ доступа. Это поможет оптимизировать ресурсы сервера и снять ограничение на количество параллельных запросов (без использования ключа ограничение скорости в 1 запрос в секунду делится между всеми пользователями расширения. После регистрации скорость ограничена 1 запросом в секунду только от Вас)
+	<div class="warning"><b>Внимание!</b>
+	    Никто не может гарантировать, что сайт-источник не ведет историю запросов и не хранит список всех сайтов, на которые Вы заходили.
+	    На самом деле, на большинстве интернет-сайтов есть рекламные блоки, хозяева которых обладают и наверняка пользуются этой информацией.
 	</div>
-	<input type="text" id="userkey" style="width:20em"/>
+	<input type="radio" name="source" id="source0"/><label for="source0"> <a href="http://freegeoip.net/">freegeoip.net</a> &mdash;
+	    использует бесплатную базу данных GeoLite от <a href="http://maxmind.com/">MaxMind</a>.
+	</label>
 	<br>
-	<input type="radio" name="source" id="source1000"/><label for="source1000"> <a href="http://flag-button.tk/">flag-button.tk</a></label>
+	<input type="radio" name="source" id="source2"/><label for="source2"> <a href="http://ipinfodb.com/">ipinfodb.com</a> &mdash;
+	    использует бесплатную базу данных IP2Location Lite от <a href="http://www.ip2location.com/?rid=1094">IP2Location</a>.
+	</label>
+	<br>
+	<input type="radio" name="source" id="source1000"/><label for="source1000"> <a href="http://flag-button.tk/">flag-button.tk</a> &mdash;
+	    собирает данные из нескольких бесплатных источников и выбирает лучший.
+	</label>
+	<span class="debugMode">
+	    <br>
+	    <input type="radio" name="source" id="source1001"/><label for="source1001"> <a href="http://localhost/">localhost</a> &mdash;
+		локально установленая версия.
+	    </label>
+	</span>
+	<br>
 	
-	<h3>Оффлайн-режим</h3>
 	<div class="info">
-	    При включении этого режима запросы к сайту-источнику не будут отправляться, и будет отображаться информация только об уже посещенных сайтах.
+	    Для использования источника <a href="http://ipinfodb.com/">ipinfodb.com</a> рекомендуется бесплатно <a href="http://ipinfodb.com/register.php">зарегистрироваться</a> и указать полученный ключ доступа.
+	    Это поможет оптимизировать ресурсы сервера и снять ограничение на количество параллельных запросов
+	    (Без использования ключа ограничение скорости в 1 запрос в секунду делится между всеми пользователями расширения.
+	    После регистрации скорость ограничена 1 запросом в секунду только от Вас).
+	</div>
+	Ключ доступа к <a href="http://ipinfodb.com/">ipinfodb.com</a> (<a href="http://ipinfodb.com/register.php">регистрация</a>): <input type="text" id="userkey"/>
+	
+	<h3>Оффлайн режим</h3>
+	<div class="info">
+	    При включении этого режима запросы к сайту-источнику не будут отправляться, и будет отображаться информация только об уже посещенных сайтах
 	</div>
 	<input type="checkbox" id="offlineMode"/><label for="offlineMode"> Включить оффлайн-режим</label>
     </fieldset>
     
     <fieldset><legend>Общие</legend>
 	<div class="info">
-	    Отключение этой опции поможет избежать мигания иконки при переключении между вкладками, но на некоторых страницах (например, на экспресс-панели) Вы будете видеть флаг, оставшийся с тредыдущей страницы.
+	    Отключение следующей опции поможет избежать мигания иконки при переключении между вкладками, но на некоторых страницах (например, на экспресс-панели) Вы будете видеть флаг, оставшийся с предыдущей страницы.
 	</div>
 	<input type="checkbox" id="disableButton"/><label for="disableButton"> Отключать кнопку при покидании страницы</label>
 	<br>
+	<input type="checkbox" id="showInfo"/><label for="showInfo"> Показывать подсказки по настройкам (применится после перезагрузки страницы)</label>
+	<br>
 	<input type="checkbox" id="debugMode"/><label for="debugMode"> Показывать отладочную информацию</label>
-	<button id="test">test</button>
 	
-	<h3>Сброс настроек:</h3>
-	<button id="prefsClearNow">Сбросить настройки на значения <q>По умолчанию</q></button>
-	<h3>Очистить кэш:</h3>
-	<button id="cacheClearNow">Очистить сейчас!</button>
+	<h3>Метод работы</h3>
+	<input type="radio" name="eventType" id="eventType0"/><label for="eventType0">
+	    старый (не работает с приватными вкладками)
+	</label>
+	<br>
+	<input type="radio" name="eventType" id="eventType1"/><label for="eventType1">
+	    новый (работает с приватными вкладками, но иногда ведет себя странно)
+	</label>
+	<br>
+	<input type="radio" name="eventType" id="eventType2"/><label for="eventType2">
+	    оба
+	</label>
 	
+	<h3>Сброс настроек</h3>
+	<button id="prefsClearNow">Сбросить настройки на значения по умолчанию</button>
+	<button id="cacheClearNow">Полностью очистить кэш</button>
+	<button id="cacheClearErr">Удалить из кэша записи об ошибках</button>
+	<button id="cacheTruncNow" class="debugMode">Удалить самые старые 10% кэша</button>
+	<button id="cacheShow" class="debugMode">Показать статистику кэша</button>
+	<button id="cacheShow1" class="debugMode">Показать статистику прекэша</button>
+    </fieldset>
+    
+    <fieldset><legend>Карты</legend>
 	<h3>Карта пользователей</h3>
 	<div class="info">
 	    На этой карте точками отмечено географическое расположение пользователей этого расширения, согласившихся предоставить эту информацию
 	</div>
 	<div id="mapUsersWarning" class="warning"><b>Внимание!</b>
-	    Нажимая эту кнопку, Вы соглашаетесь на то, что Ваши координаты будут записаны и Ваше местоположение будет отмечено на этой карте такой же точкой (размером с город). На самом деле, любой интернет-сайт, на который Вы заходите, обладает этой информацией</div>
+	    Нажимая эту кнопку, Вы соглашаетесь на то, что Ваши координаты будут записаны и Ваше местоположение будет отмечено на этой карте такой же точкой (размером с город).
+	    На самом деле, любой интернет-сайт, на который Вы заходите, обладает этой информацией
+	</div>
 	<button id="mapUsersBtn">Показать карту</button>
 	<img id="mapUsersImg" style="display:none">
 	
-	<h3>Карта сайтов</h3>
+	<h3>Карта интернета (по данным сайта flag-button.tk)</h3>
 	<div class="info">
-	    На этой карте точками отмечено географическое расположение всех сайтов, на которые заходили пользователи этого расширения
+	    На этой карте точками отмечено географическое расположение всех сайтов, на которые заходили пользователи этого расширения, установившие в качестве источника сайт <a href="http://flag-button.tk/">flag-button.tk</a>
 	</div>
 	<button id="mapSitesBtn">Показать карту</button>
 	<img id="mapSitesImg" style="display:none">
     </fieldset>
 
-
+    <fieldset><legend>Лицензии</legend>
+	<object id="lic" data="licenses.html"></object>
+    </fieldset>
 
 <script src="lang.js"></script>
 <script src="js/lib.js"></script>
