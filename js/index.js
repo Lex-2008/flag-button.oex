@@ -59,13 +59,12 @@ function disableButton(text)
 
 function normalizeHost(host)
     {
-    var h=['blogspot.com', 'facebook.com', 'livejournal.com', 'narod.ru', 'radikal.ru', 'sourceforge.net', 'vk.com', 'wikia.com', 'wikimedia.org', 'wikipedia.org', 'wiktionary.org', 'wrzuta.pl'];
+    var h={'blogspot.com':1,'deviantart.com':1,'deviantart.net':1,'dns-shop.ru':1,'facebook.com':1,'fastpic.ru':1,'gazeta.pl':1,'gittigidiyor.com':1,'ifolder.ru':1,'imagevenue.com':1,'imageshack.us':1,'livejournal.com':1,'letitbit.net':1,'mirtesen.ru':1,'narod.ru':1,'nnm.ru':1,'radikal.ru':1,'raduga.su':1,'rapidshare.com':1,'sourceforge.net':1,'tripod.com':1,'vk.com':1,'vkontakte.ru':1,'wikia.com':1,'wikimedia.org':1,'wikipedia.org':1,'wiktionary.org':1,'wrzuta.pl':1};
     host=host.replace(/^www\.(.+\..+)/,"$1");//cut off www. only if there's a dot to the right
-    host=host.replace(/^(google|amazon)(\.com?)\.[a-z][a-z]$/,'$1.com');//google.ru, google.co.uk
+    host=host.replace(/^(google|amazon)(\.com?)?\.[a-z][a-z]$/,'$1.com');//google.ru, google.co.uk
     host2=host.split('.').slice(-2).join('.');//whatever.provider.tld
-    for (var q in h)
-	if(host2==h[q])
-	    host=host2;
+    if(h[host2])
+	host=host2;
     host=punycode.toASCII(host);
     return host;
     }
