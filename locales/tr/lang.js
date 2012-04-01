@@ -12,4 +12,6 @@
     defWidth:200,
     confirmReset:'Tüm ayarları varsayılan ayarlara döndürmek istediğinizden emin misiniz?',
     offlineText:'Data is unavailable in offline mode',
+    dateFormat:'%month%, %day%',
+    dateMonths:['Jan','Feb','March','Apr','May','June','July','Aug','Sept','Oct','Nov','Dec'],
     };
