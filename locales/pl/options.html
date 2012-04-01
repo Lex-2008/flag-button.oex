@@ -106,6 +106,33 @@
 	<br>
 	<input type="checkbox" id="debugMode"/><label for="debugMode"> Pokazuj informacje odpluskwiające</label>
 	
+	<h3>Statistics</h3>
+	<div class="info">
+	    Enabling this feature will send the following information to the developer:
+	    <ul>
+		<li>
+		    Extension version
+		    (so I know when autoupdate works)
+		</li>
+		<li>
+		    Size of cache and usage of precache and its different parts
+		    (cache is a memory that keeps location information for sites that you've visited. Precache is a similar thing, but collected while building the extension with looking at alexa "top million sites" list and internal statistics of requests to flag-button.tk. These numbers will show me how hard should I think about optimizing them)
+		</li>
+		<li>
+		    All preferences except those that might have personal information
+		    (ipinfodb.com access key, links list and custom icons - these preferences won't be sent. Knowing how users change preferences will give me hints how settings should be configured by default)
+		</li>
+	    </ul>
+	    <!-- Knowing how you are using this extension will motivate the developer to fine-tune it for your needs! -->
+	</div>
+	<input type="checkbox" id="statsEnable"/><label for="statsEnable"> Collect anonymous statistics on extension usage and send it to the developer</label>
+	<div id="stats_gr">
+	    Next time data will be sent on: <b id="statsNextTime"></b>
+	</div>
+	<br>
+	<button id="statsShowNow">Show statistics</button>
+	<button id="statsSendNow">Send statistics</button>
+	
 	<h3>Sposób pracy</h3>
 	<input type="radio" name="eventType" id="eventType0"/><label for="eventType0">
 	    stary (nie działa na kartach prywatnych)

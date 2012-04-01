@@ -4,8 +4,11 @@ var host=opera.extension.bgProcess.lastHost;
 opera.extension.addEventListener( "message", function(arg)
     {
     //close on error
-    if(arg.fail)
+    if(arg.data.code=='err')
+	{
 	window.close();
+	alert('i should close');
+	}
     
     var q,w,s;
     for(q in ids)

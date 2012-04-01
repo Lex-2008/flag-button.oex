@@ -1,4 +1,5 @@
 var cache=opera.extension.bgProcess.cache;
+var stats=opera.extension.bgProcess.stats;
 
 function addCSS(cssCode)
     {
@@ -133,6 +134,25 @@ function loadPrefs()
     gebi('debugMode').checked=widget.preferences.debugMode=='1';
     if(widget.preferences.debugMode=='0') addCSS('.debugMode{display:none}');
     
+    //===stats===
+    gebi('statsEnable').onclick=function() { stats.enable(this.checked) };
+    gebi('statsEnable').checked=widget.preferences.statsEnabled=='1';
+    if(widget.preferences.statsEnabled=='0')
+        gebi('stats_gr').style.display='none';
+    else
+        {
+        var next=new Date(stats.nextTime);
+        gebi('statsNextTime').innerText=lang.dateFormat.replace('%month%',lang.dateMonths[next.getMonth()]).replace('%day%',next.getDate());
+        };
+    gebi('statsShowNow').onclick=function()
+        {
+        alert(JSON.stringify(stats.makeData()).replace(/([{},])/g,'$1\n'))
+        };
+    gebi('statsSendNow').onclick=function()
+        {
+        stats.sendData();
+        };
+    
     gebi('eventType0').onclick=function() { widget.preferences.eventType=0 };
     gebi('eventType1').onclick=function() { widget.preferences.eventType=1 };
     gebi('eventType2').onclick=function() { widget.preferences.eventType=2 };
@@ -199,7 +219,6 @@ function loadPrefs()
                 'overhead: '+(l-u)+'chars/...='+Math.round((l-u)/n)+'avg; '+
                             Math.round((l-u)/l*100)+'%');
         //~ gebi('cacheShow').click();
-        //~ prompt('result',JSON.stringify(opera.extension.bgProcess.result));
         }
     
     //===maps===
@@ -225,4 +244,34 @@ function loadPrefs()
         }
     gebi('lic').height=gebi('lic').contentWindow.document.body.scrollHeight;
     }
+
 loadPrefs();
+
+function addJS(s,f)
+    {
+    var script = document.createElement('script');
+    script.onload = f;
+    script.src = "http://whatever.com/the/script.js";
+    document.getElementsByTagName('head')[0].appendChild(script);
+    }
+
+function buildPrecache()
+    {
+    addJS('domains.js',function()
+        {
+        addJS('loader.js',function()
+            {
+            clearCache();
+            opera.extension.bgProcess.precache={};
+            widget.preferences.source=1001;//localhost
+            for(var q in opera.extension.bgProcess.groupHosts0)
+                domains.push(q);
+            for(var q in opera.extension.bgProcess.groupHosts2)
+                domains.push(q);
+            for(var q in opera.extension.bgProcess.groupHosts3)
+                domains.push(q);
+            
+            grabNext()
+            });//addJS('loader.js'
+        });//addJS('domains.js'
+    }

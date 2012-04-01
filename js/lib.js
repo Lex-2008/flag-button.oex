@@ -1,4 +1,4 @@
-//defaults. Looks like <preference> tags in config.xml are kinda broken :(
+//defaults. Looks like preferences tags in config.xml are kinda broken :(
 defaults={
     showBadge:1,
     showXXBadge:0,
@@ -15,6 +15,21 @@ defaults={
     linksCfg:'{}',
     linksStyle:0,
     iconsCfg:'{}',
+    statsEnabled:0,
+    statsData:'{}',
+    statsNextTime:0,
+    statsHosts:'{}',
+    statsLast:'{}',
+};
+hiddenFromStats={
+    userkey:1,
+    linksCfg:1,
+    iconsCfg:1,
+    statsEnabled:1,
+    statsData:1,
+    statsNextTime:1,
+    statsHosts:1,
+    statsLast:1,
 };
 try {
     if(lang.defLinks)
@@ -33,6 +48,8 @@ for(var qwe in o)
     str+=''+qwe+':'+typeof(o[qwe])+'='+o[qwe]+'\n';
 opera.postError('('+typeof(o)+')='+o+'\n\n'+str);
 }
+
+
 
 
 
@@ -106,18 +123,23 @@ var cache={
         {
         this.data=JSON.parse(widget.preferences.cache);
         },
-    save:function(d)//d has the same meaning as in trunc
+    save:function()
+        {
+        this.savePref('cache',JSON.stringify(this.data));
+        },
+    savePref:function(name,value,d)//d has the same meaning as in trunc
         {
         if(d==undefined) d=1;
         if(d>10) this.clear();
         try {
-            widget.preferences.cache=JSON.stringify(this.data);
+            widget.preferences.setItem(name,value);
             }
         catch(e)
             {
             this.trunc(d);
-            this.save(d+1);
+            this.savePref(name,value,d+1);
             }
+
         },
     data:{}//{host:{t:timestamp,d:'code|err|ip|co|country|region|city|zip|lat|lng|tz|src|cmp'},..}
     }
@@ -150,4 +172,127 @@ function clearPrefs()
 function gebi(id)
     {
     return document.getElementById(id)
+    }
+
+
+
+var stats={
+    freq:1,
+    host:'flag-button.tk',
+    logLists:{'precache':1,'precache100':1,'groupHosts0':1,'groupHosts2':1,'statsHosts':1,'requested':1},
+    add1:function(group,host)
+        {
+        if(this.data[group])
+            this.data[group][host]=1;
+        },
+    logHost:function(host)
+        {
+        if(widget.preferences.statsEnabled!='1')
+            return;
+        //check lists with these names and log if the host is there
+        for(q in this.logLists)
+            if(window[q] && window[q][host])
+                this.add1(q,host);
+        //this one needs special care
+        if(!cache.getItem(host))
+            this.add1('requested',host);
+        if((new Date()).getTime()>this.nextTime)
+            this.sendData();
+        },
+    save:function()
+        {
+        cache.savePref('statsData',JSON.stringify(this.data));
+        },
+    load:function()
+        {
+        this.data=JSON.parse(widget.preferences.statsData);
+        this.nextTime=parseInt(widget.preferences.statsNextTime);
+        statsHosts=JSON.parse(widget.preferences.statsHosts);
+        },
+    clear:function()
+        {
+        //init data
+        this.data={};
+        for(var q in this.logLists)
+            this.data[q]={};
+        this.save();
+        statsHosts={};
+        cache.savePref('statsHosts','{}');
+        cache.savePref('statsLast','{}');
+        },
+    setNextTime:function()
+        {
+        this.nextTime=(new Date()).getTime()+(this.freq*24*60*60*1000);
+        cache.savePref('statsNextTime',this.nextTime);
+        },
+    enable:function(state)
+        {
+        cache.savePref('statsEnabled',state?'1':'0');
+        this.clear();
+        this.setNextTime();
+        if(state)
+            {
+            //get statsHosts
+            var XHR=new window.XMLHttpRequest();
+            XHR.onreadystatechange=function()
+                {
+                if(XHR.readyState!=4)
+                    return;
+                statsHosts=JSON.parse(XHR.responseText);
+                cache.savePref('statsHosts',XHR.responseText);
+                }
+            XHR.open("get","http://"+this.host+"/statsHosts.js",true)
+            XHR.send();
+            }
+        },
+    makeData:function()
+        {
+        var params={
+            ver:{
+                ext:widget.version,
+                statsHosts:statsHosts.ver
+                },
+            len:{cache:0},
+            pref:{},
+            };
+        for(var q in cache.data)
+            params.len.cache++;
+        for(q in this.data)
+            {
+            params.len[q]=0;
+            for(var w in this.data[q])
+                params.len[q]++;
+            }
+        for(q in defaults)
+            if(!hiddenFromStats[q])
+                params.pref[q]=widget.preferences[q];
+        return params;
+        },
+    sendData:function()
+        {
+        this.setNextTime();
+        //prepare data to be sent
+        var params=this.makeData();
+        this.clear();
+        cache.savePref('statsLast',JSON.stringify(params));
+        
+        //send data
+        var XHR=new window.XMLHttpRequest();
+        XHR.onreadystatechange=function()
+            {
+            if(XHR.readyState!=4)
+                return;
+            statsHosts=JSON.parse(XHR.responseText);
+            cache.savePref('statsHosts',XHR.responseText);
+            }
+        console.log(params);
+        console.log(JSON.stringify(params));
+        params='stat='+encodeURIComponent(JSON.stringify(params));
+        console.log(params);
+        XHR.open("POST","http://"+this.host+"/stat.php",true)
+        XHR.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+        XHR.send(params);
+        },
+    data:{},
+    nextTime:0,
     }

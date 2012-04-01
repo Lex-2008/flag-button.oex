@@ -5,10 +5,14 @@ function grabNext()
     if(domain=domains.shift())
 	{
 	getTabInfo(receive,domain);
-	opera.postError('asking for '+domain+'. '+domains.length+' domains left');
+	opera.postError('asking for '+domain+' with '+domains.length+' domains left');
 	}
     else
+	{
 	opera.postError('stop asking with '+domains.length+' domains left');
+	precache=result;
+	input('','precache='+JSON.stringify(result));
+	}
     }
 
 function receive(a)

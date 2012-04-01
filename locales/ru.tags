@@ -1,3 +1,31 @@
+==========popup.html========== 
+1:	<!DOCTYPE html><html><head><meta charset="utf-8">
+2:	<title></title>
+3:	<style>
+4:	
+5:	
+6:	
+7:	
+8:	</style>
+9:	</head><body><div id="wrap">
+10:	<div id="host_gr"><b></b><span id="host"></span></div>
+11:	<div id="ip_gr"><b></b><span id="ip"></span></div>
+12:	<div id="country_gr"><b></b><span id="country"></span></div>
+13:	<div id="region_gr"><b></b><span id="region"></span></div>
+14:	<div id="city_gr"><b></b><span id="city"></span></div>
+15:	<div id="zip_gr"><b></b><span id="zip"></span></div>
+16:	<div id="lat_gr"><b></b><span id="lat"></span></div>
+17:	<div id="lng_gr"><b></b><span id="lng"></span></div>
+18:	<div id="tz_gr"><b></b><span id="tz"></span></div>
+19:	<div id="src_gr"><b></b><a id="src"></a></div>
+20:	<div id="cmp_gr"><b></b><a id="cmp"></a></div>
+21:	<hr>
+22:	<div id="links"></div>
+23:	</div>
+24:	
+25:	<script src="js/lib.js"></script>
+26:	<script src="js/popup.js"></script>
+27:	</body></html>
 ==========options.html========== 
 1:	<!DOCTYPE html><html><head><meta charset="utf-8">
 2:	<title></title>
@@ -108,80 +136,79 @@
 107:	<input type="checkbox" id="debugMode"/><label for="debugMode"></label>
 108:	
 109:	<h3></h3>
-110:	<input type="radio" name="eventType" id="eventType0"/><label for="eventType0">
+110:	<div class="info">
 111:	
-112:	</label>
-113:	<br>
-114:	<input type="radio" name="eventType" id="eventType1"/><label for="eventType1">
+112:	<ul>
+113:	<li>
+114:	
 115:	
-116:	</label>
-117:	<br>
-118:	<input type="radio" name="eventType" id="eventType2"/><label for="eventType2">
+116:	</li>
+117:	<li>
+118:	
 119:	
-120:	</label>
-121:	
-122:	<h3></h3>
-123:	<button id="prefsClearNow"></button>
-124:	<button id="cacheClearNow"></button>
-125:	<button id="cacheClearErr"></button>
-126:	<button id="cacheTruncNow" class="debugMode"></button>
-127:	<button id="cacheShow" class="debugMode"></button>
-128:	<button id="cacheShow1" class="debugMode"></button>
-129:	</fieldset>
-130:	
-131:	<fieldset><legend></legend>
-132:	<h3></h3>
-133:	<div class="info">
-134:	
-135:	</div>
-136:	<div id="mapUsersWarning" class="warning"><b></b>
-137:	
+120:	</li>
+121:	<li>
+122:	
+123:	
+124:	</li>
+125:	</ul>
+126:	<!-- Knowing how you are using this extension will motivate the developer to fine-tune it for your needs! -->
+127:	</div>
+128:	<input type="checkbox" id="statsEnable"/><label for="statsEnable"></label>
+129:	<div id="stats_gr">
+130:	<b id="statsNextTime"></b>
+131:	</div>
+132:	<br>
+133:	<button id="statsShowNow"></button>
+134:	<button id="statsSendNow"></button>
+135:	
+136:	<h3></h3>
+137:	<input type="radio" name="eventType" id="eventType0"/><label for="eventType0">
 138:	
-139:	</div>
-140:	<button id="mapUsersBtn"></button>
-141:	<img id="mapUsersImg" style="display:none">
+139:	</label>
+140:	<br>
+141:	<input type="radio" name="eventType" id="eventType1"/><label for="eventType1">
 142:	
-143:	<h3></h3>
-144:	<div class="info">
-145:	<a href="http://flag-button.tk/"></a>
-146:	</div>
-147:	<button id="mapSitesBtn"></button>
-148:	<img id="mapSitesImg" style="display:none">
-149:	</fieldset>
-150:	
-151:	<fieldset><legend></legend>
-152:	<object id="lic" data="licenses.html"></object>
-153:	</fieldset>
-154:	
-155:	<script src="lang.js"></script>
-156:	<script src="js/lib.js"></script>
-157:	<script src="js/options.js"></script>
-158:	</body></html>
-==========popup.html========== 
-1:	<!DOCTYPE html><html><head><meta charset="utf-8">
-2:	<title></title>
-3:	<style>
-4:	
-5:	
-6:	
-7:	
-8:	</style>
-9:	</head><body><div id="wrap">
-10:	<div id="host_gr"><b></b><span id="host"></span></div>
-11:	<div id="ip_gr"><b></b><span id="ip"></span></div>
-12:	<div id="country_gr"><b></b><span id="country"></span></div>
-13:	<div id="region_gr"><b></b><span id="region"></span></div>
-14:	<div id="city_gr"><b></b><span id="city"></span></div>
-15:	<div id="zip_gr"><b></b><span id="zip"></span></div>
-16:	<div id="lat_gr"><b></b><span id="lat"></span></div>
-17:	<div id="lng_gr"><b></b><span id="lng"></span></div>
-18:	<div id="tz_gr"><b></b><span id="tz"></span></div>
-19:	<div id="src_gr"><b></b><a id="src"></a></div>
-20:	<div id="cmp_gr"><b></b><a id="cmp"></a></div>
-21:	<hr>
-22:	<div id="links"></div>
-23:	</div>
-24:	
-25:	<script src="js/lib.js"></script>
-26:	<script src="js/popup.js"></script>
-27:	</body></html>
+143:	</label>
+144:	<br>
+145:	<input type="radio" name="eventType" id="eventType2"/><label for="eventType2">
+146:	
+147:	</label>
+148:	
+149:	<h3></h3>
+150:	<button id="prefsClearNow"></button>
+151:	<button id="cacheClearNow"></button>
+152:	<button id="cacheClearErr"></button>
+153:	<button id="cacheTruncNow" class="debugMode"></button>
+154:	<button id="cacheShow" class="debugMode"></button>
+155:	<button id="cacheShow1" class="debugMode"></button>
+156:	</fieldset>
+157:	
+158:	<fieldset><legend></legend>
+159:	<h3></h3>
+160:	<div class="info">
+161:	
+162:	</div>
+163:	<div id="mapUsersWarning" class="warning"><b></b>
+164:	
+165:	
+166:	</div>
+167:	<button id="mapUsersBtn"></button>
+168:	<img id="mapUsersImg" style="display:none">
+169:	
+170:	<h3></h3>
+171:	<div class="info">
+172:	<a href="http://flag-button.tk/"></a>
+173:	</div>
+174:	<button id="mapSitesBtn"></button>
+175:	<img id="mapSitesImg" style="display:none">
+176:	</fieldset>
+177:	
+178:	<fieldset><legend></legend>
+179:	<object id="lic" data="licenses.html"></object>
+180:	</fieldset>
+181:	
+182:	<script src="lang.js"></script>
+183:	<script src="js/lib.js"></script>
+184:	<script src="js/options.js"></script>
+185:	</body></html>

@@ -30,8 +30,9 @@ opera.extension.windows.addEventListener( "blur", tabBlurEvent, false);
 
 function tabFocusEvent()
     {
+    //"old" method (0) or "both (2)
     if(widget.preferences.eventType%2==0)//0 or 2
-	toggleIfExists();//let them grab the tab bar themselves
+	toggleIfExists();//active tab will be called by tab api
     }
 
 function tabBlurEvent()
@@ -54,16 +55,23 @@ function disableButton(text)
 	theButton.badge.textContent='XX';
     else
 	theButton.badge.textContent='';
-    theButton.disabled=true;
+    //~ theButton.disabled=true;
     }
+
+groupHosts3={'blog.onet.pl':1};
+groupHosts2={'deviantart.com':1,'deviantart.net':1,'dns-shop.ru':1,'facebook.com':1,'fastpic.ru':1,'gazeta.pl':1,'gittigidiyor.com':1,'ifolder.ru':1,'imagevenue.com':1,'imageshack.us':1,'interia.pl':1,'lento.pl':1,'letitbit.net':1,'livejournal.com':1,'megafon.ru':1,'mirtesen.ru':1,'narod.ru':1,'newsweek.pl':1,'nnm.ru':1,'olx.ru':1,'onet.pl':1,'radikal.ru':1,'raduga.su':1,'rapidshare.com':1,'sexfotka.pl':1,'sourceforge.net':1,'skryptoteka.pl':1,'tripod.com':1,'vk.com':1,'vkontakte.ru':1,'wikia.com':1,'wikimedia.org':1,'wikipedia.org':1,'wiktionary.org':1,'wrzuta.pl':1,'yvision.kz':1};
+groupHosts0={'accounts.google.com':1,'addons.opera.com':1,'crash.opera.com':1,'localhost':1,'my.opera.com':1,'nk.pl':1,'plus.google.com':1,'support.google.com':1,'windows.microsoft.com':1};
+statsHosts={ver:0};
 
 function normalizeHost(host)
     {
-    var h={'blogspot.com':1,'deviantart.com':1,'deviantart.net':1,'dns-shop.ru':1,'facebook.com':1,'fastpic.ru':1,'gazeta.pl':1,'gittigidiyor.com':1,'ifolder.ru':1,'imagevenue.com':1,'imageshack.us':1,'livejournal.com':1,'letitbit.net':1,'mirtesen.ru':1,'narod.ru':1,'nnm.ru':1,'radikal.ru':1,'raduga.su':1,'rapidshare.com':1,'sourceforge.net':1,'tripod.com':1,'vk.com':1,'vkontakte.ru':1,'wikia.com':1,'wikimedia.org':1,'wikipedia.org':1,'wiktionary.org':1,'wrzuta.pl':1};
     host=host.replace(/^www\.(.+\..+)/,"$1");//cut off www. only if there's a dot to the right
-    host=host.replace(/^(google|amazon)(\.com?)?\.[a-z][a-z]$/,'$1.com');//google.ru, google.co.uk
+    host=host.replace(/^(amazon|blogspot|google)(\.com?)?\.[a-z][a-z]$/,'$1.com');//google.ru, google.co.uk
+    host3=host.split('.').slice(-3).join('.');//whatever.prov.ider.tld
     host2=host.split('.').slice(-2).join('.');//whatever.provider.tld
-    if(h[host2])
+    if(groupHosts3[host3])
+	host=host3;
+    else if(groupHosts2[host2])
 	host=host2;
     host=punycode.toASCII(host);
     return host;
@@ -89,15 +97,24 @@ opera.extension.addEventListener( "message", function(event)
     switch(event.data.q)
 	{
 	case 'on':
-	    if(widget.preferences.eventType<2)//0 or 1
+	    //"new" method (1) or "both" (2)
+	    if(widget.preferences.eventType>0)
+		{
+		//~ opera.postError('new on '+event.data.w);
+		lastActiveTab=event.source;
 		toggleIfExists(event.data.w);
+		}
 	break;
 	case 'off':
-	    if(popupIsOpening)//do not disable the button
+	    if(popupIsOpening)//do not disable the button while popup is opening
 		popupIsOpening=false;
 	    else
-		if(widget.preferences.eventType<2 && widget.preferences.disableButton=='1')
-		    disableButton();
+		if(widget.preferences.eventType>0)
+		    {
+		    lastActiveTab=0;
+		    if(widget.preferences.disableButton=='1')
+			disableButton();
+		    }
 	break;
 	case 'popup':
 	    popupHelper(event);
@@ -117,6 +134,7 @@ opera.extension.addEventListener( "message", function(event)
 
 var lastHost='';
 var lastRequestTime=0;
+var lastActiveTab=0;
 
 
 //button function
@@ -142,6 +160,29 @@ function toggleIfExists(host)
 	    else
 		theButton.badge.textContent='';
 	    theButton.disabled=false;
+	    //send data to injected process
+	    arg.meta={'geoData':{'country':'country','countryCode':'co','region':'region','city':'city','coordinates':{'latitude':'lat','longitude':'lng'},'timeZone':'tz','source':'src'},'hostIP':{'ip':'ip'}};
+	    var tabAPIFail=false;
+	    if(widget.preferences.eventType%2==0)//try tab API
+		{
+		try
+		    {
+		    //try to get from active tab
+		    var tab=opera.extension.tabs.getFocused();
+		    tab.postMessage({q:'data',w:arg});
+		    }
+		catch(e)
+		    {
+		    tabAPIFail=true;
+		    }
+		}
+	    if((widget.preferences.eventType==1 || //try lastActiveTab if using "new" method
+		(widget.preferences.eventType==2 && tabAPIFail)) //or using "both" AND tab API failed
+		&& lastActiveTab)		// AND last active tab is known
+		{
+		//~ opera.postError('sending to: '+lastActiveTab);
+		lastActiveTab.postMessage({q:'data',w:arg});
+		}
 	    }
 	else
 	    {
@@ -155,6 +196,7 @@ function toggleIfExists(host)
     getTabInfo(onOk,host);    
     }
 
+hostWait={};
 
 //main function
 function getTabInfo(onOk,host)
@@ -184,11 +226,12 @@ function getTabInfo(onOk,host)
 	    }
 	catch(e)
 	    {
-	    //can't get from active tab - get 
+	    //can't get from active tab - get last known
 	    host=lastHost;
 	    }
     
     host=normalizeHost(host);
+    stats.logHost(host);
     
     //try cache
     var arg=cache.getItem(host);
@@ -203,6 +246,18 @@ function getTabInfo(onOk,host)
 	onOk({code:'err',err:lang.offlineText});
 	return;
 	}
+    //check if request have already been sent
+    if(hostWait[host])
+	{
+	//wait 1 second and retry
+	setTimeout(function()
+	    {
+	    getTabInfo(onOk,host)
+	    },1000);
+	return;
+	}
+    else
+	hostWait[host]=1;
     //get remotely data
     var XHR=new window.XMLHttpRequest();
     XHR.onreadystatechange=function()
@@ -297,22 +352,27 @@ function getTabInfo(onOk,host)
 	break;
 	}
     
+    sendRequest(XHR);
+    }//getTabInfo
+
+
+
+function sendRequest(XHR)
+    {
     //prevent requests from being sent faster then once a second
-    if(lastRequestTime+1000>(new Date()).getMilliseconds())
+    if(lastRequestTime+1000>(new Date()).getTime())
 	{
 	setTimeout(function()
 	    {
-	    lastRequestTime=(new Date()).getMilliseconds();
-	    XHR.send(null);
-	    },lastRequestTime+1000-(new Date()).getMilliseconds());
+	    sendRequest(XHR);
+	    },lastRequestTime+1000-(new Date()).getTime());
 	}
     else
 	{
-	lastRequestTime=(new Date()).getMilliseconds();
+	lastRequestTime=(new Date()).getTime();
 	XHR.send(null);
 	};
-    }//getTabInfo
-
+    }
 
 
 //almost like main
@@ -322,62 +382,21 @@ function popupHelper(event)
 	{
 	arg.host=lastHost;
 	event.source.postMessage(arg);
-	}    
+	}
     getTabInfo(onOk);
     }
 
 
-
-//init cache
-function importOldCache()
-    {
-    var counter=Math.round((new Date()).getTime()/100000)-13270000;
-    for(var q in widget.preferences)
-	if(q.substr(0,6)=='cache:')
-	    {
-	    try {
-		var o=JSON.parse(widget.preferences[q]);
-		var t=counter++;
-		q=normalizeHost(q.substr(6));
-		for(var w in o)
-		    if(o[w]=='-')
-			o[w]='';
-		if(!o.ipAddress.match(/^((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){3}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})$/))
-		    continue; //IP address doesn't look like IP address - FAIL
-		    //code|err|ip|co|country|region|city|zip|lat|lng|tz|src|cmp
-		var n=[o.statusCode.toLowerCase(),o.statusMessage,o.ipAddress,o.countryCode,normalizeText(o.countryName),normalizeText(o.regionName),normalizeText(o.cityName),o.zipCode,o.latitude,o.longitude,o.timeZone,'ipinfodb.com','I'].join('|');
-		cache.setItem(q,n,t);
-		}
-	    catch(e)
-		{}
-	    }
-    //save prefs
-    var save={};
-    for(q in defaults)
-	if(widget.preferences[q]!==undefined)
-	    save[q]=widget.preferences[q];
-    //wipe everything
-    widget.preferences.clear();
-    //restore prefs
-    for(q in save)
-	widget.preferences[q]=save[q];
-    //save cache
-    cache.save();
-    }
 
 //init prefs
 ensureAllPrefs();
 
 
 //init cache
-if(widget.preferences.cache==undefined)
-    {
-    importOldCache();
-    widget.preferences.linksCfg=widget.preferences.linksCfg.replace(/\[ipAddress\]/g,'[ip]').replace(/\[countryName\]/g,'[country]').replace(/\[regionName\]/g,'[region]','').replace(/\[cityName\]/g,'[city]').replace(/\[zipCode\]/g,'[zip]').replace(/\[latitude\]/g,'[lat]').replace(/\[longitude\]/g,'[lng]').replace(/\[timeZone\]/g,'[tz]');
-    }
-else
+if(widget.preferences.cache)
     cache.load();
 setInterval("cache.save()",60000);
+setInterval("stats.save()",60000);
 
 
 //apply prefs
