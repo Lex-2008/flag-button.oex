@@ -391,10 +391,9 @@ function popupHelper(event)
 //init prefs
 ensureAllPrefs();
 
-
 //init cache
-if(widget.preferences.cache)
-    cache.load();
+cache.load();
+stats.load();
 setInterval("cache.save()",60000);
 setInterval("stats.save()",60000);
 
