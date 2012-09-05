@@ -57,13 +57,20 @@ function disableButton(text)
     theButton.disabled=true;
     }
 
+groupHosts3={'blog.onet.pl':1};
+groupHosts2={'allanalpass.com':1,'deviantart.com':1,'deviantart.net':1,'dns-shop.ru':1,'est.ua':1,'facebook.com':1,'fastpic.ru':1,'gazeta.pl':1,'gittigidiyor.com':1,'ifolder.ru':1,'imagevenue.com':1,'imageshack.us':1,'interia.pl':1,'ivao.aero':1,'lento.pl':1,'letitbit.net':1,'linkbabes.com':1,'livejournal.com':1,'megafon.ru':1,'minecraftwiki.net':1,'mirtesen.ru':1,'moole.ru':1,'mts.ru':1,'narod.ru':1,'newsweek.pl':1,'nnm.ru':1,'onet.pl':1,'radikal.ru':1,'raduga.su':1,'rapidshare.com':1,'sexfotka.pl':1,'sex-zone.pl':1,'softonic.com':1,'sourceforge.net':1,'skryptoteka.pl':1,'tiu.ru':1,'tripod.com':1,'tumblr.com':1,'urlcash.net':1,'vk.com':1,'vkontakte.ru':1,'wikia.com':1,'wikidot.com':1,'wikimedia.org':1,'wikipedia.org':1,'wiktionary.org':1,'wordpress.com':1,'wrzuta.pl':1,'yvision.kz':1};
+groupHosts0={'accounts.google.com':1,'addons.opera.com':1,'crash.opera.com':1,'encrypted.google.com':1,'forum.hr':1,'forum.pcekspert.com':1,'get3.adobe.com':1,'localhost':1,'my.opera.com':1,'nk.pl':1,'plus.google.com':1,'support.google.com':1,'webstoregames.com':1,'windows.microsoft.com':1};
+statsHosts={ver:0};
+
 function normalizeHost(host)
     {
-    var h={'blogspot.com':1,'deviantart.com':1,'deviantart.net':1,'dns-shop.ru':1,'facebook.com':1,'fastpic.ru':1,'gazeta.pl':1,'gittigidiyor.com':1,'ifolder.ru':1,'imagevenue.com':1,'imageshack.us':1,'livejournal.com':1,'letitbit.net':1,'mirtesen.ru':1,'narod.ru':1,'nnm.ru':1,'radikal.ru':1,'raduga.su':1,'rapidshare.com':1,'sourceforge.net':1,'tripod.com':1,'vk.com':1,'vkontakte.ru':1,'wikia.com':1,'wikimedia.org':1,'wikipedia.org':1,'wiktionary.org':1,'wrzuta.pl':1};
     host=host.replace(/^www\.(.+\..+)/,"$1");//cut off www. only if there's a dot to the right
-    host=host.replace(/^(google|amazon)(\.com?)?\.[a-z][a-z]$/,'$1.com');//google.ru, google.co.uk
+    host=host.replace(/^(amazon|blogspot|google)(\.com?)?\.[a-z][a-z]$/,'$1.com');//google.ru, google.co.uk
+    host3=host.split('.').slice(-3).join('.');//whatever.prov.ider.tld
     host2=host.split('.').slice(-2).join('.');//whatever.provider.tld
-    if(h[host2])
+    if(groupHosts3[host3])
+	host=host3;
+    else if(groupHosts2[host2])
 	host=host2;
     host=punycode.toASCII(host);
     return host;
@@ -93,7 +100,7 @@ opera.extension.addEventListener( "message", function(event)
 		toggleIfExists(event.data.w);
 	break;
 	case 'off':
-	    if(popupIsOpening)//do not disable the button
+	    if(popupIsOpening)//do not disable the button while popup is opening
 		popupIsOpening=false;
 	    else
 		if(widget.preferences.eventType<2 && widget.preferences.disableButton=='1')
@@ -184,7 +191,7 @@ function getTabInfo(onOk,host)
 	    }
 	catch(e)
 	    {
-	    //can't get from active tab - get 
+	    //can't get from active tab - get last known
 	    host=lastHost;
 	    }
     
@@ -237,6 +244,10 @@ function getTabInfo(onOk,host)
 		    arg=['not an IP address',XHR.responseText,'','','','','','','','','','ipinfodb.com',''];
 		    break;
 		    }
+		//remove quotes at the beginning and end
+		for(ind in data)
+		    if(data[ind][0]=='"' && data[ind][data[ind].length-1]=='"')
+			data[ind]=data[ind].substring(1,data[ind].length-1);
 		//code|err|ip|co|country|region|city|zip|lat|lng|tz|src|cmp
 		arg=['ok','',data[0],data[1],data[2],data[4],data[5],data[6],data[7],data[8],'','freegeoip.net',''];
 	    break;
