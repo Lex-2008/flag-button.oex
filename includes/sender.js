@@ -5,7 +5,7 @@ function sender(data)
         document.dispatchEvent( new window.CustomEvent('CustomDataSend',{detail:
             {
                 'to':to,
-                'from':widget.name,
+                'from':widget.id,
                 'data':data
             }}));
         };
@@ -17,7 +17,7 @@ function sender(data)
     //reply to data requests (from extensions which will be loaded later)
     this.listener=function(ev)
         {
-        if(ev.detail.to=='*' || ev.detail.to==widget.name)
+        if(ev.detail.to=='*' || ev.detail.to==widget.id)
             send(ev.detail.from);
         };
     

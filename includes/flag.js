@@ -26,14 +26,14 @@ if (window.top === window.self)
     {
     window.addEventListener( "focus",function()
         {
-        send1('on');
+        send1('focus');
         },false);
     
     window.addEventListener( "blur", function()
         {
-        send1('off');
+        send1('blur');
         },false);
     
-    send1('on');
+    send1('loaded');
     }
 

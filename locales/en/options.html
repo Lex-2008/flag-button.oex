@@ -122,24 +122,33 @@
 		    All preferences except those that might have personal information
 		    (ipinfodb.com access key, links list and custom icons - these preferences won't be sent. Knowing how users change preferences will give me hints how settings should be configured by default)
 		</li>
+		<li>
+		    Your browser version
+		    (so I know if I can use new features or should maintain compatibility with older versions)
+		</li>
+		<li>
+		    Your current browser language
+		    (so I know if I need to translate the extension to more languages)
+		</li>
 	    </ul>
-	    <!-- Knowing how you are using this extension will motivate the developer to fine-tune it for your needs! -->
+	    Knowing how you are using this extension will motivate the developer to fine-tune it for your needs!
 	</div>
 	<input type="checkbox" id="statsEnable"/><label for="statsEnable"> Collect anonymous statistics on extension usage and send it to the developer</label>
 	<div id="stats_gr">
 	    Next time data will be sent on: <b id="statsNextTime"></b>
 	</div>
 	<br>
-	<button id="statsShowNow">Show statistics</button>
+	<button id="statsShowPrev">Show previously sent data</button>
+	<button id="statsShowCurr">Show current data</button>
 	<button id="statsSendNow">Send statistics</button>
 	
 	<h3>Work method</h3>
 	<input type="radio" name="eventType" id="eventType0"/><label for="eventType0">
-	    old (doesn't work with private tabs)
+	    Tab API (doesn't work with private tabs in Opera versions prior to 12)
 	</label>
 	<br>
 	<input type="radio" name="eventType" id="eventType1"/><label for="eventType1">
-	    new (works with private tabs, but sometimes behaves strangely)
+	    Page events (sometimes behaves strangely)
 	</label>
 	<br>
 	<input type="radio" name="eventType" id="eventType2"/><label for="eventType2">

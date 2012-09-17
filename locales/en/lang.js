@@ -12,6 +12,6 @@
     defWidth:200,
     confirmReset:'Are you sure you want to reset all preferences to defaults?',
     offlineText:'Data is unavailable in offline mode',
-    dateFormat:'%month%, %day%',
+    dateFormat:'%month%, %day% %hour%:%minute%',
     dateMonths:['Jan','Feb','March','Apr','May','June','July','Aug','Sept','Oct','Nov','Dec'],
     };

@@ -1,5 +1,24 @@
 var ids=['host','ip','country','region','city','zip','lat','lng','tz','src','cmp'];
 var host=opera.extension.bgProcess.lastHost;
+var fail;//global flag if replaceIds shows that current line is "bad" -- contains ids which are not in data
+
+function replaceIds(s,data)
+    {
+    var w,sp;
+    for(w in ids)
+	{
+	sp=s.split('['+ids[w]+']');
+	if(sp.length<2)
+	    continue;//no id in string => nothing to do
+	if(!data[ids[w]])
+	    {
+	    fail=true;
+	    continue;//id in string, but not in args => fail line
+	    }
+	s=sp.join(data[ids[w]]);
+	}
+    return s;
+    }
 
 opera.extension.addEventListener( "message", function(arg)
     {
@@ -10,31 +29,27 @@ opera.extension.addEventListener( "message", function(arg)
 	alert('i should close');
 	}
     
-    var q,w,s;
+    var q;
     for(q in ids)
 	{
-	gebi(ids[q]).innerHTML=arg.data[ids[q]];
+	gebi(ids[q]).appendChild(document.createTextNode(arg.data[ids[q]]));
 	if(arg.data[ids[q]])
 	    gebi(ids[q]+'_gr').style.display='';
 	else
 	    gebi(ids[q]+'_gr').style.display='none';
 	}
-    //~ gebi('host').innerHTML=host;
     gebi('src').href='http://'+arg.data[ids[q]];
     if(widget.preferences.debugMode=='0') gebi('cmp_gr').style.display='none';
-    var linksCfg=JSON.parse(widget.preferences.linksCfg);
+    
+    var linksCfg=sJSON.parse(widget.preferences.linksCfg);
     var root=gebi('links');
     for(q in linksCfg)
 	{
 	var elem=document.createElement('a');
-	s=linksCfg[q];
-	for(w in ids)
-	    s=s.replace('['+ids[w]+']',arg.data[ids[w]]);
-	elem.href=s;
-	s=q;
-	for(w in ids)
-	    s=s.replace('['+ids[w]+']',arg.data[ids[w]]);
-	elem.appendChild(document.createTextNode(s));
+	var fail=false;
+	elem.href=replaceIds(linksCfg[q],arg.data);
+	elem.appendChild(document.createTextNode(replaceIds(q,arg.data)));
+	if(fail) continue;
 	root.appendChild(elem);
 	switch(widget.preferences.linksStyle)
 	    {
@@ -49,7 +64,7 @@ opera.extension.addEventListener( "message", function(arg)
 	    break;
 	    }
 	}
-    root.removeChild(w);
+    root.removeChild(root.lastChild);
     opera.extension.postMessage( {q:"size",h:gebi('wrap').offsetHeight+gebi('wrap').offsetTop*2} );
     }, false);
 

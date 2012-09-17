@@ -12,6 +12,6 @@
     defWidth:250,
     confirmReset:'Na pewno chcesz przywrócić domyślne ustawienia?',
     offlineText:'Dane nie są dostępne w trybie bez połączenia',
-    dateFormat:'%month%, %day%',
+    dateFormat:'%month%, %day% %hour%:%minute%',
     dateMonths:['Jan','Feb','March','Apr','May','June','July','Aug','Sept','Oct','Nov','Dec'],
     };

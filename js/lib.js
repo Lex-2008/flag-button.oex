@@ -1,4 +1,4 @@
-//defaults. Looks like preferences tags in config.xml are kinda broken :(
+//defaults. Looks like preferences tags in config.xml are not 100% reliable
 defaults={
     showBadge:1,
     showXXBadge:0,
@@ -7,7 +7,7 @@ defaults={
     disableButton:1,
     debugMode:0,
     source:2,//0=freegeoip.net,2=ipinfodb.com,1000=flag-button.tk
-    eventType:1,
+    eventType:0,//0=tab API,1=focus events,2=both
     userkey:' ',
     offlineMode:0,
     showInfo:1,
@@ -38,6 +38,8 @@ try {
 	defaults.linksCfg=JSON.stringify(lang.defLinks);
     if(lang.defWidth)
 	defaults.popupWidth=lang.defWidth;
+    if(parseInt(opera.version())<12)
+        defaults.eventType=1;//on Opera versions prior to 12 
     }
 catch(e){};
 
@@ -89,33 +91,19 @@ var cache={
     trunc:function(d)//we will delete approximately d*10% of all cache elements
         {
         if(d==undefined) d=1;
-        var top10=[],n=0,max=0,min=0;
+        var cut=0;//cache items with time below this value will be deleted
         for(var q in this.data)
             {
-            var t=this.data[q].t;
-            if(n<10)//<-- amount of elements we first skip
-                {
-                //on first element: be sure that min and max will be set to its value
-                if(n==0) min=t;
-                //for fist 10 elements: just measure, don't try to delete
-                if(t>max) max=t;
-                if(t<min) min=t;
-                top10.push(q);
-                }
-            else
-                {//for all other elements: measure and think about deleting
-                if(t>max) max=t;
-                if(t<min) min=t;
-                if(t<(max-min)*d/10+min)
-                    delete this.data[q];
-                }
+            //assume that time of first element is earliest time.
+            //assume that latest time is 'now'.
+            var min=(this.data[q].t);
+            var max=Math.round((new Date()).getTime()/100000)-13270000;
+            cut=min+(max-min)*d/10;
+            break;
             }
-        //back to first 10 elements: consider deleting
-        for(var q in top10)
-            {
-            if(this.data[q].t<(max-min)*d/10+min)
+        for(var q in this.data)
+            if(this.data[q].t<cut)
                 delete this.data[q];
-            }
         },
     clear:function()
         {
@@ -123,11 +111,11 @@ var cache={
         },
     load:function()
         {
-        this.data=JSON.parse(widget.preferences.cache);
+        this.data=sJSON.parse(widget.preferences.cache);
         },
     save:function()
         {
-        this.savePref('cache',JSON.stringify(this.data));
+        this.savePref('cache',sJSON.stringify(this.data));
         },
     savePref:function(name,value,d)//d has the same meaning as in trunc
         {
@@ -179,13 +167,14 @@ function gebi(id)
 
 
 var stats={
-    freq:1,
+    freq:1,//DAYS how often to report stats
     host:'flag-button.tk',
     logLists:{'precache':1,'precache100':1,'groupHosts0':1,'groupHosts2':1,'statsHosts':1,'requested':1},
     add1:function(group,host)
         {
-        if(this.data[group])
-            this.data[group][host]=1;
+        if(!this.data[group])
+            this.data[group]={};
+        this.data[group][host]=1;
         },
     logHost:function(host)
         {
@@ -203,13 +192,13 @@ var stats={
         },
     save:function()
         {
-        cache.savePref('statsData',JSON.stringify(this.data));
+        cache.savePref('statsData',sJSON.stringify(this.data));
         },
     load:function()
         {
-        this.data=JSON.parse(widget.preferences.statsData);
+        this.data=sJSON.parse(widget.preferences.statsData);
         this.nextTime=parseInt(widget.preferences.statsNextTime);
-        statsHosts=JSON.parse(widget.preferences.statsHosts);
+        statsHosts=sJSON.parse(widget.preferences.statsHosts);
         },
     clear:function()
         {
@@ -240,7 +229,7 @@ var stats={
                 {
                 if(XHR.readyState!=4)
                     return;
-                statsHosts=JSON.parse(XHR.responseText);
+                statsHosts=sJSON.parse(XHR.responseText);
                 cache.savePref('statsHosts',XHR.responseText);
                 }
             XHR.open("get","http://"+this.host+"/statsHosts.js",true)
@@ -251,11 +240,12 @@ var stats={
         {
         var params={
             ver:{
+                opera:opera.version(),
                 ext:widget.version,
                 statsHosts:statsHosts.ver
                 },
             len:{cache:0},
-            pref:{},
+            pref:{lang:navigator.language},
             };
         for(var q in cache.data)
             params.len.cache++;
@@ -276,7 +266,7 @@ var stats={
         //prepare data to be sent
         var params=this.makeData();
         this.clear();
-        cache.savePref('statsLast',JSON.stringify(params));
+        cache.savePref('statsLast',sJSON.stringify(params));
         
         //send data
         var XHR=new window.XMLHttpRequest();
@@ -284,12 +274,12 @@ var stats={
             {
             if(XHR.readyState!=4)
                 return;
-            statsHosts=JSON.parse(XHR.responseText);
+            statsHosts=sJSON.parse(XHR.responseText);
             cache.savePref('statsHosts',XHR.responseText);
             }
-        console.log(params);
-        console.log(JSON.stringify(params));
-        params='stat='+encodeURIComponent(JSON.stringify(params));
+        //~ console.log(params);
+        //~ console.log(sJSON.stringify(params));
+        params='stat='+encodeURIComponent(sJSON.stringify(params));
         console.log(params);
         XHR.open("POST","http://"+this.host+"/stat.php",true)
         XHR.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
@@ -297,4 +287,50 @@ var stats={
         },
     data:{},
     nextTime:0,
+    }
+
+var sJSON={
+    stringify:function(o)
+        {
+        try{
+            return JSON.stringify(o)
+            }
+        catch(e)
+            {
+            return '{}';
+            }
+        },
+    parse:function(s)
+        {
+        try{
+            return JSON.parse(s)
+            }
+        catch(e)
+            {
+            return {};
+            }
+        },
+    prettify:function(o)
+        {
+        try{
+            var a=JSON.stringify(o).replace(/(,)/g,'$1\n').replace(/({)/g,'$1\n').replace(/(})/g,'$1').split('\n');
+            var t='';
+            var i=0;
+            for(var q in a)
+                {
+                t+=(new Array(i).join("\t"))+a[q]+'\n';
+                if(a[q].charAt(a[q].length-1)=='{')
+                    i++;
+                if(a[q].charAt(a[q].length-2)=='}')
+                    i--;
+                }
+            return t;
+            //~ return JSON.stringify(o);
+            }
+        catch(e)
+            {
+            alert(e);
+            return '{}';
+            }
+        }
     }

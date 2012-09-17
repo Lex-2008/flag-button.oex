@@ -59,14 +59,18 @@ function disableButton(text)
     }
 
 groupHosts3={'blog.onet.pl':1};
-groupHosts2={'deviantart.com':1,'deviantart.net':1,'dns-shop.ru':1,'facebook.com':1,'fastpic.ru':1,'gazeta.pl':1,'gittigidiyor.com':1,'ifolder.ru':1,'imagevenue.com':1,'imageshack.us':1,'interia.pl':1,'lento.pl':1,'letitbit.net':1,'livejournal.com':1,'megafon.ru':1,'mirtesen.ru':1,'narod.ru':1,'newsweek.pl':1,'nnm.ru':1,'olx.ru':1,'onet.pl':1,'radikal.ru':1,'raduga.su':1,'rapidshare.com':1,'sexfotka.pl':1,'sourceforge.net':1,'skryptoteka.pl':1,'tripod.com':1,'vk.com':1,'vkontakte.ru':1,'wikia.com':1,'wikimedia.org':1,'wikipedia.org':1,'wiktionary.org':1,'wrzuta.pl':1,'yvision.kz':1};
-groupHosts0={'accounts.google.com':1,'addons.opera.com':1,'crash.opera.com':1,'localhost':1,'my.opera.com':1,'nk.pl':1,'plus.google.com':1,'support.google.com':1,'windows.microsoft.com':1};
+groupHosts2={'allanalpass.com':1,'deviantart.com':1,'deviantart.net':1,'dns-shop.ru':1,'est.ua':1,'facebook.com':1,'fastpic.ru':1,'gazeta.pl':1,'gittigidiyor.com':1,'ifolder.ru':1,'imagevenue.com':1,'imageshack.us':1,'interia.pl':1,'ivao.aero':1,'lento.pl':1,'letitbit.net':1,'livejournal.com':1,'megafon.ru':1,'minecraftwiki.net':1,'mirtesen.ru':1,'moole.ru':1,'mts.ru':1,'narod.ru':1,'newsweek.pl':1,'nnm.ru':1,'onet.pl':1,'radikal.ru':1,'raduga.su':1,'rapidshare.com':1,'sexfotka.pl':1,'sex-zone.pl':1,'softonic.com':1,'sourceforge.net':1,'skryptoteka.pl':1,'tiu.ru':1,'tripod.com':1,'tumblr.com':1,'urlcash.net':1,'vk.com':1,'vkontakte.ru':1,'wikia.com':1,'wikidot.com':1,'wikimedia.org':1,'wikipedia.org':1,'wiktionary.org':1,'wordpress.com':1,'wrzuta.pl':1,'yvision.kz':1,
+    //https://addons.opera.com/ru/extensions/details/block-linkbucks-opera-edition/?display=en
+'linkbucks.com':1,'any.gs':1,'cash4links.co':1,'cash4files.com':1,'dyo.gs':1,'filesonthe.net':1,'goneviral.com':1,'megaline.co':1,'miniurls.co':1,'qqc.co':1,'seriousdeals.net':1,'theseblogs.com':1,'theseforums.com':1,'tinylinks.co':1,'tubeviral.com':1,'ultrafiles.net':1,'urlbeat.net':1,'whackyvidz.com':1,'yyv.co':1,
+    };
+groupHosts0={'accounts.google.com':1,'addons.opera.com':1,'crash.opera.com':1,'encrypted.google.com':1,'forum.hr':1,'forum.pcekspert.com':1,'get3.adobe.com':1,'localhost':1,'my.opera.com':1,'nk.pl':1,'plus.google.com':1,'support.google.com':1,'webstoregames.com':1,'windows.microsoft.com':1};
 statsHosts={ver:0};
 
 function normalizeHost(host)
     {
     host=host.replace(/^www\.(.+\..+)/,"$1");//cut off www. only if there's a dot to the right
-    host=host.replace(/^(amazon|blogspot|google)(\.com?)?\.[a-z][a-z]$/,'$1.com');//google.ru, google.co.uk
+    host=host.replace(/^(amazon|google)(\.com?)?\.[a-z][a-z]$/,'$1.com');//google.ru, google.co.uk
+    host=host.replace(/^.*\.(blogspot)(\.com?)?\.[a-z][a-z]$/,'$1.com');//whatever.blogspot.co.uk
     host3=host.split('.').slice(-3).join('.');//whatever.prov.ider.tld
     host2=host.split('.').slice(-2).join('.');//whatever.provider.tld
     if(groupHosts3[host3])
@@ -96,7 +100,11 @@ opera.extension.addEventListener( "message", function(event)
     {
     switch(event.data.q)
 	{
-	case 'on':
+	case 'loaded':
+	    lastActiveTab=event.source;
+	    toggleIfExists(event.data.w);
+	break;
+	case 'focus':
 	    //"new" method (1) or "both" (2)
 	    if(widget.preferences.eventType>0)
 		{
@@ -105,7 +113,7 @@ opera.extension.addEventListener( "message", function(event)
 		toggleIfExists(event.data.w);
 		}
 	break;
-	case 'off':
+	case 'blur':
 	    if(popupIsOpening)//do not disable the button while popup is opening
 		popupIsOpening=false;
 	    else
@@ -126,7 +134,7 @@ opera.extension.addEventListener( "message", function(event)
 	    theButton.badge.backgroundColor=widget.preferences.badgeBGcolor;
 	    theButton.badge.color=widget.preferences.badgeTXcolor;
 	    theButton.popup.width=parseInt(widget.preferences.popupWidth);
-	    iconsCfg=JSON.parse(widget.preferences.iconsCfg);
+	    iconsCfg=sJSON.parse(widget.preferences.iconsCfg);
 	break;
 	}
     }, false);
@@ -135,6 +143,7 @@ opera.extension.addEventListener( "message", function(event)
 var lastHost='';
 var lastRequestTime=0;
 var lastActiveTab=0;
+hostWait={};
 
 
 //button function
@@ -161,7 +170,7 @@ function toggleIfExists(host)
 		theButton.badge.textContent='';
 	    theButton.disabled=false;
 	    //send data to injected process
-	    arg.meta={'geoData':{'country':'country','countryCode':'co','region':'region','city':'city','coordinates':{'latitude':'lat','longitude':'lng'},'timeZone':'tz','source':'src'},'hostIP':{'ip':'ip'}};
+	    //~ arg.meta={'host-info':{'ip':'ip','location':{'country':'country','countryCode':'co','region':'region','city':'city','coordinates':{'latitude':'lat','longitude':'lng'},'timeZone':'tz','source':'src'}}};
 	    var tabAPIFail=false;
 	    if(widget.preferences.eventType%2==0)//try tab API
 		{
@@ -196,7 +205,7 @@ function toggleIfExists(host)
     getTabInfo(onOk,host);    
     }
 
-hostWait={};
+
 
 //main function
 function getTabInfo(onOk,host)
@@ -255,6 +264,7 @@ function getTabInfo(onOk,host)
 	    getTabInfo(onOk,host)
 	    },1000);
 	return;
+	//note: next time we'll take it from cache
 	}
     else
 	hostWait[host]=1;
@@ -292,6 +302,10 @@ function getTabInfo(onOk,host)
 		    arg=['not an IP address',XHR.responseText,'','','','','','','','','','ipinfodb.com',''];
 		    break;
 		    }
+		//remove quotes at the beginning and end
+		for(ind in data)
+		    if(data[ind][0]=='"' && data[ind][data[ind].length-1]=='"')
+			data[ind]=data[ind].substring(1,data[ind].length-1);
 		//code|err|ip|co|country|region|city|zip|lat|lng|tz|src|cmp
 		arg=['ok','',data[0],data[1],data[2],data[4],data[5],data[6],data[7],data[8],'','freegeoip.net',''];
 	    break;
@@ -402,4 +416,33 @@ setInterval("stats.save()",60000);
 theButton.badge.backgroundColor=widget.preferences.badgeBGcolor;
 theButton.badge.color=widget.preferences.badgeTXcolor;
 theButton.popup.width=widget.preferences.popupWidth;
-iconsCfg=JSON.parse(widget.preferences.iconsCfg);
+iconsCfg=sJSON.parse(widget.preferences.iconsCfg);
+
+function addJS(s,f)
+    {
+    var script = document.createElement('script');
+    script.onload = f;
+    script.src = s;
+    document.getElementsByTagName('head')[0].appendChild(script);
+    }
+
+function buildPrecache()
+    {
+    addJS('js/domains.js',function()
+        {
+        addJS('js/loader.js',function()
+            {
+            clearCache();
+            precache={};
+            widget.preferences.source=1001;//localhost
+            for(var q in groupHosts0)
+                domains.push(q);
+            for(var q in groupHosts2)
+                domains.push(q);
+            for(var q in groupHosts3)
+                domains.push(q);
+	    
+            grabNext()
+            });//addJS('loader.js'
+        });//addJS('domains.js'
+    }

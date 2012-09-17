@@ -35,11 +35,11 @@
 	<div class="info">
 	    Ниже Вы можете выбрать, как эти ссылки будут организованы
 	</div>
-	<input type="radio" name="linksStyle" id="linksStyle0"/><label for="linksStyle0"> список через пробелом</label>
+	<input type="radio" name="linksStyle" id="linksStyle0"/><label for="linksStyle0"> список через пробел</label>
 	<br>
 	<input type="radio" name="linksStyle" id="linksStyle1"/><label for="linksStyle1"> список через запятую</label>
 	<br>
-	<input type="radio" name="linksStyle" id="linksStyle2"/><label for="linksStyle2"> столбик</label>
+	<input type="radio" name="linksStyle" id="linksStyle2"/><label for="linksStyle2"> в столбик</label>
 	<br>
     </fieldset>
     
@@ -122,24 +122,33 @@
 		    All preferences except those that might have personal information
 		    (ipinfodb.com access key, links list and custom icons - these preferences won't be sent. Knowing how users change preferences will give me hints how settings should be configured by default)
 		</li>
+		<li>
+		    Your browser version
+		    (so I know if I can use new features or should maintain compatibility with older versions)
+		</li>
+		<li>
+		    Your current browser language
+		    (so I know if I need to translate the extension to more languages)
+		</li>
 	    </ul>
-	    <!-- Knowing how you are using this extension will motivate the developer to fine-tune it for your needs! -->
+	    Knowing how you are using this extension will motivate the developer to fine-tune it for your needs!
 	</div>
 	<input type="checkbox" id="statsEnable"/><label for="statsEnable"> Collect anonymous statistics on extension usage and send it to the developer</label>
 	<div id="stats_gr">
 	    Next time data will be sent on: <b id="statsNextTime"></b>
 	</div>
 	<br>
-	<button id="statsShowNow">Show statistics</button>
+	<button id="statsShowPrev">Show previously sent data</button>
+	<button id="statsShowCurr">Show current data</button>
 	<button id="statsSendNow">Send statistics</button>
 	
 	<h3>Метод работы</h3>
 	<input type="radio" name="eventType" id="eventType0"/><label for="eventType0">
-	    старый (не работает с приватными вкладками)
+	    Tab API (doesn't work with private tabs in Opera versions prior to 12)
 	</label>
 	<br>
 	<input type="radio" name="eventType" id="eventType1"/><label for="eventType1">
-	    новый (работает с приватными вкладками, но иногда ведет себя странно)
+	    Page events (sometimes behaves strangely)
 	</label>
 	<br>
 	<input type="radio" name="eventType" id="eventType2"/><label for="eventType2">

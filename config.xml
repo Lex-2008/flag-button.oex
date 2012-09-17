@@ -1,5 +1,7 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<widget xmlns="http://www.w3.org/ns/widgets" id="https://addons.opera.com/addons/extensions/details/flag-button/" version="1.6-dev3">
+<widget xmlns="http://www.w3.org/ns/widgets" version="1.6-dev4"
+    id="https://addons.opera.com/addons/extensions/details/flag-button/"
+    url="https://addons.opera.com/addons/extensions/details/flag-button/">
     <name xml:lang="en">Flag Button</name>
     <name xml:lang="ru">Flag Button</name>
     <name xml:lang="tr">Bayrak Düğmesi</name>
@@ -7,6 +9,7 @@
     <icon src="icons/svg2raster-16.png" width="16" height="16"/>
     <icon src="icons/svg2raster-64.png" width="64" height="64"/>
     <icon src="icons/svg2raster-256.png" width="256" height="256"/>
+    <content src="flag-button.html"/>
     <access origin="*"/>
     <license href="http://www.apache.org/licenses/LICENSE-2.0">Copyright 2011 alex-shpak
 

@@ -49,10 +49,10 @@ function loadPrefs()
             e=[q[w].substring(0,e),q[w].substring(e+1)]	//[0..'='),('='..end]
             iconsCfg[e[0].toUpperCase()]=e[1];		//assign
             }
-        widget.preferences.iconsCfg=JSON.stringify(iconsCfg);
+        widget.preferences.iconsCfg=sJSON.stringify(iconsCfg);
         opera.extension.postMessage({q:"badgeColor"});
         }
-    var iconsCfg=JSON.parse(widget.preferences.iconsCfg);
+    var iconsCfg=sJSON.parse(widget.preferences.iconsCfg);
     var str='';
     for(var q in iconsCfg)
 	str+=q+'='+iconsCfg[q]+'\n';
@@ -77,7 +77,7 @@ function loadPrefs()
             e=[q[w].substring(0,e),q[w].substring(e+1)]	//[0..'='),('='..end]
             linksCfg[e[0]]=e[1];		//assign
             }
-        widget.preferences.linksCfg=JSON.stringify(linksCfg);
+        widget.preferences.linksCfg=sJSON.stringify(linksCfg);
         opera.extension.postMessage({q:"badgeColor"});
         }
     
@@ -86,7 +86,7 @@ function loadPrefs()
     gebi('linksStyle1').onclick=function() { widget.preferences.linksStyle=1 };
     gebi('linksStyle2').onclick=function() { widget.preferences.linksStyle=2 };
     gebi('popupWidth').value=widget.preferences.popupWidth;
-    var linksCfg=JSON.parse(widget.preferences.linksCfg);
+    var linksCfg=sJSON.parse(widget.preferences.linksCfg);
     var str='';
     for(var q in linksCfg)
 	str+=q+'='+linksCfg[q]+'\n';
@@ -142,11 +142,15 @@ function loadPrefs()
     else
         {
         var next=new Date(stats.nextTime);
-        gebi('statsNextTime').innerText=lang.dateFormat.replace('%month%',lang.dateMonths[next.getMonth()]).replace('%day%',next.getDate());
+        gebi('statsNextTime').innerText=lang.dateFormat.replace('%month%',lang.dateMonths[next.getMonth()]).replace('%day%',next.getDate()).replace('%hour%',next.getHours()).replace('%minute%',next.getMinutes());
         };
-    gebi('statsShowNow').onclick=function()
+    gebi('statsShowPrev').onclick=function()
         {
-        alert(JSON.stringify(stats.makeData()).replace(/([{},])/g,'$1\n'))
+        alert(sJSON.prettify(sJSON.parse(widget.preferences.statsLast)))
+        };
+    gebi('statsShowCurr').onclick=function()
+        {
+        alert(sJSON.prettify(stats.makeData()))
         };
     gebi('statsSendNow').onclick=function()
         {
@@ -188,7 +192,7 @@ function loadPrefs()
         };
     gebi('cacheShow').onclick=function()
         {
-        var q=JSON.stringify(cache.data);
+        var q=sJSON.stringify(cache.data);
         var l=q.length;
         var n=0;
         var u=0;
@@ -204,7 +208,7 @@ function loadPrefs()
     gebi('cacheShow1').onclick=function()
         {
         precache=opera.extension.bgProcess.precache;
-        var q=JSON.stringify(precache);
+        var q=sJSON.stringify(precache);
         var l=q.length;
         var n=0;
         var u=0;
@@ -246,32 +250,3 @@ function loadPrefs()
     }
 
 loadPrefs();
-
-function addJS(s,f)
-    {
-    var script = document.createElement('script');
-    script.onload = f;
-    script.src = "http://whatever.com/the/script.js";
-    document.getElementsByTagName('head')[0].appendChild(script);
-    }
-
-function buildPrecache()
-    {
-    addJS('domains.js',function()
-        {
-        addJS('loader.js',function()
-            {
-            clearCache();
-            opera.extension.bgProcess.precache={};
-            widget.preferences.source=1001;//localhost
-            for(var q in opera.extension.bgProcess.groupHosts0)
-                domains.push(q);
-            for(var q in opera.extension.bgProcess.groupHosts2)
-                domains.push(q);
-            for(var q in opera.extension.bgProcess.groupHosts3)
-                domains.push(q);
-            
-            grabNext()
-            });//addJS('loader.js'
-        });//addJS('domains.js'
-    }
