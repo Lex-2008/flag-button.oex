@@ -58,14 +58,20 @@ function disableButton(text)
     }
 
 groupHosts3={'blog.onet.pl':1};
-groupHosts2={'allanalpass.com':1,'deviantart.com':1,'deviantart.net':1,'dns-shop.ru':1,'est.ua':1,'facebook.com':1,'fastpic.ru':1,'gazeta.pl':1,'gittigidiyor.com':1,'ifolder.ru':1,'imagevenue.com':1,'imageshack.us':1,'interia.pl':1,'ivao.aero':1,'lento.pl':1,'letitbit.net':1,'linkbabes.com':1,'livejournal.com':1,'megafon.ru':1,'minecraftwiki.net':1,'mirtesen.ru':1,'moole.ru':1,'mts.ru':1,'narod.ru':1,'newsweek.pl':1,'nnm.ru':1,'onet.pl':1,'radikal.ru':1,'raduga.su':1,'rapidshare.com':1,'sexfotka.pl':1,'sex-zone.pl':1,'softonic.com':1,'sourceforge.net':1,'skryptoteka.pl':1,'tiu.ru':1,'tripod.com':1,'tumblr.com':1,'urlcash.net':1,'vk.com':1,'vkontakte.ru':1,'wikia.com':1,'wikidot.com':1,'wikimedia.org':1,'wikipedia.org':1,'wiktionary.org':1,'wordpress.com':1,'wrzuta.pl':1,'yvision.kz':1};
-groupHosts0={'accounts.google.com':1,'addons.opera.com':1,'crash.opera.com':1,'encrypted.google.com':1,'forum.hr':1,'forum.pcekspert.com':1,'get3.adobe.com':1,'localhost':1,'my.opera.com':1,'nk.pl':1,'plus.google.com':1,'support.google.com':1,'webstoregames.com':1,'windows.microsoft.com':1};
+groupHosts2={'allanalpass.com':1,'deviantart.com':1,'deviantart.net':1,'dns-shop.ru':1,'est.ua':1,'facebook.com':1,'fastpic.ru':1,'gazeta.pl':1,'gittigidiyor.com':1,'ifolder.ru':1,'imagevenue.com':1,'imageshack.us':1,'interia.pl':1,'ivao.aero':1,'lento.pl':1,'letitbit.net':1,'livejournal.com':1,'megafon.ru':1,'minecraftwiki.net':1,'mirtesen.ru':1,'moole.ru':1,'mts.ru':1,'narod.ru':1,'newsweek.pl':1,'nnm.ru':1,'onet.pl':1,'radikal.ru':1,'raduga.su':1,'rapidshare.com':1,'sexfotka.pl':1,'sex-zone.pl':1,'softonic.com':1,'softonic.pl':1,'sourceforge.net':1,'skryptoteka.pl':1,'tiu.ru':1,'tripod.com':1,'tumblr.com':1,'urlcash.net':1,'vk.com':1,'vkontakte.ru':1,'wikia.com':1,'wikidot.com':1,'wikimedia.org':1,'wikipedia.org':1,'wiktionary.org':1,'wordpress.com':1,'wrzuta.pl':1,'yvision.kz':1,
+    //https://addons.opera.com/ru/extensions/details/block-linkbucks-opera-edition/?display=en
+'linkbucks.com':1,'any.gs':1,'cash4links.co':1,'cash4files.com':1,'dyo.gs':1,'filesonthe.net':1,'goneviral.com':1,'megaline.co':1,'miniurls.co':1,'qqc.co':1,'seriousdeals.net':1,'theseblogs.com':1,'theseforums.com':1,'tinylinks.co':1,'tubeviral.com':1,'ultrafiles.net':1,'urlbeat.net':1,'whackyvidz.com':1,'yyv.co':1,
+    //more
+'seriousfiles.com':1,'picbucks.com':1,'ultrafiles.net':1,'zff.co':1,
+    };
+groupHosts0={'accounts.google.com':1,'addons.opera.com':1,'crash.opera.com':1,'encrypted.google.com':1,'forum.hr':1,'forum.pcekspert.com':1,'get3.adobe.com':1,'kriz-zivota.com':1,'localhost':1,'mail.google.com':1,'my.opera.com':1,'nk.pl':1,'opera.com':1,'plus.google.com':1,'support.google.com':1,'titlovi.com':1,'webstoregames.com':1,'windows.microsoft.com':1};
 statsHosts={ver:0};
 
 function normalizeHost(host)
     {
     host=host.replace(/^www\.(.+\..+)/,"$1");//cut off www. only if there's a dot to the right
-    host=host.replace(/^(amazon|blogspot|google)(\.com?)?\.[a-z][a-z]$/,'$1.com');//google.ru, google.co.uk
+    host=host.replace(/^(amazon|google)(\.com?)?\.[a-z][a-z]$/,'$1.com');//google.ru, google.co.uk
+    host=host.replace(/^.*\.(blogspot)(\.com?)?\.[a-z][a-z]$/,'$1.com');//whatever.blogspot.co.uk
     host3=host.split('.').slice(-3).join('.');//whatever.prov.ider.tld
     host2=host.split('.').slice(-2).join('.');//whatever.provider.tld
     if(groupHosts3[host3])
@@ -308,22 +314,27 @@ function getTabInfo(onOk,host)
 	break;
 	}
     
+    sendRequest(XHR);
+    }//getTabInfo
+
+
+
+function sendRequest(XHR)
+    {
     //prevent requests from being sent faster then once a second
-    if(lastRequestTime+1000>(new Date()).getMilliseconds())
+    if(lastRequestTime+1000>(new Date()).getTime())
 	{
 	setTimeout(function()
 	    {
-	    lastRequestTime=(new Date()).getMilliseconds();
-	    XHR.send(null);
-	    },lastRequestTime+1000-(new Date()).getMilliseconds());
+	    sendRequest(XHR);
+	    },lastRequestTime+1000-(new Date()).getTime());
 	}
     else
 	{
-	lastRequestTime=(new Date()).getMilliseconds();
+	lastRequestTime=(new Date()).getTime();
 	XHR.send(null);
 	};
-    }//getTabInfo
-
+    }
 
 
 //almost like main
