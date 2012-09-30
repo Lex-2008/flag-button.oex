@@ -24,16 +24,24 @@ window.addEventListener('DOMContentLoaded', function () {
 
 if (window.top === window.self)
     {
-    window.addEventListener( "focus",function()
-        {
+    window.addEventListener( "focus",function(){
         send1('focus');
         },false);
     
-    window.addEventListener( "blur", function()
-        {
+    window.addEventListener( "blur", function(){
         send1('blur');
         },false);
     
-    send1('loaded');
+    window.addEventListener('load', function(){
+        if(!testMediaQuery('screen and (view-mode:minimized)'))
+            {
+            opera.postError('loaded page normal: '+window.location.hostname);
+            send1('loaded')
+            }
+        else
+            opera.postError('loaded page in SD: '+window.location.hostname);
+        },false);
+    
     }
-
+else
+    opera.postError('loaded page iframe: '+window.location.hostname);

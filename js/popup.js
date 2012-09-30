@@ -1,5 +1,4 @@
 var ids=['host','ip','country','region','city','zip','lat','lng','tz','src','cmp'];
-var host=opera.extension.bgProcess.lastHost;
 var fail;//global flag if replaceIds shows that current line is "bad" -- contains ids which are not in data
 
 function replaceIds(s,data)
@@ -23,10 +22,11 @@ function replaceIds(s,data)
 opera.extension.addEventListener( "message", function(arg)
     {
     //close on error
-    if(arg.data.code=='err')
+    if(arg.data.code!='ok')
 	{
 	window.close();
-	alert('i should close');
+	opera.postError('popup should close');
+	return;
 	}
     
     var q;
@@ -68,4 +68,10 @@ opera.extension.addEventListener( "message", function(arg)
     opera.extension.postMessage( {q:"size",h:gebi('wrap').offsetHeight+gebi('wrap').offsetTop*2} );
     }, false);
 
-opera.extension.postMessage( {q:"popup"} );
+if(opera.extension.bgProcess.lastHost)
+    opera.extension.postMessage( {q:"popup"} );
+else
+    {
+    window.close();
+    opera.postError('popup should close');
+    }

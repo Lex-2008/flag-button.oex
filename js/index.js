@@ -5,7 +5,7 @@ var ToolbarUIItemProperties =
     {
     title:lang.defTitle,
     icon:'icons/svg2raster-16.png',
-    disabled:true,
+    disabled:false,
     badge:
 	{
 	display: "block",
@@ -24,21 +24,33 @@ opera.contexts.toolbar.addItem(theButton);
 opera.extension.tabs.addEventListener( "create", tabFocusEvent, false);
 opera.extension.tabs.addEventListener( "focus", tabFocusEvent, false);
 opera.extension.tabs.addEventListener( "blur", tabBlurEvent, false);
+opera.extension.tabs.addEventListener( "close", tabBlurEvent, false);
 opera.extension.windows.addEventListener( "create", tabFocusEvent, false);
 opera.extension.windows.addEventListener( "focus", tabFocusEvent, false);
 opera.extension.windows.addEventListener( "blur", tabBlurEvent, false);
+opera.extension.windows.addEventListener( "close", tabBlurEvent, false);
 
 function tabFocusEvent()
     {
     //"old" method (0) or "both (2)
     if(widget.preferences.eventType%2==0)//0 or 2
+	{
+	opera.postError('Tab focused; processing');
 	toggleIfExists();//active tab will be called by tab api
+	}
+    else
+	opera.postError('Tab focused; ignoring');
     }
 
 function tabBlurEvent()
     {
     if(widget.preferences.eventType%2==0 && widget.preferences.disableButton=='1')
+	{
+	opera.postError('Tab blurred; processing');
 	disableButton();
+	}
+    else
+	opera.postError('Tab blurred; ignoring');
     }
 
 function disableButton(text)
@@ -62,8 +74,10 @@ groupHosts3={'blog.onet.pl':1};
 groupHosts2={'allanalpass.com':1,'deviantart.com':1,'deviantart.net':1,'dns-shop.ru':1,'est.ua':1,'facebook.com':1,'fastpic.ru':1,'gazeta.pl':1,'gittigidiyor.com':1,'ifolder.ru':1,'imagevenue.com':1,'imageshack.us':1,'interia.pl':1,'ivao.aero':1,'lento.pl':1,'letitbit.net':1,'livejournal.com':1,'megafon.ru':1,'minecraftwiki.net':1,'mirtesen.ru':1,'moole.ru':1,'mts.ru':1,'narod.ru':1,'newsweek.pl':1,'nnm.ru':1,'onet.pl':1,'radikal.ru':1,'raduga.su':1,'rapidshare.com':1,'sexfotka.pl':1,'sex-zone.pl':1,'softonic.com':1,'sourceforge.net':1,'skryptoteka.pl':1,'tiu.ru':1,'tripod.com':1,'tumblr.com':1,'urlcash.net':1,'vk.com':1,'vkontakte.ru':1,'wikia.com':1,'wikidot.com':1,'wikimedia.org':1,'wikipedia.org':1,'wiktionary.org':1,'wordpress.com':1,'wrzuta.pl':1,'yvision.kz':1,
     //https://addons.opera.com/ru/extensions/details/block-linkbucks-opera-edition/?display=en
 'linkbucks.com':1,'any.gs':1,'cash4links.co':1,'cash4files.com':1,'dyo.gs':1,'filesonthe.net':1,'goneviral.com':1,'megaline.co':1,'miniurls.co':1,'qqc.co':1,'seriousdeals.net':1,'theseblogs.com':1,'theseforums.com':1,'tinylinks.co':1,'tubeviral.com':1,'ultrafiles.net':1,'urlbeat.net':1,'whackyvidz.com':1,'yyv.co':1,
+    //more
+'seriousfiles.com':1,'picbucks.com':1,'ultrafiles.net':1,'zff.co':1,
     };
-groupHosts0={'accounts.google.com':1,'addons.opera.com':1,'crash.opera.com':1,'encrypted.google.com':1,'forum.hr':1,'forum.pcekspert.com':1,'get3.adobe.com':1,'localhost':1,'my.opera.com':1,'nk.pl':1,'plus.google.com':1,'support.google.com':1,'webstoregames.com':1,'windows.microsoft.com':1};
+groupHosts0={'accounts.google.com':1,'addons.opera.com':1,'crash.opera.com':1,'encrypted.google.com':1,'forum.hr':1,'forum.pcekspert.com':1,'get3.adobe.com':1,'kriz-zivota.com':1,'localhost':1,'mail.google.com':1,'my.opera.com':1,'nk.pl':1,'opera.com':1,'plus.google.com':1,'support.google.com':1,'titlovi.com':1,'webstoregames.com':1,'windows.microsoft.com':1};
 statsHosts={ver:0};
 
 function normalizeHost(host)
@@ -101,6 +115,7 @@ opera.extension.addEventListener( "message", function(event)
     switch(event.data.q)
 	{
 	case 'loaded':
+	    opera.postError('Page loaded; processing: '+event.data.w);
 	    lastActiveTab=event.source;
 	    toggleIfExists(event.data.w);
 	break;
@@ -108,10 +123,12 @@ opera.extension.addEventListener( "message", function(event)
 	    //"new" method (1) or "both" (2)
 	    if(widget.preferences.eventType>0)
 		{
-		//~ opera.postError('new on '+event.data.w);
+		opera.postError('Page focused; processing: '+event.data.w);
 		lastActiveTab=event.source;
 		toggleIfExists(event.data.w);
 		}
+	    else
+		opera.postError('Page focused; ignoring: '+event.data.w);
 	break;
 	case 'blur':
 	    if(popupIsOpening)//do not disable the button while popup is opening
@@ -121,8 +138,15 @@ opera.extension.addEventListener( "message", function(event)
 		    {
 		    lastActiveTab=0;
 		    if(widget.preferences.disableButton=='1')
+			{
 			disableButton();
+			opera.postError('Page blurred; processing: '+event.data.w);
+			}
+		    else
+			opera.postError('Page blurred; ignoring 1: '+event.data.w);
 		    }
+		else
+		    opera.postError('Page blurred; ignoring 2: '+event.data.w);
 	break;
 	case 'popup':
 	    popupHelper(event);
@@ -168,6 +192,7 @@ function toggleIfExists(host)
 		theButton.badge.textContent=arg.co.toUpperCase();
 	    else
 		theButton.badge.textContent='';
+	    // enable button no matter the settings
 	    theButton.disabled=false;
 	    //send data to injected process
 	    //~ arg.meta={'host-info':{'ip':'ip','location':{'country':'country','countryCode':'co','region':'region','city':'city','coordinates':{'latitude':'lat','longitude':'lng'},'timeZone':'tz','source':'src'}}};
@@ -202,7 +227,7 @@ function toggleIfExists(host)
 	    }
 	}
     
-    getTabInfo(onOk,host);    
+    getTabInfo(onOk,host);
     }
 
 
@@ -211,32 +236,33 @@ function toggleIfExists(host)
 function getTabInfo(onOk,host)
     {
     //NB! if('0') is true
-    //that is my key
+    //this is my key
     var key='8ab4dafef4a713f5097cb50706e861b38ebf6972a44167aa9426cde1768fed5e';
     if(widget.preferences.userkey.length>30) key=widget.preferences.userkey;
     
     //get host
-    if(host)
-	lastHost=host;
-    else
+    if(!host)
 	try
 	    {
 	    //try to get from active tab
 	    var tab=opera.extension.tabs.getFocused();
 	    var url=tab.url;
-	    var re = new RegExp('^(?:f|ht)tp(?:s)?\://([^/]+)', 'im');
-	    if(url.match(re)[1].toString())
-		{
-		host=url.match(re)[1].toString();
-		lastHost=host;
-		}
-	    else
-		host=lastHost;
+	    var re = new RegExp('^(?:f|ht)tp(?:s)?\://([^:/]+)', 'im');
+	    var m=url.match(re);
+	    if(!m) throw "bad protocol on "+url;
+	    host=url.match(re)[1].toString();
+	    if(!host) throw "couldn't find a host for "+url;
+	    opera.postError('getTabInfo got a host: '+host);
+	    lastHost=host;
 	    }
 	catch(e)
 	    {
 	    //can't get from active tab - get last known
-	    host=lastHost;
+	    //~ host=lastHost;
+	    opera.postError('getTabInfo fail with error: '+e);
+	    onOk({"code":'err',"err":e.toString(),"ip":'',"co":'',"country":'',"region":'',"city":'',"zip":'',"lat":'',"lng":'',"tz":'',"src":'',"cmp":''});
+	    lastHost=0;
+	    return;
 	    }
     
     host=normalizeHost(host);
@@ -348,7 +374,7 @@ function getTabInfo(onOk,host)
 	arg=arg.join('|');
 	cache.setItem(host,arg);
 	arg=cache.getItem(host);
-	if(arg) onOk(arg);
+	onOk(arg);
 	};
     switch(widget.preferences.source)
 	{
@@ -437,10 +463,10 @@ function buildPrecache()
             widget.preferences.source=1001;//localhost
             for(var q in groupHosts0)
                 domains.push(q);
-            for(var q in groupHosts2)
-                domains.push(q);
-            for(var q in groupHosts3)
-                domains.push(q);
+            //~ for(var q in groupHosts2)
+                //~ domains.push(q);
+            //~ for(var q in groupHosts3)
+                //~ domains.push(q);
 	    
             grabNext()
             });//addJS('loader.js'
