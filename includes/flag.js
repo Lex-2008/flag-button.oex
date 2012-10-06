@@ -11,12 +11,7 @@ window.addEventListener('DOMContentLoaded', function () {
         switch(event.data.q)
             {
             case 'data':
-                //prevent from sending again
-                if(!this.data_was_sent)
-                    {
-                    sender(event.data.w);
-                    this.data_was_sent=true;
-                    }
+                window['flag-button']=event.data.w;
             break;
             }
         },false);

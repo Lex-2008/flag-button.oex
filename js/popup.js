@@ -25,7 +25,7 @@ opera.extension.addEventListener( "message", function(arg)
     if(arg.data.code!='ok')
 	{
 	window.close();
-	opera.postError('popup should close');
+	opera.postError('popup should close because not OK: '+sJSON.stringify(arg.data));
 	return;
 	}
     
@@ -46,10 +46,12 @@ opera.extension.addEventListener( "message", function(arg)
     for(q in linksCfg)
 	{
 	var elem=document.createElement('a');
-	var fail=false;
+	//note: it's a global variable!
+	fail=false;
 	elem.href=replaceIds(linksCfg[q],arg.data);
 	elem.appendChild(document.createTextNode(replaceIds(q,arg.data)));
-	if(fail) continue;
+	if(fail)
+	    continue;
 	root.appendChild(elem);
 	switch(widget.preferences.linksStyle)
 	    {
@@ -73,5 +75,5 @@ if(opera.extension.bgProcess.lastHost)
 else
     {
     window.close();
-    opera.postError('popup should close');
+    opera.postError('popup should close because bad lastHost='+opera.extension.bgProcess.lastHost);
     }

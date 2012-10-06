@@ -19,7 +19,6 @@ defaults={
     statsEnabled:0,
     statsData:'{}',
     statsNextTime:0,
-    statsHosts:'{}',
     statsLast:'{}',
 };
 hiddenFromStats={
@@ -30,7 +29,6 @@ hiddenFromStats={
     statsEnabled:1,
     statsData:1,
     statsNextTime:1,
-    statsHosts:1,
     statsLast:1,
 };
 try {
@@ -104,6 +102,17 @@ var cache={
         for(var q in this.data)
             if(this.data[q].t<cut)
                 delete this.data[q];
+        this.save();
+        },
+    timeout:function(d)//we will delete all records older than d days
+        {
+        if(d==undefined) d=30;
+        var now=Math.round((new Date()).getTime()/100000)-13270000;
+        var cut=now-d*864;//24*60*60/100
+        for(var q in this.data)
+            if(this.data[q].t<cut)
+                delete this.data[q];
+        this.save();
         },
     clear:function()
         {
@@ -169,7 +178,7 @@ function gebi(id)
 var stats={
     freq:1,//DAYS how often to report stats
     host:'flag-button.tk',
-    logLists:{'precache':1,'precache100':1,'groupHosts0':1,'groupHosts2':1,'statsHosts':1,'requested':1},
+    logLists:{'precache':1,'precache100':1,'extraHosts':1,'requested':1},
     add1:function(group,host)
         {
         if(!this.data[group])
@@ -198,7 +207,6 @@ var stats={
         {
         this.data=sJSON.parse(widget.preferences.statsData);
         this.nextTime=parseInt(widget.preferences.statsNextTime);
-        statsHosts=sJSON.parse(widget.preferences.statsHosts);
         },
     clear:function()
         {
@@ -207,8 +215,6 @@ var stats={
         for(var q in this.logLists)
             this.data[q]={};
         this.save();
-        statsHosts={};
-        cache.savePref('statsHosts','{}');
         cache.savePref('statsLast','{}');
         },
     setNextTime:function()
@@ -221,28 +227,13 @@ var stats={
         cache.savePref('statsEnabled',state?'1':'0');
         this.clear();
         this.setNextTime();
-        if(state)
-            {
-            //get statsHosts
-            var XHR=new window.XMLHttpRequest();
-            XHR.onreadystatechange=function()
-                {
-                if(XHR.readyState!=4)
-                    return;
-                statsHosts=sJSON.parse(XHR.responseText);
-                cache.savePref('statsHosts',XHR.responseText);
-                }
-            XHR.open("get","http://"+this.host+"/statsHosts.js",true)
-            XHR.send();
-            }
         },
     makeData:function()
         {
         var params={
             ver:{
                 opera:opera.version(),
-                ext:widget.version,
-                statsHosts:statsHosts.ver
+                ext:widget.version
                 },
             len:{cache:0},
             pref:{lang:navigator.language},
@@ -270,15 +261,6 @@ var stats={
         
         //send data
         var XHR=new window.XMLHttpRequest();
-        XHR.onreadystatechange=function()
-            {
-            if(XHR.readyState!=4)
-                return;
-            statsHosts=sJSON.parse(XHR.responseText);
-            cache.savePref('statsHosts',XHR.responseText);
-            }
-        //~ console.log(params);
-        //~ console.log(sJSON.stringify(params));
         params='stat='+encodeURIComponent(sJSON.stringify(params));
         console.log(params);
         XHR.open("POST","http://"+this.host+"/stat.php",true)

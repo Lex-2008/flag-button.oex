@@ -111,24 +111,48 @@
 	    Enabling this feature will send the following information to the developer:
 	    <ul>
 		<li>
+		    Browser version
+		    (so I know if I can use new features or should maintain compatibility with older versions)
+		</li>
+		<li>
 		    Extension version
 		    (so I know when autoupdate works)
 		</li>
 		<li>
-		    Size of cache and usage of precache and its different parts
-		    (cache is a memory that keeps location information for sites that you've visited. Precache is a similar thing, but collected while building the extension with looking at alexa "top million sites" list and internal statistics of requests to flag-button.tk. These numbers will show me how hard should I think about optimizing them)
+		    Size of cache
+		    (Cache is a memory that keeps location information for sites that you've visited.
+		    This number shows how many records does it have.
+		    Knowing it tells me if I should optimize related part of extension)
 		</li>
 		<li>
-		    All preferences except those that might have personal information
-		    (ipinfodb.com access key, links list and custom icons - these preferences won't be sent. Knowing how users change preferences will give me hints how settings should be configured by default)
+		    Usage of precache
+		    (Precache is a location information for most popular sites, collected while building the extension.
+		    This number shows how many sites from this list you've visited.
+		    Knowing it tells me if it's useful at all)
 		</li>
 		<li>
-		    Your browser version
-		    (so I know if I can use new features or should maintain compatibility with older versions)
+		    Usage of "top 100 sites" part of precache
+		    (Like previous, but only first 100 sites from precache are accounted.
+		    Knowing it tells me what happens if I make precahe 10 times smaller)
+		</li>
+		<li>
+		    Usage of "extraHosts" part of precache
+		    (Like two above, but uses list of sites which once were among most popular requests to flag-button.tk.
+		    Knowing it tells me if I should consider minimizing it)
+		</li>
+		<li>
+		    Amount of requests to source
+		    (How many times this extension requested location information for a new site.
+		    Knowing it tells me if I should optimize related part of extension)
 		</li>
 		<li>
 		    Your current browser language
 		    (so I know if I need to translate the extension to more languages)
+		</li>
+		<li>
+		    All preferences except those that might have personal information
+		    (ipinfodb.com access key, links list and custom icons - these preferences won't be sent.
+		    Knowing how users change preferences will give me hints how settings should be configured by default)
 		</li>
 	    </ul>
 	    Knowing how you are using this extension will motivate the developer to fine-tune it for your needs!
@@ -136,11 +160,10 @@
 	<input type="checkbox" id="statsEnable"/><label for="statsEnable"> Collect anonymous statistics on extension usage and send it to the developer</label>
 	<div id="stats_gr">
 	    Next time data will be sent on: <b id="statsNextTime"></b>
+	    <br>
+	    <button id="statsShowPrev">Show previously sent data</button>
+	    <button id="statsShowCurr">Show current data</button>
 	</div>
-	<br>
-	<button id="statsShowPrev">Show previously sent data</button>
-	<button id="statsShowCurr">Show current data</button>
-	<button id="statsSendNow">Send statistics</button>
 	
 	<h3>Sposób pracy</h3>
 	<input type="radio" name="eventType" id="eventType0"/><label for="eventType0">

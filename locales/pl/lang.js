@@ -14,4 +14,10 @@
     offlineText:'Dane nie są dostępne w trybie bez połączenia',
     dateFormat:'%month%, %day% %hour%:%minute%',
     dateMonths:['Jan','Feb','March','Apr','May','June','July','Aug','Sept','Oct','Nov','Dec'],
+    errOperaProtocol:'Internal Opera page',
+    errFileProtocol:'Local file system',
+    errWidgetProtocol:'Extension page',
+    errUnknownProtocol:'Unknown protocol: ',
+    errNoHostName:'Can\'t find a hostname in URL: ',
+    noOldData:'No data had been sent yet',
     };

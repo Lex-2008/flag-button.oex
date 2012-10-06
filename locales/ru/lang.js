@@ -15,4 +15,10 @@
     offlineText:'Данные недоступны в оффлайн-режиме',
     dateFormat:'%day% %month% %hour%:%minute%',
     dateMonths:['янв','фев','марта','апр','мая','июня','июля','авг','сент','окт','ноября','дек'],
+    errOperaProtocol:'Internal Opera page',
+    errFileProtocol:'Local file system',
+    errWidgetProtocol:'Extension page',
+    errUnknownProtocol:'Unknown protocol: ',
+    errNoHostName:'Can\'t find a hostname in URL: ',
+    noOldData:'No data had been sent yet',
     };

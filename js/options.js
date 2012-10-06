@@ -13,6 +13,7 @@ function addCSS(cssCode)
     document.getElementsByTagName("head")[0].appendChild(styleElement);
     }
 
+//note: it must be safe to run this funstion several times
 function loadPrefs()
     {
     //===badge===
@@ -135,26 +136,26 @@ function loadPrefs()
     if(widget.preferences.debugMode=='0') addCSS('.debugMode{display:none}');
     
     //===stats===
-    gebi('statsEnable').onclick=function() { stats.enable(this.checked) };
+    gebi('statsEnable').onclick=function() { stats.enable(this.checked); loadPrefs() };
     gebi('statsEnable').checked=widget.preferences.statsEnabled=='1';
     if(widget.preferences.statsEnabled=='0')
         gebi('stats_gr').style.display='none';
     else
         {
+        gebi('stats_gr').style.display='';
         var next=new Date(stats.nextTime);
         gebi('statsNextTime').innerText=lang.dateFormat.replace('%month%',lang.dateMonths[next.getMonth()]).replace('%day%',next.getDate()).replace('%hour%',next.getHours()).replace('%minute%',next.getMinutes());
         };
     gebi('statsShowPrev').onclick=function()
         {
-        alert(sJSON.prettify(sJSON.parse(widget.preferences.statsLast)))
+        if(widget.preferences.statsLast=='{}')
+            alert(lang.noOldData);
+        else
+            alert(sJSON.prettify(sJSON.parse(widget.preferences.statsLast)))
         };
     gebi('statsShowCurr').onclick=function()
         {
         alert(sJSON.prettify(stats.makeData()))
-        };
-    gebi('statsSendNow').onclick=function()
-        {
-        stats.sendData();
         };
     
     gebi('eventType0').onclick=function() { widget.preferences.eventType=0 };
@@ -185,11 +186,7 @@ function loadPrefs()
                 delete cache.data[q];
             }
         };
-    gebi('cacheTruncNow').onclick=function()
-        {
-        cache.trunc();
-        cache.save();
-        };
+    gebi('cacheTruncNow').onclick=function() { cache.trunc() };
     gebi('cacheShow').onclick=function()
         {
         var q=sJSON.stringify(cache.data);

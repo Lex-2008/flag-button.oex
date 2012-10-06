@@ -1,7 +1,7 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<widget xmlns="http://www.w3.org/ns/widgets" version="1.6-dev5"
-    id="https://addons.opera.com/addons/extensions/details/flag-button/"
-    url="https://addons.opera.com/addons/extensions/details/flag-button/">
+<widget xmlns="http://www.w3.org/ns/widgets" version="1.6-dev6"
+    id="http://my.opera.com/alex-shpak/blog/flag-button/"
+    url="http://my.opera.com/alex-shpak/blog/flag-button/">
     <name xml:lang="en">Flag Button</name>
     <name xml:lang="ru">Flag Button</name>
     <name xml:lang="tr">Bayrak Düğmesi</name>
@@ -11,7 +11,7 @@
     <icon src="icons/svg2raster-256.png" width="256" height="256"/>
     <content src="flag-button.html"/>
     <access origin="*"/>
-    <license href="http://www.apache.org/licenses/LICENSE-2.0">Copyright 2011 alex-shpak
+    <license href="http://www.apache.org/licenses/LICENSE-2.0">Copyright 2012 alex-shpak
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -26,10 +26,10 @@ See the License for the specific language governing permissions and
 limitations under the License.</license>
     <author href="http://my.opera.com/alex-shpak/" email="alex-shpak@myopera.com">Alexey Shpakovsky</author>
     <description xml:lang="en">
-        Adds a button with a flag of a country where the sever is located. Uses API of several external sites.
+        Adds a button with a flag of a country where the sever is located. Requests information from external websites.
     </description>
     <description xml:lang="ru">
-        Добавляет кнопку с флагом страны, в которой расположен сервер. Использует данные нескольких внешних сайтов.
+        Добавляет кнопку с флагом страны, в которой расположен сервер. Запрашивает информацию с внешних сайтов.
     </description>
     <description xml:lang="tr">
         Bu düğme, sunucunun bulunduğu ülkenin bayrağını göstermektedir. Dış kaynaklı farklı web sayfalarının API'lerini kullanmaktadır.

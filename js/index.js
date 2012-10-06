@@ -71,14 +71,13 @@ function disableButton(text)
     }
 
 groupHosts3={'blog.onet.pl':1};
-groupHosts2={'allanalpass.com':1,'deviantart.com':1,'deviantart.net':1,'dns-shop.ru':1,'est.ua':1,'facebook.com':1,'fastpic.ru':1,'gazeta.pl':1,'gittigidiyor.com':1,'ifolder.ru':1,'imagevenue.com':1,'imageshack.us':1,'interia.pl':1,'ivao.aero':1,'lento.pl':1,'letitbit.net':1,'livejournal.com':1,'megafon.ru':1,'minecraftwiki.net':1,'mirtesen.ru':1,'moole.ru':1,'mts.ru':1,'narod.ru':1,'newsweek.pl':1,'nnm.ru':1,'onet.pl':1,'radikal.ru':1,'raduga.su':1,'rapidshare.com':1,'sexfotka.pl':1,'sex-zone.pl':1,'softonic.com':1,'sourceforge.net':1,'skryptoteka.pl':1,'tiu.ru':1,'tripod.com':1,'tumblr.com':1,'urlcash.net':1,'vk.com':1,'vkontakte.ru':1,'wikia.com':1,'wikidot.com':1,'wikimedia.org':1,'wikipedia.org':1,'wiktionary.org':1,'wordpress.com':1,'wrzuta.pl':1,'yvision.kz':1,
+groupHosts2={'allanalpass.com':1,'deviantart.com':1,'deviantart.net':1,'dns-shop.ru':1,'est.ua':1,'facebook.com':1,'fastpic.ru':1,'gazeta.pl':1,'gittigidiyor.com':1,'ifolder.ru':1,'imagevenue.com':1,'imageshack.us':1,'interia.pl':1,'ivao.aero':1,'lento.pl':1,'letitbit.net':1,'livejournal.com':1,'megafon.ru':1,'minecraftwiki.net':1,'mirtesen.ru':1,'moole.ru':1,'mts.ru':1,'narod.ru':1,'newsweek.pl':1,'nnm.ru':1,'onet.pl':1,'radikal.ru':1,'raduga.su':1,'rapidshare.com':1,'sexfotka.pl':1,'sex-zone.pl':1,'softonic.com':1,'softonic.pl':1,'sourceforge.net':1,'skryptoteka.pl':1,'tiu.ru':1,'tripod.com':1,'tumblr.com':1,'urlcash.net':1,'vk.com':1,'vkontakte.ru':1,'wikia.com':1,'wikidot.com':1,'wikimedia.org':1,'wikipedia.org':1,'wiktionary.org':1,'wordpress.com':1,'wrzuta.pl':1,'yvision.kz':1,
     //https://addons.opera.com/ru/extensions/details/block-linkbucks-opera-edition/?display=en
 'linkbucks.com':1,'any.gs':1,'cash4links.co':1,'cash4files.com':1,'dyo.gs':1,'filesonthe.net':1,'goneviral.com':1,'megaline.co':1,'miniurls.co':1,'qqc.co':1,'seriousdeals.net':1,'theseblogs.com':1,'theseforums.com':1,'tinylinks.co':1,'tubeviral.com':1,'ultrafiles.net':1,'urlbeat.net':1,'whackyvidz.com':1,'yyv.co':1,
     //more
 'seriousfiles.com':1,'picbucks.com':1,'ultrafiles.net':1,'zff.co':1,
     };
-groupHosts0={'accounts.google.com':1,'addons.opera.com':1,'crash.opera.com':1,'encrypted.google.com':1,'forum.hr':1,'forum.pcekspert.com':1,'get3.adobe.com':1,'kriz-zivota.com':1,'localhost':1,'mail.google.com':1,'my.opera.com':1,'nk.pl':1,'opera.com':1,'plus.google.com':1,'support.google.com':1,'titlovi.com':1,'webstoregames.com':1,'windows.microsoft.com':1};
-statsHosts={ver:0};
+extraHosts={'accounts.google.com':1,'addons.opera.com':1,'crash.opera.com':1,'encrypted.google.com':1,'forum.hr':1,'forum.pcekspert.com':1,'get3.adobe.com':1,'kriz-zivota.com':1,'localhost':1,'mail.google.com':1,'my.opera.com':1,'nk.pl':1,'opera.com':1,'plus.google.com':1,'support.google.com':1,'titlovi.com':1,'webstoregames.com':1,'windows.microsoft.com':1};
 
 function normalizeHost(host)
     {
@@ -247,11 +246,14 @@ function getTabInfo(onOk,host)
 	    //try to get from active tab
 	    var tab=opera.extension.tabs.getFocused();
 	    var url=tab.url;
+	    if(url.match('opera:')) throw lang.errOperaProtocol;
+	    if(url.match('file://')) throw lang.errFileProtocol;
+	    if(url.match('widget://')) throw lang.errWidgetProtocol;
 	    var re = new RegExp('^(?:f|ht)tp(?:s)?\://([^:/]+)', 'im');
 	    var m=url.match(re);
-	    if(!m) throw "bad protocol on "+url;
+	    if(!m) throw lang.errUnknownProtocol+url;
 	    host=url.match(re)[1].toString();
-	    if(!host) throw "couldn't find a host for "+url;
+	    if(!host) throw lang.errNoHostName+url;
 	    opera.postError('getTabInfo got a host: '+host);
 	    lastHost=host;
 	    }
@@ -428,13 +430,12 @@ function popupHelper(event)
 
 
 
-//init prefs
+//init prefs, cache and stats
 ensureAllPrefs();
-
-//init cache
 cache.load();
 stats.load();
-setInterval("cache.save()",60000);
+//note: cache.timeout also calls cache.save()
+setInterval("cache.timeout()",59000);
 setInterval("stats.save()",60000);
 
 
@@ -461,12 +462,8 @@ function buildPrecache()
             clearCache();
             precache={};
             widget.preferences.source=1001;//localhost
-            for(var q in groupHosts0)
+            for(var q in extraHosts)
                 domains.push(q);
-            //~ for(var q in groupHosts2)
-                //~ domains.push(q);
-            //~ for(var q in groupHosts3)
-                //~ domains.push(q);
 	    
             grabNext()
             });//addJS('loader.js'
