@@ -1,5 +1,3 @@
-//init
-
 var theButton;
 var ToolbarUIItemProperties =
     {
@@ -30,27 +28,28 @@ opera.extension.windows.addEventListener( "focus", tabFocusEvent, false);
 opera.extension.windows.addEventListener( "blur", tabBlurEvent, false);
 opera.extension.windows.addEventListener( "close", tabBlurEvent, false);
 
+
 function tabFocusEvent()
     {
     //"old" method (0) or "both (2)
     if(widget.preferences.eventType%2==0)//0 or 2
 	{
-	opera.postError('Tab focused; processing');
+	debug('Tab focused; processing');
 	toggleIfExists();//active tab will be called by tab api
 	}
     else
-	opera.postError('Tab focused; ignoring');
+	debug('Tab focused; ignoring');
     }
 
 function tabBlurEvent()
     {
     if(widget.preferences.eventType%2==0 && widget.preferences.disableButton=='1')
 	{
-	opera.postError('Tab blurred; processing');
+	debug('Tab blurred; processing');
 	disableButton();
 	}
     else
-	opera.postError('Tab blurred; ignoring');
+	debug('Tab blurred; ignoring');
     }
 
 function disableButton(text)
@@ -71,13 +70,15 @@ function disableButton(text)
     }
 
 groupHosts3={'blog.onet.pl':1};
-groupHosts2={'allanalpass.com':1,'deviantart.com':1,'deviantart.net':1,'dns-shop.ru':1,'est.ua':1,'facebook.com':1,'fastpic.ru':1,'gazeta.pl':1,'gittigidiyor.com':1,'ifolder.ru':1,'imagevenue.com':1,'imageshack.us':1,'interia.pl':1,'ivao.aero':1,'lento.pl':1,'letitbit.net':1,'livejournal.com':1,'megafon.ru':1,'minecraftwiki.net':1,'mirtesen.ru':1,'moole.ru':1,'mts.ru':1,'narod.ru':1,'newsweek.pl':1,'nnm.ru':1,'onet.pl':1,'radikal.ru':1,'raduga.su':1,'rapidshare.com':1,'sexfotka.pl':1,'sex-zone.pl':1,'softonic.com':1,'softonic.pl':1,'sourceforge.net':1,'skryptoteka.pl':1,'tiu.ru':1,'tripod.com':1,'tumblr.com':1,'urlcash.net':1,'vk.com':1,'vkontakte.ru':1,'wikia.com':1,'wikidot.com':1,'wikimedia.org':1,'wikipedia.org':1,'wiktionary.org':1,'wordpress.com':1,'wrzuta.pl':1,'yvision.kz':1,
-    //https://addons.opera.com/ru/extensions/details/block-linkbucks-opera-edition/?display=en
-'linkbucks.com':1,'any.gs':1,'cash4links.co':1,'cash4files.com':1,'dyo.gs':1,'filesonthe.net':1,'goneviral.com':1,'megaline.co':1,'miniurls.co':1,'qqc.co':1,'seriousdeals.net':1,'theseblogs.com':1,'theseforums.com':1,'tinylinks.co':1,'tubeviral.com':1,'ultrafiles.net':1,'urlbeat.net':1,'whackyvidz.com':1,'yyv.co':1,
-    //more
-'seriousfiles.com':1,'picbucks.com':1,'ultrafiles.net':1,'zff.co':1,
+groupHosts2={'blogspot.com':1,'blox.pl':1,'deviantart.com':1,'deviantart.net':1,'dns-shop.ru':1,'est.ua':1,'facebook.com':1,'fastpic.ru':1,'gazeta.pl':1,'github.com':1,'gittigidiyor.com':1,'ifolder.ru':1,'imagevenue.com':1,'imageshack.us':1,'interia.pl':1,'ivao.aero':1,'lento.pl':1,'letitbit.net':1,'livejournal.com':1,'megafon.ru':1,'minecraftwiki.net':1,'mirtesen.ru':1,'moole.ru':1,'mts.ru':1,'narod.ru':1,'newsweek.pl':1,'nnm.ru':1,'nowyekran.pl':1,'onet.pl':1,'radikal.ru':1,'raduga.su':1,'rapidshare.com':1,'sexfotka.pl':1,'sex-zone.pl':1,'softonic.com':1,'softonic.pl':1,'sourceforge.net':1,'skryptoteka.pl':1,'tiu.ru':1,'tripod.com':1,'trnd.com':1,'trojmiasto.pl':1,'tumblr.com':1,'urlcash.net':1,'vk.com':1,'vkontakte.ru':1,'wikia.com':1,'wikidot.com':1,'wikimedia.org':1,'wikipedia.org':1,'wiktionary.org':1,'wordpress.com':1,'wrzuta.pl':1,'yvision.kz':1,
+    //following line is taken from Block Linkbucks extension (ver 1.85)
+    //Copyright (c) 2012 USAcyborg.com. All rights reserved. 
+    //Usage is governed by a BSD-style license: 
+    //http://usacyborg.com/LICENSE.html 
+    //https://addons.opera.com/extensions/details/block-linkbucks-opera-edition/ 
+'adf\.ly':1,'amy\.gs':1,'any\.gs':1,'allanalpass\.com':1,'amateurteensexblog\.com':1,'cash4links\.co':1,'cash4files\.com':1,'deb\.gs':1,'drstickyfingers\.com':1,'dyo\.gs':1,'filesonthe\.net':1,'freean\.us':1,'freegaysitepass\.com':1,'fapoff\.com':1,'galleries\.bz':1,'goneviral\.com':1,'hornywood\.tv':1,'linkbabes\.com':1,'linkbucks\.com':1,'linkseer.net':1,'megaline\.co':1,'miniurls\.co':1,'picbucks\.com':1,'poontown\.net':1,'qqc\.co':1,'rqq\.co':1,'seriousdeals\.net':1,'seriousfiles\.com':1, 'sexpalace\.gs':1,'theseblogs\.com':1,'theseforums\.com':1,'tinylinks\.co':1,'tnabucks\.com':1,'tubeviral\.com':1,'ultrafiles\.net':1,'urlbeat\.net':1,'whackyvidz\.com':1,'youfap\.me':1,'yyv\.co':1,'zff\.co':1,
     };
-extraHosts={'accounts.google.com':1,'addons.opera.com':1,'crash.opera.com':1,'encrypted.google.com':1,'forum.hr':1,'forum.pcekspert.com':1,'get3.adobe.com':1,'kriz-zivota.com':1,'localhost':1,'mail.google.com':1,'my.opera.com':1,'nk.pl':1,'opera.com':1,'plus.google.com':1,'support.google.com':1,'titlovi.com':1,'webstoregames.com':1,'windows.microsoft.com':1};
+extraHosts={'addons.opera.com':1,'auth.mail.ru':1,'e.mail.ru':1,'encrypted.google.com':1,'feeds.feedburner.com':1,'help.opera.com':1,'localhost':1,'my.opera.com':1,'mail.yahoo.com':1,'opera.com':1};
 
 function normalizeHost(host)
     {
@@ -114,7 +115,7 @@ opera.extension.addEventListener( "message", function(event)
     switch(event.data.q)
 	{
 	case 'loaded':
-	    opera.postError('Page loaded; processing: '+event.data.w);
+	    debug('Page loaded; processing: '+event.data.w);
 	    lastActiveTab=event.source;
 	    toggleIfExists(event.data.w);
 	break;
@@ -122,12 +123,12 @@ opera.extension.addEventListener( "message", function(event)
 	    //"new" method (1) or "both" (2)
 	    if(widget.preferences.eventType>0)
 		{
-		opera.postError('Page focused; processing: '+event.data.w);
+		debug('Page focused; processing: '+event.data.w);
 		lastActiveTab=event.source;
 		toggleIfExists(event.data.w);
 		}
 	    else
-		opera.postError('Page focused; ignoring: '+event.data.w);
+		debug('Page focused; ignoring: '+event.data.w);
 	break;
 	case 'blur':
 	    if(popupIsOpening)//do not disable the button while popup is opening
@@ -139,13 +140,13 @@ opera.extension.addEventListener( "message", function(event)
 		    if(widget.preferences.disableButton=='1')
 			{
 			disableButton();
-			opera.postError('Page blurred; processing: '+event.data.w);
+			debug('Page blurred; processing: '+event.data.w);
 			}
 		    else
-			opera.postError('Page blurred; ignoring 1: '+event.data.w);
+			debug('Page blurred; ignoring 1: '+event.data.w);
 		    }
 		else
-		    opera.postError('Page blurred; ignoring 2: '+event.data.w);
+		    debug('Page blurred; ignoring 2: '+event.data.w);
 	break;
 	case 'popup':
 	    popupHelper(event);
@@ -188,13 +189,12 @@ function toggleIfExists(host)
 		else//standard error flag
 		    theButton.icon='icons/svg2raster-16.png';
 	    if(widget.preferences.showBadge==1)
-		theButton.badge.textContent=arg.co.toUpperCase();
+		theButton.badge.textContent=key;
 	    else
 		theButton.badge.textContent='';
 	    // enable button no matter the settings
 	    theButton.disabled=false;
 	    //send data to injected process
-	    //~ arg.meta={'host-info':{'ip':'ip','location':{'country':'country','countryCode':'co','region':'region','city':'city','coordinates':{'latitude':'lat','longitude':'lng'},'timeZone':'tz','source':'src'}}};
 	    var tabAPIFail=false;
 	    if(widget.preferences.eventType%2==0)//try tab API
 		{
@@ -213,7 +213,7 @@ function toggleIfExists(host)
 		(widget.preferences.eventType==2 && tabAPIFail)) //or using "both" AND tab API failed
 		&& lastActiveTab)		// AND last active tab is known
 		{
-		//~ opera.postError('sending to: '+lastActiveTab);
+		debug('sending to: '+lastActiveTab);
 		lastActiveTab.postMessage({q:'data',w:arg});
 		}
 	    }
@@ -240,6 +240,7 @@ function getTabInfo(onOk,host)
     if(widget.preferences.userkey.length>30) key=widget.preferences.userkey;
     
     //get host
+    debug('getTabInfo started with a host: '+host);
     if(!host)
 	try
 	    {
@@ -254,14 +255,13 @@ function getTabInfo(onOk,host)
 	    if(!m) throw lang.errUnknownProtocol+url;
 	    host=url.match(re)[1].toString();
 	    if(!host) throw lang.errNoHostName+url;
-	    opera.postError('getTabInfo got a host: '+host);
-	    lastHost=host;
+	    debug('getTabInfo got a host: '+host);
 	    }
 	catch(e)
 	    {
 	    //can't get from active tab - get last known
 	    //~ host=lastHost;
-	    opera.postError('getTabInfo fail with error: '+e);
+	    debug('getTabInfo fail with error: '+e);
 	    onOk({"code":'err',"err":e.toString(),"ip":'',"co":'',"country":'',"region":'',"city":'',"zip":'',"lat":'',"lng":'',"tz":'',"src":'',"cmp":''});
 	    lastHost=0;
 	    return;
@@ -269,20 +269,24 @@ function getTabInfo(onOk,host)
     
     host=normalizeHost(host);
     stats.logHost(host);
+    lastHost=host;
     
     //try cache
     var arg=cache.getItem(host);
     if(arg)
 	{
+	debug('getTabInfo found it in cache');
 	onOk(arg);
 	return;
 	}
     //err on offline mode
     if(widget.preferences.offlineMode==1)
 	{
+	debug('getTabInfo err because offline');
 	onOk({code:'err',err:lang.offlineText});
 	return;
 	}
+    debug('getTabInfo will get data from online');
     //check if request have already been sent
     if(hostWait[host])
 	{
@@ -296,7 +300,7 @@ function getTabInfo(onOk,host)
 	}
     else
 	hostWait[host]=1;
-    //get remotely data
+    //get data from remote server
     var XHR=new window.XMLHttpRequest();
     XHR.onreadystatechange=function()
 	{

@@ -4,17 +4,14 @@ function send1(s) //'on' or 'off'
     opera.extension.postMessage({q:s,w:host});
     }
 
-//note: window.addEventListener is required because sender.js might not be loaded yet
-window.addEventListener('DOMContentLoaded', function () {
-    opera.extension.addEventListener( "message", function(event)
+opera.extension.addEventListener( "message", function(event)
+    {
+    switch(event.data.q)
         {
-        switch(event.data.q)
-            {
-            case 'data':
-                window['flag-button']=event.data.w;
-            break;
-            }
-        },false);
+        case 'data':
+            window['flag-button']=event.data.w;
+        break;
+        }
     },false);
 
 if (window.top === window.self)
@@ -28,15 +25,12 @@ if (window.top === window.self)
         },false);
     
     window.addEventListener('load', function(){
-        if(!testMediaQuery('screen and (view-mode:minimized)'))
-            {
-            opera.postError('loaded page normal: '+window.location.hostname);
-            send1('loaded')
-            }
-        else
-            opera.postError('loaded page in SD: '+window.location.hostname);
+        //~ try{
+            //~ if(widget.preferences.eventType>0)
+                if(!testMediaQuery('screen and (view-mode:minimized)'))
+                    send1('loaded')
+            //~ }
+        //~ catch(e){}
         },false);
     
     }
-else
-    opera.postError('loaded page iframe: '+window.location.hostname);

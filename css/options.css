@@ -44,7 +44,7 @@ h3:not(:nth-child(2))/*:not(:first-of-type)*/
 	top:2px;
 	left:2px;
 	}
-#lic
+#lic,#prv
 	{
 	width:100%;
 	}

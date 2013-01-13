@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<widget xmlns="http://www.w3.org/ns/widgets" version="1.6-dev6"
+<widget xmlns="http://www.w3.org/ns/widgets" version="1.6-dev7"
     id="http://my.opera.com/alex-shpak/blog/flag-button/"
     url="http://my.opera.com/alex-shpak/blog/flag-button/">
     <name xml:lang="en">Flag Button</name>
@@ -11,7 +11,7 @@
     <icon src="icons/svg2raster-256.png" width="256" height="256"/>
     <content src="flag-button.html"/>
     <access origin="*"/>
-    <license href="http://www.apache.org/licenses/LICENSE-2.0">Copyright 2012 alex-shpak
+    <license href="http://www.apache.org/licenses/LICENSE-2.0">Copyright 2013 alex-shpak
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

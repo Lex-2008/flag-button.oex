@@ -13,26 +13,26 @@ function addCSS(cssCode)
     document.getElementsByTagName("head")[0].appendChild(styleElement);
     }
 
-//note: it must be safe to run this funstion several times
+//note: it must be safe to run this function several times
 function loadPrefs()
     {
     //===badge===
+    gebi('showBadge').checked=widget.preferences.showBadge=='1';
     gebi('showBadge').onclick=function() { widget.preferences.showBadge=this.checked?'1':'0'; };
+    gebi('showXXBadge').checked=widget.preferences.showXXBadge=='1';
     gebi('showXXBadge').onclick=function() { widget.preferences.showXXBadge=this.checked?'1':'0'; };
+    gebi('badgeBGcolor').value=widget.preferences.badgeBGcolor;
     gebi('badgeBGcolor').onchange=gebi('badgeBGcolor').onkeyup=function()
         {
         widget.preferences.badgeBGcolor=this.value;
         opera.extension.postMessage({q:"badgeColor"});
         };
+    gebi('badgeTXcolor').value=widget.preferences.badgeTXcolor;
     gebi('badgeTXcolor').onchange=gebi('badgeTXcolor').onkeyup=function()
         {
         widget.preferences.badgeTXcolor=this.value;
         opera.extension.postMessage({q:"badgeColor"});
         };
-    gebi('showBadge').checked=widget.preferences.showBadge=='1';
-    gebi('showXXBadge').checked=widget.preferences.showXXBadge=='1';
-    gebi('badgeBGcolor').value=widget.preferences.badgeBGcolor;
-    gebi('badgeTXcolor').value=widget.preferences.badgeTXcolor;
     
     //===icons===
     gebi('iconsCfg').border_size=(gebi('iconsCfg').offsetHeight-gebi('iconsCfg').scrollHeight)/2;
@@ -62,7 +62,11 @@ function loadPrefs()
     gebi('iconsCfg').style.height=(gebi('iconsCfg').border_size+gebi('iconsCfg').scrollHeight)+'px';
     
     //===popup===
-    gebi('popupWidth').onchange=gebi('popupWidth').onkeyup=function(){ widget.preferences.popupWidth=this.value; };
+    gebi('popupWidth').onchange=gebi('popupWidth').onkeyup=function()
+	{
+	widget.preferences.popupWidth=this.value;
+        opera.extension.postMessage({q:"badgeColor"});
+	};
     gebi('linksCfg').border_size=(gebi('linksCfg').offsetHeight-gebi('linksCfg').scrollHeight)/2;
     gebi('linksCfg').onkeyup=function()
         {
@@ -239,11 +243,12 @@ function loadPrefs()
         }
 
     //===licence===
-    gebi('lic').onload=function()
+    gebi('lic').onload=gebi('prv').onload=function()
         {
         this.height=this.contentWindow.document.body.scrollHeight
         }
     gebi('lic').height=gebi('lic').contentWindow.document.body.scrollHeight;
+    gebi('prv').height=gebi('prv').contentWindow.document.body.scrollHeight;
     }
 
 loadPrefs();

@@ -25,7 +25,7 @@ opera.extension.addEventListener( "message", function(arg)
     if(arg.data.code!='ok')
 	{
 	window.close();
-	opera.postError('popup should close because not OK: '+sJSON.stringify(arg.data));
+	debug('popup should close because not OK: '+sJSON.stringify(arg.data));
 	return;
 	}
     
@@ -38,7 +38,7 @@ opera.extension.addEventListener( "message", function(arg)
 	else
 	    gebi(ids[q]+'_gr').style.display='none';
 	}
-    gebi('src').href='http://'+arg.data[ids[q]];
+    gebi('src').href='http://'+arg.data['src'];
     if(widget.preferences.debugMode=='0') gebi('cmp_gr').style.display='none';
     
     var linksCfg=sJSON.parse(widget.preferences.linksCfg);
@@ -75,5 +75,5 @@ if(opera.extension.bgProcess.lastHost)
 else
     {
     window.close();
-    opera.postError('popup should close because bad lastHost='+opera.extension.bgProcess.lastHost);
+    debug('popup should close because bad lastHost='+opera.extension.bgProcess.lastHost);
     }

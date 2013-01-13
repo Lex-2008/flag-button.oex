@@ -51,6 +51,10 @@ for(var qwe in o)
 opera.postError('('+typeof(o)+')='+o+'\n\n'+str);
 }
 
+function debug(s){
+if(widget.preferences.debugMode=='1')
+    opera.postError(s);
+}
 
 
 
@@ -176,7 +180,7 @@ function gebi(id)
 
 
 var stats={
-    freq:1,//DAYS how often to report stats
+    freq:7,//DAYS how often to report stats
     host:'flag-button.tk',
     logLists:{'precache':1,'precache100':1,'extraHosts':1,'requested':1},
     add1:function(group,host)
@@ -274,23 +278,13 @@ var stats={
 var sJSON={
     stringify:function(o)
         {
-        try{
-            return JSON.stringify(o)
-            }
-        catch(e)
-            {
-            return '{}';
-            }
+        try{ return JSON.stringify(o) }
+        catch(e){ return '{}' }
         },
     parse:function(s)
         {
-        try{
-            return JSON.parse(s)
-            }
-        catch(e)
-            {
-            return {};
-            }
+        try{ return JSON.parse(s) }
+        catch(e){ return {} }
         },
     prettify:function(o)
         {
@@ -311,7 +305,7 @@ var sJSON={
             }
         catch(e)
             {
-            alert(e);
+            //~ alert(e);
             return '{}';
             }
         }
