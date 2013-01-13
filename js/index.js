@@ -446,7 +446,7 @@ setInterval("stats.save()",60000);
 //apply prefs
 theButton.badge.backgroundColor=widget.preferences.badgeBGcolor;
 theButton.badge.color=widget.preferences.badgeTXcolor;
-theButton.popup.width=widget.preferences.popupWidth;
+theButton.popup.width=parseInt(widget.preferences.popupWidth);
 iconsCfg=sJSON.parse(widget.preferences.iconsCfg);
 
 function addJS(s,f)
