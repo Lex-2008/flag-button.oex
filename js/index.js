@@ -58,17 +58,15 @@ function disableButton(text)
     }
 
 groupHosts3={'blog.onet.pl':1};
-groupHosts2={'blogspot.com':1,'deviantart.com':1,'deviantart.net':1,'dns-shop.ru':1,'est.ua':1,'facebook.com':1,'fastpic.ru':1,'gazeta.pl':1,'github.com':1,'gittigidiyor.com':1,'ifolder.ru':1,'imagevenue.com':1,'imageshack.us':1,'interia.pl':1,'ivao.aero':1,'lento.pl':1,'letitbit.net':1,'livejournal.com':1,'megafon.ru':1,'minecraftwiki.net':1,'mirtesen.ru':1,'moole.ru':1,'mts.ru':1,'narod.ru':1,'newsweek.pl':1,'nnm.ru':1,'onet.pl':1,'radikal.ru':1,'raduga.su':1,'rapidshare.com':1,'sexfotka.pl':1,'sex-zone.pl':1,'softonic.com':1,'softonic.pl':1,'sourceforge.net':1,'skryptoteka.pl':1,'tiu.ru':1,'tripod.com':1,'trojmiasto.pl':1,'tumblr.com':1,'urlcash.net':1,'vk.com':1,'vkontakte.ru':1,'wikia.com':1,'wikidot.com':1,'wikimedia.org':1,'wikipedia.org':1,'wiktionary.org':1,'wordpress.com':1,'wrzuta.pl':1,'yvision.kz':1,
-    //following line is taken from Block Linkbucks extension 
+groupHosts2={'blogspot.com':1,'blox.pl':1,'deviantart.com':1,'deviantart.net':1,'dns-shop.ru':1,'est.ua':1,'facebook.com':1,'fastpic.ru':1,'gazeta.pl':1,'github.com':1,'gittigidiyor.com':1,'ifolder.ru':1,'imagevenue.com':1,'imageshack.us':1,'interia.pl':1,'ivao.aero':1,'lento.pl':1,'letitbit.net':1,'livejournal.com':1,'megafon.ru':1,'minecraftwiki.net':1,'mirtesen.ru':1,'moole.ru':1,'mts.ru':1,'narod.ru':1,'newsweek.pl':1,'nnm.ru':1,'nowyekran.pl':1,'onet.pl':1,'radikal.ru':1,'raduga.su':1,'rapidshare.com':1,'sexfotka.pl':1,'sex-zone.pl':1,'softonic.com':1,'softonic.pl':1,'sourceforge.net':1,'skryptoteka.pl':1,'tiu.ru':1,'tripod.com':1,'trnd.com':1,'trojmiasto.pl':1,'tumblr.com':1,'urlcash.net':1,'vk.com':1,'vkontakte.ru':1,'wikia.com':1,'wikidot.com':1,'wikimedia.org':1,'wikipedia.org':1,'wiktionary.org':1,'wordpress.com':1,'wrzuta.pl':1,'yvision.kz':1,
+    //following line is taken from Block Linkbucks extension (ver 1.85)
     //Copyright (c) 2012 USAcyborg.com. All rights reserved. 
     //Usage is governed by a BSD-style license: 
     //http://usacyborg.com/LICENSE.html 
     //https://addons.opera.com/extensions/details/block-linkbucks-opera-edition/ 
-'amy.gs':1,'any.gs':1,'allanalpass.com':1,'amateurteensexblog.com':1,'cash4links.co':1,'cash4files.com':1,'deb.gs':1,'drstickyfingers.com':1,'dyo.gs':1,'filesonthe.net':1,'freean.us':1,'freegaysitepass.com':1,'fapoff.com':1,'galleries.bz':1,'goneviral.com':1,'hornywood.tv':1,'linkbabes.com':1,'linkbucks.com':1,'megaline.co':1,'miniurls.co':1,'picbucks.com':1,'poontown.net':1,'qqc.co':1,'rqq.co':1,'seriousdeals.net':1,'seriousfiles.com':1, 'sexpalace.gs':1,'theseblogs.com':1,'theseforums.com':1,'tinylinks.co':1,'tnabucks.com':1,'tubeviral.com':1,'ultrafiles.net':1,'urlbeat.net':1,'whackyvidz.com':1,'youfap.me':1,'yyv.co':1,'zff.co':1,
-    //more
-'linkseer.net':1,
+'adf\.ly':1,'amy\.gs':1,'any\.gs':1,'allanalpass\.com':1,'amateurteensexblog\.com':1,'cash4links\.co':1,'cash4files\.com':1,'deb\.gs':1,'drstickyfingers\.com':1,'dyo\.gs':1,'filesonthe\.net':1,'freean\.us':1,'freegaysitepass\.com':1,'fapoff\.com':1,'galleries\.bz':1,'goneviral\.com':1,'hornywood\.tv':1,'linkbabes\.com':1,'linkbucks\.com':1,'linkseer.net':1,'megaline\.co':1,'miniurls\.co':1,'picbucks\.com':1,'poontown\.net':1,'qqc\.co':1,'rqq\.co':1,'seriousdeals\.net':1,'seriousfiles\.com':1, 'sexpalace\.gs':1,'theseblogs\.com':1,'theseforums\.com':1,'tinylinks\.co':1,'tnabucks\.com':1,'tubeviral\.com':1,'ultrafiles\.net':1,'urlbeat\.net':1,'whackyvidz\.com':1,'youfap\.me':1,'yyv\.co':1,'zff\.co':1,
     };
-groupHosts0={'accounts.google.com':1,'addons.opera.com':1,'crash.opera.com':1,'encrypted.google.com':1,'forum.hr':1,'forum.pcekspert.com':1,'get3.adobe.com':1,'kriz-zivota.com':1,'localhost':1,'mail.google.com':1,'my.opera.com':1,'nk.pl':1,'opera.com':1,'plus.google.com':1,'support.google.com':1,'titlovi.com':1,'webstoregames.com':1,'windows.microsoft.com':1};
+extraHosts={'addons.opera.com':1,'auth.mail.ru':1,'e.mail.ru':1,'encrypted.google.com':1,'feeds.feedburner.com':1,'help.opera.com':1,'localhost':1,'my.opera.com':1,'mail.yahoo.com':1,'opera.com':1};
 
 function normalizeHost(host)
     {

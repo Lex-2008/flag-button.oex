@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<widget xmlns="http://www.w3.org/ns/widgets" version="1.5.4"
+<widget xmlns="http://www.w3.org/ns/widgets" version="1.5.5"
     id="https://addons.opera.com/addons/extensions/details/flag-button/">
     <name xml:lang="en">Flag Button</name>
     <name xml:lang="ru">Flag Button</name>
@@ -9,7 +9,7 @@
     <icon src="icons/svg2raster-64.png" width="64" height="64"/>
     <icon src="icons/svg2raster-256.png" width="256" height="256"/>
     <access origin="*"/>
-    <license href="http://www.apache.org/licenses/LICENSE-2.0">Copyright 2011 alex-shpak
+    <license href="http://www.apache.org/licenses/LICENSE-2.0">Copyright 2013 alex-shpak
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
