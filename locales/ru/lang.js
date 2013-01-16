@@ -3,7 +3,7 @@
 	'Если не работает - попробуйте обновить страницу.',
     defLinks:
 	{
-	"who.is":	"http://who.is/[host]",
+	"who.is":	"http://who.is/whois/[host]",
 	"Яндекс карты":	"http://maps.yandex.ru/?ll=[lng],[lat]",
 	"Карты Mail.Ru":"http://maps.mail.ru/?ll=[lng],[lat]",
 	"Карты Google":	"http://maps.google.com/?ie=UTF8&ll=[lat],[lng]",

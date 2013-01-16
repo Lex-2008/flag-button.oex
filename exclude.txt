@@ -1,0 +1,15 @@
+*.bak
+*.bat
+*.exe
+*.oex
+*.tags
+*.txt
+
+th*
+
+flags\???*.png
+
+icons\Flag_of_None.svg
+
+js\domains.js
+js\loader.js

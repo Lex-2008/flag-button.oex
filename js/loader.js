@@ -1,5 +1,6 @@
 domain='';
 result={};
+
 function grabNext()
     {
     if(domain=domains.shift())
@@ -11,7 +12,7 @@ function grabNext()
 	{
 	opera.postError('stop asking with '+domains.length+' domains left');
 	precache=result;
-	input('','precache='+JSON.stringify(result));
+	opera.extension.tabs.create({url:"data:text/plain,precache="+sJSON.stringify(precache)+';precache100='+sJSON.stringify(precache100)})
 	}
     }
 

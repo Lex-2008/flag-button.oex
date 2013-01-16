@@ -3,7 +3,7 @@
 	'Eğer çalışmıyorsa sayfayı yenilemeyi deneyin.',
     defLinks:
 	{
-	"who.is":	"http://who.is/[host]",
+	"who.is":	"http://who.is/whois/[host]",
 	"Bing harita":	"http://www.bing.com/maps/?cp=[lat]~[lng]",
 	"Google harita":"http://maps.google.com/?ie=UTF8&ll=[lat],[lng]",
 	"OpenStreetMap":"http://osm.org/?lat=[lat]&lon=[lng]",

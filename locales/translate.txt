@@ -1,0 +1,15 @@
+config.xml: "Requests information from external websites."
+While translating, please use a verb which is closer to "ask" then to "use". Because we want to let users know that "external websites" know every site they are visiting.
+
+
+locales\*\descr.txt:
+Last line changed from:
+"The same window features links to who.is (domain information site) and Google maps"
+to:
+"The same window features links to who.is (domain information site) and maps showing approximate location of the website."
+and few more lines added
+
+
+locales\*\options.html
+Privacy policy for flag-button.tk
+locales\*\lang.js

@@ -3,7 +3,7 @@
 	'Jeśli nie działa, spróbuj odświeżyć stronę.',
     defLinks:
 	{
-	"who.is":	"http://who.is/[host]",
+	"who.is":	"http://who.is/whois/[host]",
 	"Mapy Bing":	"http://www.bing.com/maps/?cp=[lat]~[lng]",
 	"Mapy Google":	"http://maps.google.com/?ie=UTF8&ll=[lat],[lng]",
 	"OpenStreetMap":"http://osm.org/?lat=[lat]&lon=[lng]",

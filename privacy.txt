@@ -1,0 +1,45 @@
+Privacy policy
+<small>What this extension does with your private data</small>
+[list]
+   [*] It [b]DOES[/b] send hostname of [i]almost[/i] every website you're visiting to an external website (called "[i]source[/i]", in options you can choose which one, default is ipinfodb.com) to get its location information when you're visiting it for a first time.
+   [*] It [b]DOES[/b] save list of hostnames for all sites you've ever visited together with their location information and first visit time (feature called "[i]cache[/i]") for about one month.
+   [*] It does [b]NOT[/b] request source on [i]every[/i] site visit or page load (since information gets retrieved from cache).
+   [*] It does [b]NOT[/b] request [i]source[/i] or store in [i]cache[/i] information about most popular websites, because information about them is already stored in extension itself (feature called "[i]precache[/i]")
+   [*] It [b]DOES[/b] ask Opera to use "[i]custom flags[/i]", if you set any, every time you switch to or open a page of a site from related country. If it is cached or not is decided by Opera and is out of control of this extension.
+   [*] It does [b]NOT[/b] send any data related to your browsing history to anyone apart from explained above (to [i]source[/i] or [i]custom flags[/i]) and in separate section below (for [i]statistics[/i], if you enable it)
+
+   [*] It uses unencrypted connections, meaning anyone with sufficient knowledge around you can "sniff" and copy or even modify all communicated data.
+   [*] On each page it sets javascript object window['flag-button'] so other scripts and extensions could benefit from knowing location information.
+   [*] Opera browser periodically checks for extension updates -- it is expected behaviour and you should be aware of it.
+   [*] Any extension behaviour outside of features discussed here is a bug (either of extension or this privacy policy) and should be immediately reported to the developer.
+[/list]
+
+
+Privacy policy concerning usage statistics
+[list]
+   [*] Participation in statistics collection is purely optional, off by default and no other functions of this extension depend on it
+   [*] Usage statistics is designed to be as anonymous as possible -- no personal information is stored and no attempt is made to link separate pieces of data to each other or to individual users
+   [*] Description of data that will be sent is available in relevant section in settings. In same place you can review the data you're sending and stop participating in sending statistics
+   [*] Extension does [b]NOT[/b] send individual hostnames or visiting times -- only "total numbers" are sent
+   [*] Extension does [b]NOT[/b] send preferences which may contain your private data
+   [*] You [b]CAN NOT[/b] change how often you send data, because statistics are based on assumption that everyone sends data with same frequency
+   [*] You [b]CAN NOT[/b] change the data itself, because it will undermine my belief in it
+   [*] Statistics server [b]DOES[/b] record current time, your IP and User-Agent string of your browser when you submit data - this is a standard feature of all websites. This information will [b]NOT[/b] be used to identify you.
+[/list]
+
+
+
+Privacy policy for flag-button.tk
+Please use this site only for 
+
+When you make request to this site, the following information is saved in standard apache log:
+<ul>
+   <li> Your IP </li>
+   <li> Date and time of your request </li>
+   <li> Hostname (website) which you were requesting </li>
+   <li> User-Agent string of your browser, which contains: </li>
+   <li> Name and version of your browser </li>
+   <li> Your Operating System </li>
+</ul>
+All logs are stored for indefinite time. They are used to gather general statistics. I might also analyse them when I suspect fraudulent activity.
+
